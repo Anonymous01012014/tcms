@@ -1,0 +1,17 @@
+<<<<<<< HEAD
+.DS_Store
+
+application/cache/*
+!application/cache/index.html
+!application/cache/.htaccess
+
+application/logs/*
+!application/logs/index.html
+!application/logs/.htaccess
+=======
+*/config/development
+*/logs/log-*.php
+*/logs/!index.html
+*/cache/*
+*/cache/!index.html
+>>>>>>> 967b12d245873007e2e42c12b4fa9d875ca66bde
