@@ -52,6 +52,7 @@ class Case_manage extends CI_Controller {
 		
 		//get all active sites.
 		$sites = $this->site_model->getAllActiveSites();
+		$data['sites']= $sites;
 		
 		//call the general views for page structure	
 		$this->load->view('gen/header');
@@ -59,8 +60,8 @@ class Case_manage extends CI_Controller {
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		
-		//show log area 
-		$this->load->view('case_add',$sites);
+		//show add case view
+		$this->load->view('case_add',$data);
 			
 		
 		$this->load->view('gen/footer');
@@ -83,9 +84,9 @@ class Case_manage extends CI_Controller {
 		$this->load->model('case_model');
 		
 		//insert post values into the model
-		$this->case_model->site_id = $this->input->post('siteId');
+		$this->case_model->site_id = $this->input->post('site');
 		$this->case_model->admin_id = 1;
-		$this->case_model->collector_id = 2;
+		$this->case_model->collector_id = 1;
 		
 		
 		//Execute addition function.
