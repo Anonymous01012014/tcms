@@ -52,6 +52,9 @@ class Case_model extends CI_Model{
 	//The id of the operator for this case.
 	var $operator_id = "";
 	
+	//The id of the site for this case.
+	var $site_id = "";
+	
 	
 	/**
      * Constructor
@@ -94,11 +97,12 @@ class Case_model extends CI_Model{
 							manual_closing_reason,
 							rejecting_reason,
 							collector_id,
-							operator_id
+							operator_id,
+							site_id
 						) 
 						VALUES (
-							'{$this->open_date}',
-							'{$this->open_time}',
+							CURDATE(),
+							CURTIME(),
 							'{$this->close_date}',
 							'{$this->close_time}',
 							'{$this->accept_reject_date}',
@@ -107,7 +111,8 @@ class Case_model extends CI_Model{
 							'{$this->manual_closing_reason}',
 							'{$this->rejecting_reason}',
 							'{$this->collector_id}',
-							'{$this->operator_id}'
+							'{$this->operator_id}',
+							'{$this->site_id}'
 						);
 					";
 		$this->db->query($query);
@@ -158,7 +163,8 @@ class Case_model extends CI_Model{
 					manual_closing_reason = '{$this->manual_closing_reason}',
 					rejecting_reason = '{$this->rejecting_reason}',
 					collector_id = '{$this->collector_id}',
-					operator_id = '{$this->operator_id}'					
+					operator_id = '{$this->operator_id}',
+					site_id = '{$this->site_id}'					
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
 		return true;
