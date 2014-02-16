@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
+$db['default']['hostname'] = '192.168.1.254';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '';
+$db['default']['password'] = 'ecobuild';
 $db['default']['database'] = 'tcms';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
