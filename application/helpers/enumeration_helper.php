@@ -90,57 +90,57 @@
 	 * contact : molham225@gmail.com
 	 * 
 	 **/
-	const Alabama = 1,
-	const Alaska = 2,
-	const Arizona = 4,
-	const Arkansas = 5,
-	const California = 6,
-	const Colorado = 8,
-	const Connecticut = 9,
-	const Delaware = 10,
-	const DC = 11,
-	const Florida = 12,
-	const Georgia = 13,
-	const Hawaii = 15,
-	const Idaho = 16,
-	const Illinois = 17,
-	const Indiana = 18,
-	const Iowa = 19,
-	const Kansas = 20,
-	const Kentucky = 21,
-	const Louisiana = 22,
-	const Maine = 23,
-	const Maryland = 24,
-	const Massachusetts = 25,
-	const Michigan = 26,
-	const Minnesota = 27,
-	const Mississippi = 28,
-	const Missouri = 29,
-	const Montana = 30,
-	const Nebraska = 31,
-	const Nevada = 32,
-	const New_Hampshire = 33,
-	const New_Jersey = 34,
-	const New_Mexico = 35,
-	const New_York = 36,
-	const North_Carolina = 37,
-	const North_Dakota = 38,
-	const Ohio = 39,
-	const Oklahoma = 40,
-	const Oregon = 41,
-	const Pennsylvania = 42,
-	const Rhode_Island = 44,
-	const South_Carolina = 45,
-	const South_Dakota = 46,
-	const Tennessee = 47,
-	const Texas = 48,
-	const Utah = 49,
-	const Vermont = 50,
-	const Virginia = 51,
-	const Washington = 53,
-	const West_Virginia = 54,
-	const Wisconsin = 55,
-	const Wyoming = 56
+	const Alabama = 1;
+	const Alaska = 2;
+	const Arizona = 4;
+	const Arkansas = 5;
+	const California = 6;
+	const Colorado = 8;
+	const Connecticut = 9;
+	const Delaware = 10;
+	const DC = 11;
+	const Florida = 12;
+	const Georgia = 13;
+	const Hawaii = 15;
+	const Idaho = 16;
+	const Illinois = 17;
+	const Indiana = 18;
+	const Iowa = 19;
+	const Kansas = 20;
+	const Kentucky = 21;
+	const Louisiana = 22;
+	const Maine = 23;
+	const Maryland = 24;
+	const Massachusetts = 25;
+	const Michigan = 26;
+	const Minnesota = 27;
+	const Mississippi = 28;
+	const Missouri = 29;
+	const Montana = 30;
+	const Nebraska = 31;
+	const Nevada = 32;
+	const New_Hampshire = 33;
+	const New_Jersey = 34;
+	const New_Mexico = 35;
+	const New_York = 36;
+	const North_Carolina = 37;
+	const North_Dakota = 38;
+	const Ohio = 39;
+	const Oklahoma = 40;
+	const Oregon = 41;
+	const Pennsylvania = 42;
+	const Rhode_Island = 44;
+	const South_Carolina = 45;
+	const South_Dakota = 46;
+	const Tennessee = 47;
+	const Texas = 48;
+	const Utah = 49;
+	const Vermont = 50;
+	const Virginia = 51;
+	const Washington = 53;
+	const West_Virginia = 54;
+	const Wisconsin = 55;
+	const Wyoming = 56;
 
 	/**
 	 * Function name:
@@ -734,7 +734,7 @@
 	 * Author : Ahmad Mulhem Barakat
 	 * contact : molham225@gmail.com
 	 **/
-	 function lane_sensor_enum($count_method){
+	 function count_method_enum($count_method){
 		switch ($count_method){
 			case "/2":
 			return Divided_By_2;
@@ -1024,7 +1024,7 @@
 			return "Faster Than 135 mph";
 			break;
 		}
-		
+	}
 		
 		/**
 		 * FHWA Classes
@@ -1062,10 +1062,10 @@
 
 		/**
 		 * Function name:
-		 * case_status_text
+		 * FHWA_class_text
 		 * 
 		 * Description :
-		 * This function returns the text representation of the case status
+		 * This function returns the text representation of the FHWA class
 		 * determined by the given number.
 		 * 
 		 * Created date ; 12-2-2014
@@ -1074,8 +1074,8 @@
 		 * Author : Ahmad Mulhem Barakat
 		 * contact : molham225@gmail.com
 		 **/
-		function case_status_text($state_number){
-			switch($state_number){
+		function FHWA_class_text($class_number){
+			switch($class_number){
 				case Class1:
 				return "Class 1";
 				break;
@@ -1125,5 +1125,5 @@
 		}
 
 
-	}
+	
 

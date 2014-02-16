@@ -259,3 +259,35 @@ body
 	font-size:16px;
 	font-family: ubuntu;
 }
+
+
+/* Table of addition form inputs */
+
+table#addFormTable{
+	width: 100%;
+}
+
+
+table#addFormTable tr{
+	width: 100%;
+	height: 40px;
+	
+}
+
+table#addFormTable tr td{
+	vertical-align: middle;
+}
+
+table#addFormTable tr td input,table#addFormTable tr td select, table#addFormTable tr td textarea{
+	width: 200px; 
+}
+table#addFormTable tr td label{
+	width: 100px;
+	margin-left: 30px;
+}
+
+button#btn_add,button#btn_cancel{
+	float: left;
+	margin-top: 30px;
+	margin-left: 30px;
+}
