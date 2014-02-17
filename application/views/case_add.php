@@ -20,11 +20,11 @@
 				</td>
 			</tr>			
 		</table>
-		<button type="submit" class="btn btn-default btn-lg" id="btn_add">
+		<button type="submit" class="btn btn-primary btn-lg" id="btn_add">
 			<span class="glyphicon glyphicon-ok"></span> Add Case
 		</button>
 		<a href="<?php echo base_url();?>dashboard">
-		<button type="Button" class="btn btn-danger btn-lg" id="btn_cancel">
+		<button type="Button" class="btn btn-default btn-lg" id="btn_cancel">
 			<span class="glyphicon glyphicon-remove"></span> Cancel
 		</button>
 		</a>
