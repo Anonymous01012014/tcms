@@ -260,6 +260,10 @@ body
 	font-family: ubuntu;
 }
 
+/**
+ * Changes added by Molham
+ **/
+
 
 /* Table of addition form inputs */
 
@@ -287,6 +291,18 @@ table#addFormTable tr td label{
 }
 
 button#btn_add,button#btn_cancel{
+	float: left;
+	margin-top: 30px;
+	margin-left: 30px;
+}
+
+/* Login form styles */
+form#login label#username,form#login label#password{
+	width:100px;
+	margin-left: 30px;
+}
+
+button#btn_login{
 	float: left;
 	margin-top: 30px;
 	margin-left: 30px;
