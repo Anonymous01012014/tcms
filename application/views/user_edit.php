@@ -16,7 +16,7 @@
 					<label for="username" >Username:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="username" id="username" value="<?php echo $user['username'];?>"/>
+					<input class="form-control" type="text" name="username" id="username" value="<?php echo $user['username'];?>" placeholder="username"/>
 				</td>				
 			</tr>
 			
