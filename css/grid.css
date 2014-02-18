@@ -115,13 +115,16 @@
 {
 	width: 50px;
 	text-align: center;
-	border-width:thin;
+	border-width:1px;
 	border-style:solid;
 	border-color:#DDD;
 	border-left-style:none;
 	border-bottom-left-radius: 0;
 	border-top-left-radius: 0px;
 	color:#08C;
+	float:right;
+	position: relative;
+	top:-1px;
 }
 
 .grid-pagination ul li a

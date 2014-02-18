@@ -205,8 +205,8 @@ class Site extends CI_Controller {
 		
 		//grid controls
 		$this->grid->control = array(
-									  array("title" => "Edit" , "icon"=>"icon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"") , 
-									  array("title" => "Delete" , "icon"=>"icon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure?")
+									  array("title" => "Edit" , "icon"=>"glyphicon glyphicon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"") , 
+									  array("title" => "Delete" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure?")
 									);												
 						
 		//render our grid :)

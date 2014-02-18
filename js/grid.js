@@ -347,7 +347,7 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 		append_text += "<td class='middle'>";
 		append_text += "<a";
 		append_text += " title='"+control[control_counter]['title']+"'";
-		append_text += " class='btn btn-mini'";
+		append_text += " class='btn btn-default btn-xs'";
 		
 		message = control[control_counter]['message'];
 		url = control[control_counter]['url'];				
@@ -433,14 +433,14 @@ function gridAddControlBar(grid_id , option , data)
 		//control bar
 		var bar = "";
 		
-		bar+= '<div id="grid_bar"   class="well well-small">';
-		bar+= '<div class="row-fluid">';
+		bar+= '<div id="grid_bar"   class="well well-sm">';
+		bar+= '<div class="row">';
 		
 		//if add button is true then show add button with given url
 		if(option['add_button'] == true)
 		{
-			bar+='<div class="span2">';
-			bar+='<a class="btn btn-info" href="'+option["add_url"]+'"><i class="icon-plus-sign icon-white"></i> '+option["add_title"]+'</a>';
+			bar+='<div class="col-md-2">';
+			bar+='<a class="btn btn-info" href="'+option["add_url"]+'"><i class="glyphicon glyphicon-plus-sign glyphicon-white"></i> '+option["add_title"]+'</a>';
 			bar+='</div>';
 		}
 		
@@ -456,7 +456,7 @@ function gridAddControlBar(grid_id , option , data)
 		if(end_index > total_size)	end_index = total_size;
 		
 		
-		bar+='<div class="span1">';
+		bar+='<div class="col-md-1">';
 		bar+='<span class="grid-pagination">'+start_index+'-'+end_index+'</span>';
 		bar+='</div>';
 		
@@ -472,12 +472,12 @@ function gridAddControlBar(grid_id , option , data)
 		if(prev_index < 1) {prev_index = 1 ; prev_class = "active";}
 		if(next_index > number_of_pages) {next_index = number_of_pages ; next_class = "active";}
 		
-		bar+='<div class="span5">';
-		bar+='<div class="pagination pagination-centered grid-pagination">';
-		bar+='<ul>';		
+		bar+='<div class="col-md-5">';
+		bar+='<div>';
+		bar+='<ul class="pagination pagination-centered grid-pagination">';		
 		bar+='<li class="'+prev_class+'" title="Prev" onclick="gridGotoPage(\'' + grid_id + '\'  , ' + prev_index + ' );" ><a>&laquo; Prev</a></li>';				
 		bar+='<li class="'+next_class+'" title="Next" onclick="gridGotoPage(\'' + grid_id + '\'  , ' + next_index + ' );"><a>Next &raquo;</a></li>';		
-		bar+='<li class=""><input id="page_number" type="text" value="'+current_page+'" onkeypress="gridPageInput(event , \'' + grid_id + '\')"></li>';																	
+		bar+='<li class=""><input id="page_number" class="form-control" type="text" value="'+current_page+'" onkeypress="gridPageInput(event , \'' + grid_id + '\')"></li>';																	
 		bar+='</ul>';								
 		bar+='</div>';										
 		bar+='</div>';		  		
@@ -485,10 +485,10 @@ function gridAddControlBar(grid_id , option , data)
 		//search
 		if(option['search'] == true)
 		{
-			bar+='<div class="span4">';
-			bar+='<div class="input-append grid-search">'
-			bar+='<input class="span8" id="grid_search" type="text" onkeypress="gridSearch(event , \'' + grid_id + '\')">';
-			bar+='<span class="add-on"><i class="icon-search"></i></span>';
+			bar+='<div class="col-md-3">';
+			bar+='<div class="input-group grid-search">'
+			bar+='<input class="col-md-8 form-control" id="grid_search" type="text" onkeypress="gridSearch(event , \'' + grid_id + '\')">';
+			bar+='<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>';
 			bar+='</div>';
 			bar+='</div>';
 		}
@@ -757,7 +757,7 @@ function gridAddSortDir(grid_id , column_name , dir)
 				$(this).find("span").remove();
 				
 				//add new dir icon
-				$(this).append("  <span><i class='icon-chevron-up'></i></span>");						
+				$(this).append("  <span><i class='glyphicon-chevron-up'></i></span>");						
 			}						
 			else if(dir=="desc")
 			{														
@@ -765,7 +765,7 @@ function gridAddSortDir(grid_id , column_name , dir)
 				$(this).find("span").remove();
 				
 				//add new dir icon
-				$(this).append("  <span><i class='icon-chevron-down'></i></span>");
+				$(this).append("  <span><i class='glyphicon-chevron-down'></i></span>");
 			}						
 			else
 			{							
