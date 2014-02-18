@@ -10,7 +10,7 @@
 	
 	
 	<!-- indlude fonts -->
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<!--<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">-->
 	
 	
 </head>

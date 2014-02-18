@@ -1,14 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Case_manage extends CI_Controller {
+class Cases extends CI_Controller {
 
 	/**
-	 * Filename: case.php
+	 * Filename: cases.php
 	 * Description: 
 	 * case contoller that control the case for example add - edit - delete - manage - ...etc
 	 * 
 	 * created date: 16-2-2014
-	 * ccreated by: Eng. Ahmad Mulhem Barkat
+	 * created by: Eng. Ahmad Mulhem Barkat
 	 * contact: molham225@gmail.com
 	 */
 	 
@@ -29,7 +29,7 @@ class Case_manage extends CI_Controller {
 	 * this function will call the page header. 
 	 * 
 	 * created date: 16-2-2014
-	 * ccreated by: Eng. Ahmad Mulhem Barkat
+	 * created by: Eng. Ahmad Mulhem Barkat
 	 * contact: molham225@gmail.com
 	 */
 	public function manage()
@@ -37,14 +37,31 @@ class Case_manage extends CI_Controller {
 		
 	}
 	
+	
+	/**
+	 * Function name : __construct
+	 * Description: 
+	 * this contructor is called as this object is initiated.
+	 * 
+	 * created date: 18-2-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function __construct(){
+		parent::__construct();
+		//check login state of the user requestin this controller.
+		$this->load->helper('is_logged_in');
+		checkLogin($this->session->userdata['user']);
+	}
+	
 	/**
 	 * Function name : add
 	 * Description: 
 	 * this function will call site_add views 
 	 * 
-	 * created date: 15-2-2014
-	 * ccreated by: Eng. Mohanad Shab Kaleia
-	 * contact: ms.kaleia@gmail.com 
+	 * created date: 16-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
 	 */
 	public function add()
 	{
@@ -75,7 +92,7 @@ class Case_manage extends CI_Controller {
 	 * this function will save the addition form info ot the database.
 	 * 
 	 * created date: 15-2-2014
-	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * created by: Eng. Ahmad Mulhem Barakat
 	 * contact: molham225@gmail.com
 	 */
 	public function saveData()

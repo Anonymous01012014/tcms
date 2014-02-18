@@ -23,11 +23,11 @@
 		<button type="submit" class="btn btn-default btn-lg" id="btn_add">
 			<span class="glyphicon glyphicon-ok"></span> Add Case
 		</button>
-		<a href="<?php echo base_url();?>dashboard">
-		<button type="Button" class="btn btn-danger btn-lg" id="btn_cancel">
+		
+		<button type="Button" class="btn btn-danger btn-lg" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard')";>
 			<span class="glyphicon glyphicon-remove"></span> Cancel
 		</button>
-		</a>
+		
 	</form>
 	
 

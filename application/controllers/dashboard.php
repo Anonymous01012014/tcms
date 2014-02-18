@@ -19,6 +19,21 @@ class Dashboard extends CI_Controller {
 		$this->showDashboard();
 	}
 	
+	/**
+	 * Function name : __construct
+	 * Description: 
+	 * this contructor is called as this object is initiated.
+	 * 
+	 * created date: 18-2-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function __construct(){
+		parent::__construct();
+		//check login state of the user requestin this controller.
+		$this->load->helper('is_logged_in');
+		checkLogin($this->session->userdata['user']);
+	}
 	
 	
 	/**

@@ -161,7 +161,7 @@ class Site_model extends CI_Model{
 	 * Author : Ahmad Mulhem Barakat
 	 * contact : molham225@gmail.com
 	 */
-	 public function getUserById(){
+	 public function getSiteById(){
 		$query = "SELECT * 
 				  FROM site
 	 			  WHERE id = {$this->id}";

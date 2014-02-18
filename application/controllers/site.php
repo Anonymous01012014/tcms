@@ -16,9 +16,25 @@ class Site extends CI_Controller {
 	 
 	public function index()
 	{		
-		$this->add();
+		$this->manage();
 	}
 	
+	
+	/**
+	 * Function name : __construct
+	 * Description: 
+	 * this contructor is called as this object is initiated.
+	 * 
+	 * created date: 18-2-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function __construct(){
+		parent::__construct();
+		//check login state of the user requestin this controller.
+		$this->load->helper('is_logged_in');
+		checkLogin($this->session->userdata['user']);
+	}
 	
 	
 	/**
@@ -79,6 +95,42 @@ class Site extends CI_Controller {
 	
 	
 	/**
+	 * Function name : edit
+	 * Description: 
+	 * this function will show the edit page of the selected site.
+	 * 
+	 * created date: 17-2-2014
+	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function edit($site_id)
+	{
+		$this->load->model('site_model');
+		
+		$this->site_model->id = $site_id;
+		
+		$sites = $this->site_model->getSiteById();
+		
+		if(isset($sites[0])){
+			
+			$data['site'] = $sites[0];
+			
+			$this->load->helper('enumeration');
+			//call the general views for page structure	
+			$this->load->view('gen/header');
+			$this->load->view('gen/main_menu');
+			$this->load->view('gen/logo');
+			$this->load->view('gen/main_content');
+			
+			//show log area 
+			$this->load->view('site_edit',$data);
+				
+			
+			$this->load->view('gen/footer');
+		}
+	}
+	
+	/**
 	 * Function name : saveData
 	 * Description: 
 	 * this function will save the addition form info ot the database.
@@ -87,7 +139,7 @@ class Site extends CI_Controller {
 	 * ccreated by: Eng. Ahmad Mulhem Barakat
 	 * contact: molham225@gmail.com
 	 */
-	public function saveData()
+	public function saveData($action,$id)
 	{
 		$this->load->helper('enumeration');
 		
@@ -104,8 +156,17 @@ class Site extends CI_Controller {
 		$this->site_model->functional_class = $this->input->post('functionalClass');
 		$this->site_model->lane_count = $this->input->post('laneCount');
 		
-		//Execute addition function.
-		 $this->site_model->addSite();
+		if($action == "add"){
+		
+			//Execute addition function.
+			 $this->site_model->addSite();
+		 
+		}elseif($action == "edit" && $id > 0){
+			//If the action is edit set the id in the model to the given one.
+			$this->site_model->id = $id;
+			//Edit the specified site.
+			$this->site_model->modifySite();
+		}
 		
 	}
 }

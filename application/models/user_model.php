@@ -90,8 +90,7 @@ class User_model extends CI_Model{
 							phone_number,
 							mobile_number,
 							type,
-							hire_date,
-							end_date
+							hire_date
 						) 
 						VALUES (
 							'{$this->first_name}',
@@ -103,8 +102,7 @@ class User_model extends CI_Model{
 							'{$this->phone_number}',
 							'{$this->mobile_number}',
 							'{$this->type}',
-							'{$this->hire_date}',
-							'{$this->end_date}'
+							CURDATE()
 						);
 					";
 		$this->db->query($query);
@@ -148,8 +146,13 @@ class User_model extends CI_Model{
 					first_name = '{$this->first_name}',
 					middle_name = '{$this->middle_name}',
 					last_name = '{$this->last_name}',
-					username = '{$this->username}',
-					password = '{$this->password}',
+					username = '{$this->username}',";
+		//If the password isn't set right 			
+		if(isset($this->password) && $this->password !== ""){
+			$query .=	"
+					password = '{$this->password}',";
+			}
+		$query .= "
 					address = '{$this->address}',
 					phone_number = '{$this->phone_number}',
 					mobile_number = '{$this->mobile_number}',
@@ -157,6 +160,7 @@ class User_model extends CI_Model{
 					hire_date = '{$this->hire_date}',
 					end_date = '{$this->end_date}'
 	 			  WHERE id = {$this->id}";
+	 			  echo $query;
 		$this->db->query($query);
 		return true;
 	 }

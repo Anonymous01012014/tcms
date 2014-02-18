@@ -264,6 +264,11 @@ body
  * Changes added by Molham
  **/
 
+/* Error validation div */
+div#error{
+	width: 100%;
+	color: red;
+}
 
 /* Table of addition form inputs */
 
@@ -283,10 +288,10 @@ table#addFormTable tr td{
 }
 
 table#addFormTable tr td input,table#addFormTable tr td select, table#addFormTable tr td textarea{
-	width: 200px; 
+	width: 300px; 
 }
 table#addFormTable tr td label{
-	width: 100px;
+	width: 120px;
 	margin-left: 30px;
 }
 

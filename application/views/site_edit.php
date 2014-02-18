@@ -1,7 +1,7 @@
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Add Site</h1>
 	<hr />
-	<form method="post" action="<?php echo base_url();?>site/saveData" >
+	<form method="post" action="<?php echo base_url();?>site/saveData/edit/<?php echo $site['id']; ?>" >
 		<table id="addFormTable">
 			<tr>
 				
@@ -11,7 +11,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="name" id="name" required/>
+					<input type="text" name="name" id="name" required value="<?php echo $site['name']; ?>"/>
 				</td>
 				
 				<!-- FIPS -->
@@ -26,7 +26,7 @@
 								$FIPS_name = FIPS_text($i);
 								if(isset($FIPS_name)){
 						?>
-						<option value="<?php echo $i; ?>"><?php echo $FIPS_name; ?></option>
+						<option value="<?php echo $i; ?>" <?php if($site['FIPS'] == $i) echo "selected"; ?> ><?php echo $FIPS_name; ?></option>
 						<?php
 								}
 							}
@@ -42,7 +42,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="longitude" id="longitude" />
+					<input type="text" name="longitude" id="longitude" value="<?php echo $site['longitude']; ?>"/>
 				</td>
 				
 				
@@ -51,7 +51,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input type="text" name="latitude" id="latitude" />
+					<input type="text" name="latitude" id="latitude" value="<?php echo $site['latitude']; ?>"/>
 				</td>
 			</tr>
 			
@@ -61,7 +61,7 @@
 					<label for="startDate">Start Date:</label>
 				</td>
 				<td>
-					<input type="text" name="startDate" id="startDate" />
+					<input type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
 				</td>
 				
 				<!-- count of lanes -->
@@ -70,7 +70,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="laneCount" id="laneCount" />
+					<input type="text" name="laneCount" id="laneCount" value="<?php echo $site['lane_count']; ?>"/>
 				</td>
 				
 			</tr>
@@ -83,13 +83,13 @@
 				</td>
 				
 				<td>
-					<select type="text" name="functionalClass" id="FunctionalClass" >
+					<select type="text" name="functionalClass" id="functionalClass" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$functional_class_name = functional_class_text($i);
 								if(isset($functional_class_name)){
 						?>
-						<option value="<?php echo $i; ?>"><?php echo $functional_class_name; ?></option>
+						<option value="<?php echo $i; ?>" <?php if($site['functional_class'] == $i) echo "selected"; ?> ><?php echo $functional_class_name; ?></option>
 						<?php
 								}
 							}
@@ -108,7 +108,7 @@
 					<label for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea name="address" id="address"></textarea>
+					<textarea name="address" id="address"><?php echo $site['address']; ?></textarea>
 				</td>
 			</tr>
 			
