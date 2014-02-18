@@ -5,11 +5,11 @@ class File_header{
 	 * Description: 
 	 * This file is represents the file header of a TSDP file.
 	 * 
+	 * Flag: -2
 	 * created date: 18-2-2014
 	 * created by: Eng. Ahmad Mulhem Barkat
 	 * contact: molham225@gmail.com
 	 */
-	 
 	 
 	/** File Header class variables **/
 	//Site ID (30 - Alpha-Numeric)
