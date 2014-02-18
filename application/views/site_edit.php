@@ -11,7 +11,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="name" id="name" required value="<?php echo $site['name']; ?>"/>
+					<input class="form-control" type="text" name="name" id="name" required value="<?php echo $site['name']; ?>"/>
 				</td>
 				
 				<!-- FIPS -->
@@ -20,7 +20,7 @@
 				</td>
 				
 				<td>
-					<select type="text" name="FIPS" id="FIPS" >
+					<select class="form-control" type="text" name="FIPS" id="FIPS" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$FIPS_name = FIPS_text($i);
@@ -42,7 +42,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="longitude" id="longitude" value="<?php echo $site['longitude']; ?>"/>
+					<input class="form-control" type="text" name="longitude" id="longitude" value="<?php echo $site['longitude']; ?>"/>
 				</td>
 				
 				
@@ -51,7 +51,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input type="text" name="latitude" id="latitude" value="<?php echo $site['latitude']; ?>"/>
+					<input class="form-control" type="text" name="latitude" id="latitude" value="<?php echo $site['latitude']; ?>"/>
 				</td>
 			</tr>
 			
@@ -61,7 +61,7 @@
 					<label for="startDate">Start Date:</label>
 				</td>
 				<td>
-					<input type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
+					<input class="form-control" type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
 				</td>
 				
 				<!-- count of lanes -->
@@ -70,7 +70,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="laneCount" id="laneCount" value="<?php echo $site['lane_count']; ?>"/>
+					<input class="form-control" type="text" name="laneCount" id="laneCount" value="<?php echo $site['lane_count']; ?>"/>
 				</td>
 				
 			</tr>
@@ -83,7 +83,7 @@
 				</td>
 				
 				<td>
-					<select type="text" name="functionalClass" id="functionalClass" >
+					<select class="form-control" type="text" name="functionalClass" id="functionalClass" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$functional_class_name = functional_class_text($i);
@@ -108,7 +108,7 @@
 					<label for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea name="address" id="address"><?php echo $site['address']; ?></textarea>
+					<textarea class="form-control" name="address" id="address"><?php echo $site['address']; ?></textarea>
 				</td>
 			</tr>
 			

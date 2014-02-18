@@ -11,7 +11,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="name" id="name" required/>
+					<input class="form-control" type="text" name="name" id="name" required/>
 				</td>
 				
 				<!-- FIPS -->
@@ -20,7 +20,7 @@
 				</td>
 				
 				<td>
-					<select type="text" name="FIPS" id="FIPS" >
+					<select class="form-control" type="text" name="FIPS" id="FIPS" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$FIPS_name = FIPS_text($i);
@@ -42,7 +42,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="longitude" id="longitude" required/>
+					<input class="form-control" type="text" name="longitude" id="longitude" required/>
 				</td>
 				
 				
@@ -51,7 +51,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input type="text" name="latitude" id="latitude" required/>
+					<input class="form-control" type="text" name="latitude" id="latitude" required/>
 				</td>
 			</tr>
 			
@@ -61,7 +61,7 @@
 					<label for="startDate">Start Date:</label>
 				</td>
 				<td>
-					<input type="text" name="startDate" id="startDate" />
+					<input class="form-control" type="text" name="startDate" id="startDate" />
 				</td>
 				
 				<!-- count of lanes -->
@@ -70,7 +70,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="laneCount" id="laneCount" required/>
+					<input class="form-control" type="text" name="laneCount" id="laneCount" required/>
 				</td>
 				
 			</tr>
@@ -83,7 +83,7 @@
 				</td>
 				
 				<td>
-					<select type="text" name="functionalClass" id="FunctionalClass" >
+					<select class="form-control" type="text" name="functionalClass" id="FunctionalClass" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$functional_class_name = functional_class_text($i);
@@ -108,7 +108,7 @@
 					<label for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea name="address" id="address"></textarea>
+					<textarea class="form-control" name="address" id="address"></textarea>
 				</td>
 			</tr>
 			

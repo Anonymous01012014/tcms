@@ -16,7 +16,7 @@
 					<label for="username" >Username:</label>
 				</td>
 				<td>
-					<input type="text" name="username" id="username" value="<?php echo $user['username'];?>"/>
+					<input class="form-control" type="text" name="username" id="username" value="<?php echo $user['username'];?>"/>
 				</td>				
 			</tr>
 			
@@ -25,7 +25,7 @@
 					<label for="password">Password:</label>
 				</td>
 				<td>
-					<input type="password" name="password" id="password"/>
+					<input class="form-control" type="password" name="password" id="password"/>
 				</td>
 			</tr>
 				
@@ -34,7 +34,7 @@
 					<label for="re_password">Retype Password:</label>
 				</td>
 				<td>
-					<input type="password" name="re_password" id="re_password"/>
+					<input class="form-control" type="password" name="re_password" id="re_password"/>
 				</td>
 			</tr>
 			<tr>
@@ -43,7 +43,7 @@
 					<label for="type">Role</label>
 				</td>
 				<td>
-					<select type="text" name="type" id="type">
+					<select class="form-control" type="text" name="type" id="type">
 						<option value="0">Admin</option>
 						<option value="1">Collector</option>
 					</select>
@@ -62,12 +62,16 @@
 					<label for="first_name">Full Name:</label>
 				</td>
 								
-				<td colspan="3">
-					<input type="text" name="first_name" id="first_name" placeholder="first name" value="<?php echo $user['first_name'];?>"/>
+				<td >
+					<input class="form-control" type="text" name="first_name" id="first_name" placeholder="first name" value="<?php echo $user['first_name'];?>"/>
+				</td>
 								
-					<input type="text" name="middle_name" id="middle_name" placeholder="middle name" value="<?php echo $user['middle_name'];?>"/>
-				
-					<input type="text" name="last_name" id="last_name" placeholder="last name"  value="<?php echo $user['last_name'];?>"/>
+				<td >		
+					<input class="form-control" type="text" name="middle_name" id="middle_name" placeholder="middle name" value="<?php echo $user['middle_name'];?>"/>
+				</td>
+								
+				<td >
+					<input class="form-control" type="text" name="last_name" id="last_name" placeholder="last name"  value="<?php echo $user['last_name'];?>"/>
 				</td>
 			</tr>	
 			
@@ -77,14 +81,14 @@
 					<label for="phone_number">Phone:</label>
 				</td>
 				<td>
-					<input type="text" name="phone_number" id="phone_number" value="<?php echo $user['phone_number'];?>"/>
+					<input class="form-control" type="text" name="phone_number" id="phone_number" value="<?php echo $user['phone_number'];?>"/>
 				</td>
 				<td>
 					<label for="mobile_number">Mobile:</label>
 				</td>
 				
 				<td align="right">				
-					<input type="text" name="mobile_number" id="mobile_number" value="<?php echo $user['mobile_number'];?>"/>
+					<input class="form-control" type="text" name="mobile_number" id="mobile_number" value="<?php echo $user['mobile_number'];?>"/>
 				</td>
 			</tr>	
 			
@@ -93,7 +97,7 @@
 					<label style="vertical-align: middle; padding-bottom: 30px;" for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea  name="address" id="address"><?php echo $user['address'];?></textarea>
+					<textarea class="form-control"  name="address" id="address"><?php echo $user['address'];?></textarea>
 				</td>
 			</tr>
 			

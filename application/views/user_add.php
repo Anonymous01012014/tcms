@@ -16,7 +16,7 @@
 					<label for="username">Username:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="username" id="username"/>
+					<input class="form-control" type="text" name="username" id="username" placeholder="username..."/>
 				</td>				
 			</tr>
 			
@@ -25,16 +25,16 @@
 					<label for="password">Password:</label>
 				</td>
 				<td>
-					<input type="password" class="form-control" name="password" id="password"/>
+					<input type="password" class="form-control" name="password" id="password" placeholder="password..."/>
 				</td>
 			</tr>
 				
 			<tr>
 				<td>
-					<label for="re_password">Retype Password:</label>
+					<label for="re_password">Repeat Password:</label>
 				</td>
 				<td>
-					<input type="password" class="form-control" name="re_password" id="re_password"/>
+					<input type="password" class="form-control" name="re_password" id="re_password" placeholder="repeat password..."/>
 				</td>
 			</tr>
 			<tr>
@@ -63,13 +63,13 @@
 				</td>
 								
 				<td>
-					<input type="text" class="form-control col-xs-1" name="first_name" id="first_name" placeholder="first name"/>
+					<input type="text" class="form-control col-xs-1" name="first_name" id="first_name" placeholder="first name..."/>
 				</td>
 				<td>				
-					<input type="text" class="form-control col-xs-1" name="middle_name" id="middle_name" placeholder="middle name"/>
+					<input type="text" class="form-control col-xs-1" name="middle_name" id="middle_name" placeholder="middle name..."/>
 				</td>
 				<td>
-					<input type="text" class="form-control col-xs-1" name="last_name" id="last_name" placeholder="last name"/>
+					<input type="text" class="form-control col-xs-1" name="last_name" id="last_name" placeholder="last name..."/>
 				</td>
 			</tr>	
 			
@@ -79,14 +79,14 @@
 					<label for="phone_number">Phone:</label>
 				</td>
 				<td>
-					<input type="text" class="form-control" name="phone_number" id="phone_number"/>
+					<input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="phone number..."/>
 				</td>
 				<td>
 					<label for="mobile_number">Mobile:</label>
 				</td>
 				
 				<td align="right">				
-					<input type="text" class="form-control" name="mobile_number" id="mobile_number"/>
+					<input type="text" class="form-control" name="mobile_number" id="mobile_number" placeholder="mobile number..."/>
 				</td>
 			</tr>	
 			
@@ -95,7 +95,7 @@
 					<label style="vertical-align: middle; padding-bottom: 30px;" for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea class="form-control"  name="address" id="address"></textarea>
+					<textarea class="form-control"  name="address" id="address" placeholder="address..."></textarea>
 				</td>
 			</tr>
 			

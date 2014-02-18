@@ -6,7 +6,7 @@
 			<tr>
 				<td>
 					<label for="site">Site:</label>
-					<select name="site" id="site" >
+					<select class="form-control" name="site" id="site" >
 						<?php
 							for($i=0;$i < count($sites);$i++){
 								$site_name = $sites[$i]['name'];
