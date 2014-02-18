@@ -1,7 +1,0 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class TSDP_file extends CI_Model{
-	public function __construct(){
-		parent::__construct();
-		$this->load->library("/TSDP_file/file_header");
-	}
-}
