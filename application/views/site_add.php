@@ -42,7 +42,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="longitude" id="longitude" />
+					<input type="text" name="longitude" id="longitude" required/>
 				</td>
 				
 				
@@ -51,7 +51,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input type="text" name="latitude" id="latitude" />
+					<input type="text" name="latitude" id="latitude" required/>
 				</td>
 			</tr>
 			
@@ -70,7 +70,7 @@
 				</td>
 				
 				<td>
-					<input type="text" name="laneCount" id="laneCount" />
+					<input type="text" name="laneCount" id="laneCount" required/>
 				</td>
 				
 			</tr>

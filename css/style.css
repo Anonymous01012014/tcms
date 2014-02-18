@@ -37,18 +37,22 @@ body
         background-position:top center;  
         background-size:100% 100%;
         overflow-x: hidden;    
+        padding-top:50px;
 }
 
 
 #main-menu
 {
 	height:50px;
-	width:100%;
-	margin: 0 auto;  
+	margin:0 auto;
+	width:100%;	
 	background-color:#555555;
-	opacity:0.8;
-	filter:alpha(opacity=80); /* For IE8 and earlier */
+	
 	color:white;	
+	position: fixed;
+	top:0px;
+	z-index: 100;
+	
 }
 
 
@@ -91,7 +95,7 @@ body
 
 #main-content
 {
-	height:70%;
+	
 	
 }
 
@@ -233,16 +237,15 @@ body
 {
 	
 	margin-top:25px;
-	height:550px;
-	background-color: white;
+	margin-bottom:50px;
+	background-color: white;	
+	padding:10px;
+	padding-bottom:20px;
 	opacity:0.9;
 	filter:alpha(opacity=90); /* For IE8 and earlier */
-	padding:10px;
-	overflow: auto;
-	
-	-moz-box-shadow:    -2px 2px 3px 3px #ccc;
-    -webkit-box-shadow: -2px 2px 3px 3px #ccc;
-    box-shadow:         -2px 2px 3px 3px #ccc;
+	-moz-box-shadow:    -1px 1px 1px 1px #ccc;
+         -webkit-box-shadow: -1px 1px 1px 1px #ccc;
+        box-shadow:         -1px 1px 1px 1px #ccc;
 }
 
 #container h1.title
@@ -272,33 +275,21 @@ div#error{
 
 /* Table of addition form inputs */
 
-table#addFormTable{
-	width: 100%;
+table tr td
+{
+	padding:10px;
+	vertical-align: top;
 }
 
-
-table#addFormTable tr{
-	width: 100%;
-	height: 40px;
-	
+input[type=text] , select
+{	
+	padding:2px;
 }
 
-table#addFormTable tr td{
-	vertical-align: middle;
-}
-
-table#addFormTable tr td input,table#addFormTable tr td select, table#addFormTable tr td textarea{
-	width: 300px; 
-}
-table#addFormTable tr td label{
-	width: 120px;
-	margin-left: 30px;
-}
-
-button#btn_add,button#btn_cancel{
-	float: left;
-	margin-top: 30px;
-	margin-left: 30px;
+textarea
+{
+	width:100%;
+	height:100px;
 }
 
 /* Login form styles */
