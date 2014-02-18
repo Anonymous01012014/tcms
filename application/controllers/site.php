@@ -38,15 +38,15 @@ class Site extends CI_Controller {
 	
 	
 	/**
-	 * Function name : showDashboard
+	 * Function name : manage
 	 * Description: 
-	 * this function will call dashboard views 
+	 * this function will call managment views 
 	 * 
-	 * created date: 14-2-2014
+	 * created date: 18-2-2014
 	 * ccreated by: Eng. Mohanad Shab Kaleia
 	 * contact: ms.kaleia@gmail.com 
 	 */
-	public function showDashboard()
+	public function manage()
 	{
 			
 		//call the general views for page structure	
@@ -54,12 +54,8 @@ class Site extends CI_Controller {
 		$this->load->view('gen/main_menu');
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
-		
-		//show log area 
-		$this->load->view('gen/latest_activities');
-		
-		//show buttons
-		$this->load->view('gen/managment_board');
+	
+		$this->load->view('site_manage');
 		
 		$this->load->view('gen/footer');
 		
@@ -168,6 +164,54 @@ class Site extends CI_Controller {
 			$this->site_model->modifySite();
 		}
 		
+	}
+	
+	
+	
+	/**
+	 * function name : ajaxGetSites
+	 * 
+	 * Description : 
+	 * get sites information from database
+	 * 
+	 * Created date ; 18-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Shab Kaleia
+	 * contact : ms.kaleia@gmail.com
+	 */
+	public function ajaxGetSites()
+	{										
+		//load user model to get data from it
+		$this->load->model('site_model');
+		
+		//load grid library
+		$this->load->library('grid');				
+		
+		//grid option
+		$this->grid->option['title'] = "Sites";   //  grid title
+		$this->grid->option['id'] = "id";         // database table id
+		$this->grid->option['sortable'] = FALSE;  // is sortable
+		$this->grid->option['page_size'] = 5;    //records per page
+		$this->grid->option['row_number'] = true; //show the row number		
+		$this->grid->option['add_button'] = true; //show add button
+		$this->grid->option['add_url'] = base_url()."user/addUser"; //add url
+		$this->grid->option['add_title'] = "Add new"; //add title
+			
+		$this->grid->columns = array('id' , 'name' , 'FIPS' , 'latitude' , 'longitude' , 'lane_count' , 'start_date');
+		
+		//get the data	
+		$this->grid->data = $this->site_model->getAllSites();
+		
+		//grid controls
+		$this->grid->control = array(
+									  array("title" => "Edit" , "icon"=>"icon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"") , 
+									  array("title" => "Delete" , "icon"=>"icon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure?")
+									);												
+						
+		//render our grid :)
+		echo $this->grid->gridRender();
+												
 	}
 }
 

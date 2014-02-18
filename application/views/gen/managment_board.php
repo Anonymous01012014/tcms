@@ -1,6 +1,6 @@
 <div id="manage-buttons" class="col-md-6 row">
 	<!-- manage site button -->
-	<a href="simple.html">
+	<a href="<?php echo base_url();?>site">
 		<div class="flat-button blue col-md-2">				
 				<p>Manage Sites</p>
 				<img src="images/icon/site.png"/>				
