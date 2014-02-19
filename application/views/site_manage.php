@@ -11,8 +11,7 @@
 		
 		<div class="grid">
 			<table id="site" action="<?php echo base_url();?>site/ajaxGetSites" dir="ltr">				
-				<tr>																
-					<th col="id" type="text">ID</th>
+				<tr>
 					<th col="name" type="text">Site name</th>
 					<th col="FIPS"  type="text">FIPS</th>		
 					<th col="latitude" type="number">latitude</th>

@@ -89,6 +89,26 @@ class Site extends CI_Controller {
 		
 	}
 	
+	/**
+	 * Function name : end
+	 * Description: 
+	 * this function will set the end date of the given 
+	 * site to current date.
+	 * 
+	 * created date: 19-2-2014
+	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function end($site_id)
+	{
+		$this->load->model('site_model');
+		if($site_id > 0){
+			$this->site_model->id = $site_id;
+			$this->site_model->endSite();
+		}
+		redirect(base_url().'site');
+	}
+	
 	
 	/**
 	 * Function name : edit
@@ -163,7 +183,7 @@ class Site extends CI_Controller {
 			//Edit the specified site.
 			$this->site_model->modifySite();
 		}
-		
+		redirect(base_url()."site");		
 	}
 	
 	
@@ -195,18 +215,18 @@ class Site extends CI_Controller {
 		$this->grid->option['page_size'] = 5;    //records per page
 		$this->grid->option['row_number'] = true; //show the row number		
 		$this->grid->option['add_button'] = true; //show add button
-		$this->grid->option['add_url'] = base_url()."user/addUser"; //add url
+		$this->grid->option['add_url'] = base_url()."site/add"; //add url
 		$this->grid->option['add_title'] = "Add new"; //add title
 			
-		$this->grid->columns = array('id' , 'name' , 'FIPS' , 'latitude' , 'longitude' , 'lane_count' , 'start_date');
+		$this->grid->columns = array('name' , 'FIPS' , 'latitude' , 'longitude' , 'lane_count' , 'start_date');
 		
 		//get the data	
 		$this->grid->data = $this->site_model->getAllSites();
 		
 		//grid controls
 		$this->grid->control = array(
-									  array("title" => "Edit" , "icon"=>"glyphicon glyphicon-pencil" , "url"=>base_url()."user/editUser" , "message_type"=>null , "message"=>"") , 
-									  array("title" => "Delete" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."user/deleteUser" , "message_type"=>"confirm" , "message"=>"Are you sure?")
+									  array("title" => "Edit" , "icon"=>"glyphicon glyphicon-pencil" , "url"=>base_url()."site/edit" , "message_type"=>null , "message"=>"") , 
+									  array("title" => "End" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."site/end" , "message_type"=>"confirm" , "message"=>"Are you sure?")
 									);												
 						
 		//render our grid :)
@@ -215,5 +235,5 @@ class Site extends CI_Controller {
 	}
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file site.php */
+/* Location: ./application/controllers/site.php */

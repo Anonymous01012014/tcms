@@ -205,6 +205,42 @@ class User_model extends CI_Model{
 		return $query->result_array();
 	 }
 	 
+	 
+	 /**
+	 * function name : getAllUsersForGridView
+	 * 
+	 * Description : 
+	 * Returns the data of all of the users in the database and modify them for view.
+	 * 
+	 * Created date : 19-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getAllUsersForGridView(){
+		$query = "SELECT * 
+				  FROM user
+				  WHERE end_date = '00000000'";
+				  
+		$query = $this->db->query($query);
+		
+		$result =$query->result_array();
+		for($i=0;$i < count($result);$i++){
+			$result[$i]['full_name'] = $result[$i]['first_name'] . ' '.$result[$i]['middle_name']. ' ' .$result[$i]['last_name'];
+			switch($result[$i]['type']){
+				case 0:
+					$result[$i]['type'] = "Admin";
+					break;
+				case 1:
+					$result[$i]['type'] = "Collector";
+					break;
+			}
+		};
+		return $result;
+	 }
+	 
+	 
 	 /**
 	 * function name : checkUser
 	 * 
@@ -258,5 +294,26 @@ class User_model extends CI_Model{
 		$users = $query->result_array();
 		if(count($users) == 1)
 		return $users[0];
+	 }
+	 
+	 /**
+	 * function name : endUser
+	 * 
+	 * Description : 
+	 * sets the end date to current for the user of the given id.
+	 * 
+	 * Created date : 11-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function endUser(){
+		$query = "UPDATE user
+				  SET end_date = CURDATE()
+				  WHERE id = {$this->id}";
+				  
+		$query = $this->db->query($query);
+		return true;
 	 }
 }

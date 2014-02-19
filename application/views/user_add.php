@@ -7,7 +7,7 @@
 				
 			
 			<tr>
-				<td>
+				<td colspan="2">
 					<h3 class="title" >Login Information</h3>
 				</td>
 			</tr>
@@ -100,7 +100,7 @@
 			</tr>
 			
 			<tr>
-				<td>
+				<td colspan="2">
 					<button type="submit" class="btn btn-info" id="btn_add">
 						<span class="glyphicon glyphicon-ok"></span> Add
 					</button>

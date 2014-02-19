@@ -1,5 +1,5 @@
 <div id="container" class="col-md-8 col-md-offset-2">
-	<h1 class="title">Add Site</h1>
+	<h1 class="title">Modify Site Data</h1>
 	<hr />
 	<form method="post" action="<?php echo base_url();?>site/saveData/edit/<?php echo $site['id']; ?>" >
 		<table id="addFormTable">
@@ -115,7 +115,7 @@
 			<tr>
 				<td colspan="2">
 					<button type="submit" class="btn btn-info" id="btn_add">
-						<span class="glyphicon glyphicon-ok">Add</span> 
+						<span class="glyphicon glyphicon-ok">Save</span> 
 					</button>
 					
 					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard');">
@@ -130,4 +130,8 @@
 	
 
 </div>
-		
+<script type="text/javascript">
+	$('input#startDate').datepicker({
+		format: "yyyy-mm-dd"
+	});
+</script>

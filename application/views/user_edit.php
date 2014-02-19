@@ -1,5 +1,5 @@
 <div id="container" class="col-md-8 col-md-offset-2">
-	<h1 class="title">Add User</h1>
+	<h1 class="title">Modify User Data</h1>
 	<hr />
 	<div id="error" ></div>
 	<form method="post" action="<?php echo base_url();?>user/saveData/edit/<?php echo $user['id'];?>" >

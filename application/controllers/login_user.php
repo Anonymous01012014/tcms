@@ -30,7 +30,7 @@ class Login_user extends CI_Controller {
 	{
 		$this->load->model("TSDP_file");
 		//if the user is logged in redirect him to dashboard
-		if(!isset($_SESSION['user'])){
+		if(!isset($this->session->userdata['user'])){
 			$data['is_post_back'] = $this->is_post_back;
 			$this->load->view('gen/header');
 			$this->load->view('gen/main_menu');

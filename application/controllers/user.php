@@ -15,12 +15,8 @@ class User extends CI_Controller {
 	 
 	 
 	public function index()
-	{	
-		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
-		$this->load->view('gen/logo');
+	{			
 		$this->manage();
-		$this->load->view('gen/footer');
 	}	
 	
 	/**
@@ -34,7 +30,17 @@ class User extends CI_Controller {
 	 */
 	public function manage()
 	{
-		
+		//call the general views for page structure	
+			$this->load->view('gen/header');
+			$this->load->view('gen/main_menu');
+			$this->load->view('gen/logo');
+			$this->load->view('gen/main_content');
+			
+			//show manage user view
+			$this->load->view('user_manage');
+				
+			
+			$this->load->view('gen/footer');
 	}
 	
 	/**
@@ -77,6 +83,27 @@ class User extends CI_Controller {
 		
 		$this->load->view('gen/footer');
 		
+	}
+	
+	
+	/**
+	 * Function name : end
+	 * Description: 
+	 * this function will call end user function of the user model. 
+	 * 
+	 * created date: 19-2-2014
+	 * created by: Eng. Ahmad Mulhem Barkat
+	 * contact: molham225@gmail.com
+	 */
+	public function end($user_id)
+	{
+		
+		$this->load->model('user_model');
+		if($user_id > 0){
+			$this->user_model->id = $user_id;
+			$this->user_model->endUser();
+		}
+		redirect(base_url()."user");		
 	}
 	
 	
@@ -164,6 +191,52 @@ class User extends CI_Controller {
 				//Execute addition function.
 				$this->user_model->modifyUser();
 			}
+		redirect(base_url()."user");
+	}
+	
+	
+	/**
+	 * Function name : ajaxGetUsers
+	 * Description: 
+	 * get users' information from database
+	 * 
+	 * created date: 19-2-2014
+	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function ajaxGetUsers()
+	{										
+		//load user model to get data from it
+		$this->load->model('user_model');
+		
+		//load grid library
+		$this->load->library('grid');				
+		
+		//grid option
+		$this->grid->option['title'] = "Users";   //  grid title
+		$this->grid->option['id'] = "id";         // database table id
+		$this->grid->option['sortable'] = FALSE;  // is sortable
+		$this->grid->option['page_size'] = 5;    //records per page
+		$this->grid->option['row_number'] = true; //show the row number		
+		$this->grid->option['add_button'] = true; //show add button
+		$this->grid->option['add_url'] = base_url()."user/add"; //add url
+		$this->grid->option['add_title'] = "Add new"; //add title
+			
+		$this->grid->columns = array('full_name' , 'type' , 'mobile_number' , 'phone_number' , 'hire_date');
+		
+		//get the data
+		
+		$this->grid->data = $this->user_model->getAllUsersForGridView();
+		
+		//grid controls
+		$this->grid->control = array(
+									  array("title" => "Edit" , "icon"=>"glyphicon glyphicon-pencil" , "url"=>base_url()."user/edit" , "message_type"=>null , "message"=>"") , 
+									  array("title" => "End" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."user/end" , "message_type"=>"confirm" , "message"=>"Are you sure?")
+									);												
+						
+		//render our grid :)
+		echo $this->grid->gridRender();
+												
 	}
 }
 

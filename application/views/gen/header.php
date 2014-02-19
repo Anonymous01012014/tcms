@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/bootstrap.css">
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo base_url();?>css/grid.css" /> 
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/reset.css">	
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/datepicker3.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css">
 	
 	
@@ -18,6 +19,7 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>js/grid.js"></script>
+	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
 	
 </head>
 

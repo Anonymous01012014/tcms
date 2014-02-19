@@ -8,7 +8,7 @@
 	</a>
 	
 	<!-- manage cases button-->
-	<a href="simple.html">
+	<a href="<?php echo base_url();?>cases">
 		<div class="flat-button red col-md-2">
 			<p>Manage Cases</p>
 			<img src="images/icon/case.png"/>
@@ -19,7 +19,7 @@
 	<div class="clearfix"></div>
 	
 	<!-- data analysis button -->
-	<a href="simple.html">
+	<a href="<?php echo base_url();?>data_analysis">
 		<div class="flat-button orange col-md-2"<>
 			<p>Data Analysis</p>
 			<img src="images/icon/analysis.png"/>
@@ -27,7 +27,7 @@
 	</a>
 	
 	<!-- manage users -->
-	<a href="simple.html">
+	<a href="<?php echo base_url();?>user">
 		<div class="flat-button green col-md-2 clearfix">
 			<p>Manage Users</p>
 			<img src="images/icon/users.png"/>

@@ -169,6 +169,7 @@ class Site_model extends CI_Model{
 		return $query->result_array();
 	 }
 	
+	
 	/**
 	 * function name : getAllSites
 	 * 
@@ -259,7 +260,7 @@ class Site_model extends CI_Model{
 	 */
 	 public function endSite(){
 		$query = "UPDATE site
-				  SET end_date = '{$this->end_date}'
+				  SET end_date = CURDATE()
 				  WHERE id = {$this->id}";
 				  
 		$query = $this->db->query($query);

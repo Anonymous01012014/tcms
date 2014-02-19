@@ -2,7 +2,7 @@
 	<h1 class="title">Add Site</h1>
 	<hr />
 	<form method="post" action="<?php echo base_url();?>site/saveData" >
-		<table id="addFormTable">
+		<table id="addFormTable" >
 			<tr>
 				
 				<!-- site name -->
@@ -130,4 +130,8 @@
 	
 
 </div>
-		
+<script type="text/javascript">
+	$('input#startDate').datepicker({
+		format: "yyyy-mm-dd"
+	});
+</script>
