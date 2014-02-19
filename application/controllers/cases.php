@@ -16,11 +16,9 @@ class Cases extends CI_Controller {
 	 
 	public function index()
 	{	
-		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
-		$this->load->view('gen/logo');
+		
 		$this->manage();
-		$this->load->view('gen/footer');
+		
 	}	
 	
 	/**
@@ -34,7 +32,12 @@ class Cases extends CI_Controller {
 	 */
 	public function manage()
 	{
-		
+		$this->load->view('gen/header');
+		$this->load->view('gen/main_menu');
+		$this->load->view('gen/logo');
+		//show manage user view
+		$this->load->view('case_manage');
+		$this->load->view('gen/footer');
 	}
 	
 	
@@ -112,5 +115,5 @@ class Cases extends CI_Controller {
 	}
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file cases.php */
+/* Location: ./application/controllers/cases.php */

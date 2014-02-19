@@ -368,7 +368,7 @@
 			return "Interstate Rural";
 			break;
 			case Interstate_Urban:
-			return "Interstate_Urban";
+			return "Interstate Urban";
 			break;
 			case Principal_Arterial_Other_Freeways_Rural:
 			return "Principal Arterial Other Freeways Rural";
