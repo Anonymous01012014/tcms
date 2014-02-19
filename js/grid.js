@@ -757,7 +757,7 @@ function gridAddSortDir(grid_id , column_name , dir)
 				$(this).find("span").remove();
 				
 				//add new dir icon
-				$(this).append("  <span><i class='glyphicon-chevron-up'></i></span>");						
+				$(this).append("  <span><i class='glyphicon glyphicon-chevron-up'></i></span>");						
 			}						
 			else if(dir=="desc")
 			{														
@@ -765,7 +765,7 @@ function gridAddSortDir(grid_id , column_name , dir)
 				$(this).find("span").remove();
 				
 				//add new dir icon
-				$(this).append("  <span><i class='glyphicon-chevron-down'></i></span>");
+				$(this).append("  <span><i class='glyphicon glyphicon-chevron-down'></i></span>");
 			}						
 			else
 			{							

@@ -14,8 +14,6 @@
 				<tr>
 					<th col="name" type="text">Site name</th>
 					<th col="FIPS"  type="text">FIPS</th>		
-					<th col="latitude" type="number">latitude</th>
-					<th col="longitude" type="number">longitude</th>
 					<th col="lane_count" type="number">Lane count</th>
 					<th col="start_date" type="date">Start date</th>					
 				</tr>										

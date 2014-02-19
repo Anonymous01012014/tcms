@@ -221,10 +221,11 @@ class Site extends CI_Controller {
 		$this->grid->columns = array('name' , 'FIPS' , 'latitude' , 'longitude' , 'lane_count' , 'start_date');
 		
 		//get the data	
-		$this->grid->data = $this->site_model->getAllSites();
+		$this->grid->data = $this->site_model->getAllActiveSites();
 		
 		//grid controls
 		$this->grid->control = array(
+									  array("title" => "Show" , "icon"=>"glyphicon glyphicon-pushpin" , "url"=>base_url()."site/showOnMap" , "message_type"=>null , "message"=>"") ,
 									  array("title" => "Edit" , "icon"=>"glyphicon glyphicon-pencil" , "url"=>base_url()."site/edit" , "message_type"=>null , "message"=>"") , 
 									  array("title" => "End" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."site/end" , "message_type"=>"confirm" , "message"=>"Are you sure?")
 									);												
@@ -233,6 +234,33 @@ class Site extends CI_Controller {
 		echo $this->grid->gridRender();
 												
 	}
+
+
+
+	/**
+	 * Function name : showOnMap
+	 * Description: 
+	 * this function will show site information on map.
+	 * 
+	 * created date: 19-2-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com
+	 */
+	public function showOnMap($id)
+	{
+		$this->load->helper('enumeration');
+		
+		// instanciating the model file
+		$this->load->model('site_model');
+		$this->site_model->id = $id;
+		
+		//get site information by id
+		$site = $this->site_model->getSiteById();
+		
+		
+				
+	}
+	
 }
 
 /* End of file site.php */
