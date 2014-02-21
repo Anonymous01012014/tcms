@@ -155,7 +155,7 @@ class Site extends CI_Controller {
 	 * ccreated by: Eng. Ahmad Mulhem Barakat
 	 * contact: molham225@gmail.com
 	 */
-	public function saveData($action,$id)
+	public function saveData($action,$id = 0)
 	{
 		$this->load->helper('enumeration');
 		
@@ -183,7 +183,7 @@ class Site extends CI_Controller {
 			//Edit the specified site.
 			$this->site_model->modifySite();
 		}
-		redirect(base_url()."site");		
+		//redirect(base_url()."site");		
 	}
 	
 	

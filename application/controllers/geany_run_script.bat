@@ -1,4 +1,4 @@
-php "case_model.php"
+php "cases.php"
 
 pause
 del "%0"
