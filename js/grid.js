@@ -341,37 +341,46 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 	for(control_counter=0;control_counter<numberOfControls;control_counter++)
 	{
 		var database_id = option['id']; //database table primary key				
-		
+			
 		var append_text="";
 		
 		append_text += "<td class='middle'>";
 		append_text += "<a";
 		append_text += " title='"+control[control_counter]['title']+"'";
 		append_text += " class='btn btn-default btn-xs'";
-		
 		message = control[control_counter]['message'];
-		url = control[control_counter]['url'];				
-		/* dialog box not completed yet :(
-		if(control[control_counter]['message_type'] == "confirm")
-		{		
-			//append_text += " onclick='alert(\" Hello \");'";																	
-			append_text += " onclick='"+ gridConfirm(message , url)  +"'";			
-			//alert(append_text);
-		}
-		if(control[control_counter]['message_type'] == "prompt")
-		{
-			append_text += " onclick='alert(\" Are you sure man?\")'";
-		}
-		*/		
-		append_text += " href='"+control[control_counter]['url']+"/"+data[row_id][database_id]+"'";
+		url = control[control_counter]['url'];
+		
+		if(control[control_counter]['message_type'] === "input"){//if message type is input then this link will show an input dialog
+			append_text += " href='javascript:showInputDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+control[control_counter]['message']+"\")'";
+		}else{
+			
+							
+			/* dialog box not completed yet :(
+			if(control[control_counter]['message_type'] == "confirm")
+			{		
+				//append_text += " onclick='alert(\" Hello \");'";																	
+				append_text += " onclick='"+ gridConfirm(message , url)  +"'";			
+				//alert(append_text);
+			}
+			if(control[control_counter]['message_type'] == "prompt")
+			{
+				append_text += " onclick='alert(\" Are you sure man?\")'";
+			}
+			*/		
+			append_text += " href='"+control[control_counter]['url']+"/"+data[row_id][database_id]+"'";
+									
+		}	
 		//append_text += " onclick='alert(\" Hello \");'";
 		append_text += " >";					
 		append_text += " <i";
 		append_text += " class='"+control[control_counter]['icon']+"'";
 		append_text += " ></i></a></td>";
 							
-		$('#'+grid_id).find("tr:last").append(append_text);							
-	}		
+		$('#'+grid_id).find("tr:last").append(append_text);	
+		
+	}
+		
 }
 
 
@@ -962,4 +971,44 @@ function gridSearch(key_event , grid_id)
 			//get data with the option
 			gridRenderWithOption(grid_id , option);		
 		}
+		
 } 
+
+/**
+ * function name: addDialod
+ * 
+ * Description: 
+ * this function will show a dialog with a textarea to enter the reason for the action.
+ * 
+ * Parameters:
+ * 
+ * Created date : 21-2-2014
+ * Modification date : ---
+ * Modfication reason : ---
+ * Author : Ahmad Mulhem Barakat
+ * contact : molham225@gmail.com
+*/
+function showInputDialog(url,title){
+			append_text = " <div class='modal fade' id='input_dialog'>"
+						+	"<div class='modal-dialog'>"
+						+	"<div class='modal-content'>"
+						+	"<div class='modal-header'>"
+						+	"<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>"
+						+	"<h4 class='modal-title'>"+title+"</h4>"
+						+	"</div>"
+						+	"<div class='modal-body'>"
+						+	"<textarea class='form-control' id='dialog_message'></textarea>"
+						+	"</div>"
+						+	"<div class='modal-footer'>"
+						+	"<button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>"
+						+	"<button type='button' class='btn btn-primary' id='save' >Save</button>"
+						+	"</div>"
+						+	"</div><!-- /.modal-content -->"
+						+	"</div><!-- /.modal-dialog -->"
+						+	"</div><!-- /.modal -->";			
+			$('body').append(append_text);
+			$('#input_dialog').appendTo('body').modal();
+			$('.modal-footer button#save').click(function(){
+				window.location.href = url+'/'+$('.modal-body textarea#dialog_message').val();
+			});
+	}		

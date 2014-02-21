@@ -363,6 +363,104 @@ class Case_model extends CI_Model{
 		return $query->result_array();
 	 }
 	 
+	 
+	 /**
+	 * function name : getOpenCasesForView
+	 * 
+	 * Description : 
+	 * Gets all of the open cases from  the database 
+	 * and render them for grid view.
+	 * 
+	 * Created date : 21-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getOpenCasesForView(){
+		$query = "SELECT * 
+				  FROM `case`
+				  WHERE status = '".OPENED."'";
+		//load site and user models.
+		$this->load->model('site_model');
+		$this->load->model('user_model');
+		
+		$query = $this->db->query($query);
+		$cases = $query->result_array();
+		//formatting the returned data for each case.
+		for($i=0;$i<count($cases);$i++){
+			//get the name of the site for the grid view
+			$this->site_model->id = $cases[$i]['site_id'];
+			$sites = $this->site_model->getSiteById();
+			if(isset($sites[0])){
+				$cases[$i]['site'] = $sites[0]['name'];
+			}
+			//get the name of the admin for the grid view
+			$this->user_model->id = $cases[$i]['admin_id'];
+			$users = $this->user_model->getUserById();
+			if(isset($users[0])){
+				$cases[$i]['admin'] = $users[0]['first_name'].' '.$users[0]['middle_name'].' '.$users[0]['last_name'];
+			}
+			//put open date & time in the right format for the grdi view
+			$cases[$i]['open_date_time'] = $cases[$i]['open_date'].' '.$cases[$i]['open_time'];
+		}
+		return $cases;
+	 }
+	 
+	 
+	 /**
+	 * function name : getClosedCasesForView
+	 * 
+	 * Description : 
+	 * Gets all of the closed cases from  the database 
+	 * and render them for grid view.
+	 * 
+	 * Created date : 21-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getClosedCasesForView(){
+		$query = "SELECT * 
+				  FROM `case`
+				  WHERE status = '".CLOSED_MANUALLY."'";
+		//load site and user models.
+		$this->load->model('site_model');
+		$this->load->model('user_model');
+		
+		$query = $this->db->query($query);
+		$cases = $query->result_array();
+		//formatting the returned data for each case.
+		for($i=0;$i<count($cases);$i++){
+			//get the name of the site for the grid view
+			$this->site_model->id = $cases[$i]['site_id'];
+			$sites = $this->site_model->getSiteById();
+			if(isset($sites[0])){
+				$cases[$i]['site'] = $sites[0]['name'];
+			}
+			//get the name of the admin for the grid view
+			$this->user_model->id = $cases[$i]['admin_id'];
+			$users = $this->user_model->getUserById();
+			if(isset($users[0])){
+				$cases[$i]['admin'] = $users[0]['first_name'].' '.$users[0]['middle_name'].' '.$users[0]['last_name'];
+			}
+			//get the name of the collector for the grid view
+			$this->user_model->id = $cases[$i]['collector_id'];
+			$users = $this->user_model->getUserById();
+			if(isset($users[0])){
+				$cases[$i]['collector'] = $users[0]['first_name'].' '.$users[0]['middle_name'].' '.$users[0]['last_name'];
+			}
+			//put open/close date & time in the right format for the grdi view
+			$cases[$i]['open_date_time'] = $cases[$i]['open_date'].' '.$cases[$i]['open_time'];
+			$cases[$i]['close_date_time'] = $cases[$i]['close_date'].' '.$cases[$i]['close_time'];
+			//get the count of cars for this case
+			$cases[$i]['count'] = 0;
+		}
+		return $cases;
+	 }
+	 
+	 
 	 /**
 	 * function name : getNormallyClosedCases
 	 * 

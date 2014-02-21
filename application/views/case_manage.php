@@ -1,6 +1,7 @@
 <script>	
 	$(document).ready(function() {		
-	    gridRender('case');
+	    gridRender('openCase');
+	    gridRender('closedCase');
 	}); 
 </script>
 
@@ -8,20 +9,35 @@
 	<h1 class="title">Manage Cases</h1>
 	<hr />
 	
-		
-		<div class="grid">
-			<table id="user" action="<?php echo base_url();?>user/ajaxGetUsers" dir="ltr">				
+		<h3>Open Cases</h3>
+		<br/>
+		<div class="grid" >
+			<table id="openCase" action="<?php echo base_url();?>cases/ajaxGetCases/open" dir="ltr">				
 				<tr>
-					<th col="full_name" type="text">Full Name</th>
-					<th col="type"  type="text">Position</th>		
-					<th col="phone_number" type="text">Phone</th>
-					<th col="mobile_number" type="text">Mobile</th>
-					<th col="hire_date" type="date">Hire Date</th>					
+					<th col="site" type="text">Site</th>
+					<th col="open_date_time"  type="text">Open Date/Time</th>		
+					<th col="admin" type="text">Admin</th>				
+				</tr>										
+			</table>
+			<br />	
+		</div>
+		
+		<h3>Closed Cases</h3>
+		<br />
+		<div class="grid">
+			<table id="closedCase" action="<?php echo base_url();?>cases/ajaxGetCases/closed" dir="ltr">				
+				<tr>
+					<th col="site" type="text">Site</th>
+					<th col="open_date_time"  type="text">Open Date/Time</th>		
+					<th col="close_date_time" type="text">Close Date/Time</th>
+					<th col="admin" type="text">Admin</th>
+					<th col="collector" type="date">Collector</th>	
+					<th col="count" type="date">Count</th>					
 				</tr>										
 			</table>	
 		</div>
-
-	
+		
+		
 
 </div>
 		
