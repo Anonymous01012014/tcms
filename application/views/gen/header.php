@@ -21,6 +21,12 @@
 	<script src="<?php echo base_url();?>js/grid.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>
 	
+	<script src="<?php echo base_url();?>js/jquery.sheepItPlugin-1.1.1.min.js"></script> 
+	<!-- this is a library to add multi input on fly
+		you can find it  from 
+		http://www.mdelrosso.com/sheepit/index.php?lng=en_GB&sec=home
+	-->
+	
 </head>
 
 

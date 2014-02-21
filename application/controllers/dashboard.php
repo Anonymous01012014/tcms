@@ -47,10 +47,12 @@ class Dashboard extends CI_Controller {
 	 */
 	public function showDashboard()
 	{
-			
+		$active_menu = "dashboard";
+		$data["active_menu"] = $active_menu;
+		 	
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu' , $data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		

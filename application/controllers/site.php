@@ -49,6 +49,8 @@ class Site extends CI_Controller {
 	public function manage()
 	{
 			
+			
+			
 		//call the general views for page structure	
 		$this->load->view('gen/header');
 		$this->load->view('gen/main_menu');
@@ -74,10 +76,14 @@ class Site extends CI_Controller {
 	 */
 	public function add()
 	{
+		//set the active menu in the main menu
+		$active_menu = "add_site";
+		$data["active_menu"] = $active_menu;	
+			
 		$this->load->helper('enumeration');
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu' , $data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		
@@ -201,7 +207,9 @@ class Site extends CI_Controller {
 	 * contact : ms.kaleia@gmail.com
 	 */
 	public function ajaxGetSites()
-	{										
+	{
+		$this->load->helper('enumeration');
+												
 		//load user model to get data from it
 		$this->load->model('site_model');
 		
@@ -220,9 +228,16 @@ class Site extends CI_Controller {
 			
 		$this->grid->columns = array('name' , 'FIPS' , 'latitude' , 'longitude' , 'lane_count' , 'start_date');
 		
-		//get the data	
-		$this->grid->data = $this->site_model->getAllActiveSites();
+		//get the data			
+		$sites_info = $this->site_model->getAllActiveSites();
+		//converting enumeration
+		for( $i = 0 ; $i <count($sites_info) ;  $i++)
+		{
+			$sites_info[$i]["FIPS"] = FIPS_text($sites_info[$i]["FIPS"]);
+			$sites_info[$i]["functional_class"] = functional_class_text($sites_info[$i]["functional_class"]);
+		}
 		
+		$this->grid->data = $sites_info;
 		//grid controls
 		$this->grid->control = array(
 									  array("title" => "Show" , "icon"=>"glyphicon glyphicon-pushpin" , "url"=>base_url()."site/showOnMap" , "message_type"=>null , "message"=>"") ,
@@ -248,8 +263,9 @@ class Site extends CI_Controller {
 	 */
 	public function showOnMap($id)
 	{
+		//load enumeration
 		$this->load->helper('enumeration');
-		
+						
 		// instanciating the model file
 		$this->load->model('site_model');
 		$this->site_model->id = $id;
@@ -257,8 +273,19 @@ class Site extends CI_Controller {
 		//get site information by id
 		$site = $this->site_model->getSiteById();
 		
+		$site[0]["FIPS"] = FIPS_text($site[0]["FIPS"]);
+		$site[0]["functional_class"] = functional_class_text($site[0]["functional_class"]);
+		$data["site"] = $site;	
 		
-				
+		
+		//call the general views for page structure	
+		$this->load->view('gen/header');
+		$this->load->view('gen/main_menu');
+		$this->load->view('gen/logo');
+		$this->load->view('gen/main_content');	
+		$this->load->view("site_on_map" , $data);
+		$this->load->view('gen/footer');
+					
 	}
 	
 }

@@ -1,3 +1,24 @@
+<!-- set the fields that will be multiplied :) -->
+<script type="text/javascript">
+
+$(document).ready(function() {
+     
+    var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 10,
+        minFormsCount: 0,
+        iniFormsCount: 2
+    });
+ 
+});
+
+</script>
+
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Add Site</h1>
 	<hr />
@@ -108,9 +129,48 @@
 					<label for="address">Address:</label>
 				</td>
 				<td colspan="3">
-					<textarea class="form-control" name="address" id="address"></textarea>
+					<textarea class="form-control" name="address" id="address"></textarea>				
 				</td>
 			</tr>
+			
+			
+			<!-- lane information -->
+			<tr>
+				<td>
+					<h2>Lane Information:</h2>
+				</td>
+				<td>
+					<!-- sheepIt Form -->
+					<div id="sheepItForm">
+					 
+					  <!-- Form template-->
+					  <div id="sheepItForm_template" class="form-inline">
+					    <label for="sheepItForm_#index#_phone">Lane <span id="sheepItForm_label"></span></label>
+					    <input id="sheepItForm_#index#_phone" class="form-control" name="person[phones][#index#][phone]" type="text" size="15" maxlength="10" />
+					    
+					    
+					    <a id="sheepItForm_remove_current">
+					    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
+					    </a>
+					  </div>
+					  <!-- /Form template-->
+					   
+					  <!-- No forms template -->
+					  <div id="sheepItForm_noforms_template">No Lanes!!</div>
+					  <!-- /No forms template-->
+					   
+					  <!-- Controls -->
+					  <div id="sheepItForm_controls">
+					    <div id="sheepItForm_add"><a><button type="button" class="btn btn-default glyphicon glyphicon-plus"></button></a></div>					    					    
+					  </div>
+					  <!-- /Controls -->
+					   
+					</div>
+					<!-- /sheepIt Form -->
+
+				</td>
+			</tr>
+			
 			
 			<tr>
 				<td colspan="2">
@@ -123,6 +183,11 @@
 					</button>			
 				</td>
 			</tr>
+			
+			
+			
+			
+			
 		</table>
 		
 		
