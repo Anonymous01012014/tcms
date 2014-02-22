@@ -49,11 +49,10 @@ class Site extends CI_Controller {
 	public function manage()
 	{
 			
-			
-			
+		$data['user_data'] = $this->session->userdata['user'];;
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 	
@@ -81,9 +80,10 @@ class Site extends CI_Controller {
 		$data["active_menu"] = $active_menu;	
 			
 		$this->load->helper('enumeration');
+		$data['user_data'] = $this->session->userdata['user'];;
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu' , $data);
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		
@@ -138,9 +138,10 @@ class Site extends CI_Controller {
 			$data['site'] = $sites[0];
 			
 			$this->load->helper('enumeration');
+			$data['user_data'] = $this->session->userdata['user'];;
 			//call the general views for page structure	
 			$this->load->view('gen/header');
-			$this->load->view('gen/main_menu');
+			$this->load->view('gen/main_menu',$data);
 			$this->load->view('gen/logo');
 			$this->load->view('gen/main_content');
 			
@@ -301,9 +302,10 @@ class Site extends CI_Controller {
 		$data["site"] = $site;	
 		
 		
+		$data['user_data'] = $this->session->userdata['user'];;
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');	
 		$this->load->view("site_on_map" , $data);

@@ -50,9 +50,11 @@ class Dashboard extends CI_Controller {
 		$active_menu = "dashboard";
 		$data["active_menu"] = $active_menu;
 		 	
+		$data['user_data'] = $this->session->userdata['user'];
+		
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu' , $data);
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		

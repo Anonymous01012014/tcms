@@ -30,9 +30,10 @@ class User extends CI_Controller {
 	 */
 	public function manage()
 	{
-		//call the general views for page structure	
+			$data['user_data'] = $this->session->userdata['user'];;
+			//call the general views for page structure	
 			$this->load->view('gen/header');
-			$this->load->view('gen/main_menu');
+			$this->load->view('gen/main_menu',$data);
 			$this->load->view('gen/logo');
 			$this->load->view('gen/main_content');
 			
@@ -71,9 +72,10 @@ class User extends CI_Controller {
 	public function add()
 	{
 		
+		$data['user_data'] = $this->session->userdata['user'];;
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		
@@ -130,9 +132,10 @@ class User extends CI_Controller {
 		if(isset($user)){
 			$data['user'] = $user;
 			
+			$data['user_data'] = $this->session->userdata['user'];;
 			//call the general views for page structure	
 			$this->load->view('gen/header');
-			$this->load->view('gen/main_menu');
+			$this->load->view('gen/main_menu',$data);
 			$this->load->view('gen/logo');
 			$this->load->view('gen/main_content');
 			

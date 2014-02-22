@@ -109,6 +109,25 @@ class Login_user extends CI_Controller {
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * Function name: signout
+	 * 
+	 * Description: 
+	 * This function will destroy user's session and redirects 
+	 * him/her to the login page.
+	 * 
+	 * created date: 22-2-2014
+	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com 
+	 */
+	 
+	public function signout()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url()."login_user");
+	}
 }
 
 /* End of file login.php */

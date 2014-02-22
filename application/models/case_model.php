@@ -189,10 +189,10 @@ class Case_model extends CI_Model{
 	 public function closeNormally(){
 		$query = "UPDATE `case`
 				  SET
-					close_date = '{$this->close_date}',
-					close_time = '{$this->close_time}',
+					close_date = CURDATE(),
+					close_time = CURTIME(),
 					status = '".CLOSED_NORMALLY."',
-					collector_id = '{$this->collector_id}',					
+					collector_id = '{$this->collector_id}'				
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
 		return true;
@@ -218,12 +218,12 @@ class Case_model extends CI_Model{
 	 public function closeManually(){
 		$query = "UPDATE `case`
 				  SET
-					close_date = '{$this->close_date}',
-					close_time = '{$this->close_time}',
+					close_date = CURDATE(),
+					close_time = CURTIME(),
 					status = '".CLOSED_MANUALLY."',
 					manual_closing_reason = '{$this->manual_closing_reason}',
-					collector_id = '{$this->collector_id}',					
-	 			  WHERE id = {$this->id}";
+					collector_id = '{$this->collector_id}' 				
+	 			  WHERE id = '{$this->id}' ";
 		$this->db->query($query);
 		return true;
 	 }
@@ -246,9 +246,9 @@ class Case_model extends CI_Model{
 	 public function acceptCase(){
 		$query = "UPDATE `case`
 				  SET
-					accept_reject_date = '{$this->accept_reject_date}',
-					accept_reject_time = '{$this->accept_reject_time}',
-					status = '".ACCEPTED_CLOSED."',					
+					accept_reject_date = CURDATE(),
+					accept_reject_time = CURTIME(),
+					status = '".ACCEPTED_CLOSED."'				
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
 		return true;
@@ -272,10 +272,10 @@ class Case_model extends CI_Model{
 	 public function rejectCase(){
 		$query = "UPDATE `case`
 				  SET
-					accept_reject_date = '{$this->accept_reject_date}',
-					accept_reject_time = '{$this->accept_reject_time}',
+					accept_reject_date = CURDATE(),
+					accept_reject_time = CURTIME(),
 					rejecting_reason = '{$this->rejecting_reason}',
-					status = '".REJECTED_CLOSED."',					
+					status = '".REJECTED_CLOSED."'				
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
 		return true;
@@ -424,7 +424,7 @@ class Case_model extends CI_Model{
 	 public function getClosedCasesForView(){
 		$query = "SELECT * 
 				  FROM `case`
-				  WHERE status = '".CLOSED_MANUALLY."'";
+				  WHERE status = '".CLOSED_NORMALLY."'";
 		//load site and user models.
 		$this->load->model('site_model');
 		$this->load->model('user_model');

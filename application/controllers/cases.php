@@ -2,6 +2,8 @@
 
 class Cases extends CI_Controller {
 
+	
+	
 	/**
 	 * Filename: cases.php
 	 * Description: 
@@ -32,8 +34,11 @@ class Cases extends CI_Controller {
 	 */
 	public function manage()
 	{
+		//insert user data in the views
+		$data['user_data'] = $this->session->userdata['user'];;
+		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		//show manage user view
 		$this->load->view('case_manage');
@@ -55,7 +60,11 @@ class Cases extends CI_Controller {
 		//check login state of the user requestin this controller.
 		$this->load->helper('is_logged_in');
 		checkLogin($this->session->userdata['user']);
+		
+		//these helper classes are for file upload function. 
+		$this->load->helper(array('form', 'url'));
 	}
+	
 	
 	/**
 	 * Function name : add
@@ -74,9 +83,12 @@ class Cases extends CI_Controller {
 		$sites = $this->site_model->getAllActiveSites();
 		$data['sites']= $sites;
 		
+		
+		//insert user data in the views
+		$data['user_data'] = $this->session->userdata['user'];;
 		//call the general views for page structure	
 		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu');
+		$this->load->view('gen/main_menu',$data);
 		$this->load->view('gen/logo');
 		$this->load->view('gen/main_content');
 		
@@ -159,7 +171,7 @@ class Cases extends CI_Controller {
 			//grid controls
 			$this->grid->control = array(
 										  array("title" => "Upload Binary" , "icon"=>"glyphicon glyphicon-upload" ,"url"=>base_url()."cases/closeNormally" , "message_type"=>null , "message"=>""),
-										  array("title" => "Cancel" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."cases/closeManually" , "message_type"=>"input" , "message"=>"Are you sure?")
+										  array("title" => "Cancel" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."cases/closeManually" , "message_type"=>"input" , "message"=>"Please enter the reason for cancelling this case..")
 										  
 										);												
 		}else if($type === "closed"){
@@ -190,6 +202,178 @@ class Cases extends CI_Controller {
 		//render our grid :)
 		echo $this->grid->gridRender();
 												
+	}
+	
+	
+	/**
+	 * Function name : closeManually
+	 * Description: 
+	 * this function will manually close the case specified by the id 
+	 * and set the manual closing reason to the given one.
+	 * 
+	 * created date: 15-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function closeManually($id,$reason)
+	{		
+		// instanciating the case model class
+		$this->load->model('case_model');
+		
+		//insert post values into the model
+		$this->case_model->id = $id;
+		$this->case_model->manual_closing_reason = $reason;	
+		$this->case_model->collector_id = $this->session->userdata['user']['id'];	
+		
+		//Execute manual close function.
+		$this->case_model->closeManually();
+		 
+		redirect(base_url().'cases');
+		
+	}
+	
+	
+	/**
+	 * Function name : reject
+	 * Description: 
+	 * this function will reject the case specified by the id 
+	 * and set the rejecting reason to the given one.
+	 * 
+	 * created date: 15-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function reject($id,$reason)
+	{		
+		// instanciating the case model class
+		$this->load->model('case_model');
+		
+		//insert post values into the model
+		$this->case_model->id = $id;
+		$this->case_model->rejecting_reason= $reason;	
+		
+		//Execute reject function.
+		$this->case_model->rejectCase();
+		 
+		redirect(base_url().'cases');
+		
+	}
+	
+	
+	/**
+	 * Function name : accept
+	 * Description: 
+	 * this function will set the case specified by the id
+	 * to accepted closed.
+	 * 
+	 * created date: 15-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function accept($id)
+	{		
+		// instanciating the case model class
+		$this->load->model('case_model');
+		
+		//insert post values into the model
+		$this->case_model->id = $id;	
+		
+		//Execute accept function.
+		$this->case_model->acceptCase();
+		 
+		redirect(base_url().'cases');
+		
+	}
+	
+	/**
+	 * Function name : closeNormally
+	 * Description: 
+	 * this function will call a page to upload the binary file of the specified case.
+	 * 
+	 * created date: 15-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function closeNormally($id)
+	{		
+		$data['case_id'] = $id;
+		//insert user data in the views
+		$data['user_data'] = $this->session->userdata['user'];
+		//call the general views for page structure	
+		$this->load->view('gen/header');
+		$this->load->view('gen/main_menu',$data);
+		$this->load->view('gen/logo');
+		$this->load->view('gen/main_content');
+		
+		//show close case view
+		$this->load->view('case_close',$data);
+			
+		
+		$this->load->view('gen/footer');
+		
+	}
+	
+	/**
+	 * Function name : closeNormally
+	 * Description: 
+	 * this function will call a page to upload the binary file of the specified case.
+	 * 
+	 * created date: 15-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	function saveBinaryFile($case_id)
+	{
+		$config['upload_path'] = './files/Binary_files/';
+		$config['allowed_types'] = '*';
+		$config['max_size']    = '80000';
+
+		$this->load->library('upload', $config);
+		if ( ! $this->upload->do_upload('binary_file'))
+		{
+			$error = array('error' => $this->upload->display_errors());
+			echo print_r($error);
+			//$this->load->view('upload_form', $error);
+		}
+		else
+		{
+			$this->load->model('binary_file_model');
+			$this->load->model('case_model');
+			
+			//get binary file data
+			$file_data =  $this->upload->data();
+			
+			
+			//split the name and extension of the file
+			$file_name = explode('.',$file_data['file_name']);
+			
+			
+			//setting the file name to uploaded-file-name_case-id
+			$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
+			//setting the binary file location.
+			$this->binary_file_model->location = 'files/Binary_files/';	
+			//setting the case id for this binary file.	
+			$this->binary_file_model->case_id = $case_id;		
+			//setting the counter id for this binary file
+			//This step shouldn't be here	
+			$this->binary_file_model->counter_id = 1;		
+			
+			//execute the add file function.
+			$this->binary_file_model->addBinaryFile();
+			
+			//set the id of the case to be closed to the given id.
+			$this->case_model->id = $case_id;
+			// set the collector id to the current user id.
+			$this->case_model->collector_id = $this->session->userdata['user']['id'];
+			
+			//execute the close normally function
+			$this->case_model->closeNormally();
+			rename('files/binary_files/'.$file_data['file_name'],'files/binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+			
+			//extract count infofrom the binary and add it to database
+			
+			redirect(base_url().'cases');
+		}
 	}
 }
 

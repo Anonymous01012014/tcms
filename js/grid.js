@@ -1,6 +1,11 @@
 // grid.js
 //required jquery.js
 
+//This variable is a flag gives true if an input dialog was added to the page.
+var input_dialog = false;
+//This variable is a flag gives true if a confirm dialog was added to the page.
+var confirm_dialog = false;
+
 
 /**
  * function name : gridRender
@@ -350,9 +355,12 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 		append_text += " class='btn btn-default btn-xs'";
 		message = control[control_counter]['message'];
 		url = control[control_counter]['url'];
-		
-		if(control[control_counter]['message_type'] === "input"){//if message type is input then this link will show an input dialog
+		//if message type is input then this link will show an input dialog
+		if(control[control_counter]['message_type'] === "input"){
 			append_text += " href='javascript:showInputDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+control[control_counter]['message']+"\")'";
+		//if message type is confirm then this link will show a confirm dialog
+		}else if(control[control_counter]['message_type'] === "confirm"){
+			append_text += " href='javascript:showConfirmDialog(\""+url+"/"+data[row_id][database_id]+"\",\""+control[control_counter]['message']+"\")'";
 		}else{
 			
 							
@@ -975,7 +983,7 @@ function gridSearch(key_event , grid_id)
 } 
 
 /**
- * function name: addDialod
+ * function name: showInputDialog
  * 
  * Description: 
  * this function will show a dialog with a textarea to enter the reason for the action.
@@ -989,14 +997,17 @@ function gridSearch(key_event , grid_id)
  * contact : molham225@gmail.com
 */
 function showInputDialog(url,title){
+	//if there wasn't an input dialog already add one.
+	if(!input_dialog){
 			append_text = " <div class='modal fade' id='input_dialog'>"
 						+	"<div class='modal-dialog'>"
 						+	"<div class='modal-content'>"
 						+	"<div class='modal-header'>"
 						+	"<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>"
-						+	"<h4 class='modal-title'>"+title+"</h4>"
+						+	"<h4 class='modal-title'>Input Dialog</h4>"
 						+	"</div>"
 						+	"<div class='modal-body'>"
+						+	"<p id='title'>"+title+"</p><br />"
 						+	"<textarea class='form-control' id='dialog_message'></textarea>"
 						+	"</div>"
 						+	"<div class='modal-footer'>"
@@ -1007,8 +1018,62 @@ function showInputDialog(url,title){
 						+	"</div><!-- /.modal-dialog -->"
 						+	"</div><!-- /.modal -->";			
 			$('body').append(append_text);
-			$('#input_dialog').appendTo('body').modal();
-			$('.modal-footer button#save').click(function(){
-				window.location.href = url+'/'+$('.modal-body textarea#dialog_message').val();
-			});
+			input_dialog = true
+		}
+		//change the message title to the one given from the user.
+		$('.modal-body p#title').html(title);
+		//append the dialog to the page body and show it
+		$('#input_dialog:first').appendTo('body').modal();
+		//add the given url with given message to the Save button href
+		$('.modal-footer button#save').click(function(){
+			window.location.href = url+'/'+$('.modal-body textarea#dialog_message').val();
+		});
 	}		
+
+
+/**
+ * function name: showConfirmDialog
+ * 
+ * Description: 
+ * this function will show a dialog with a mesage to confirm or cancel the action done.
+ * 
+ * Parameters:
+ * 
+ * Created date : 22-2-2014
+ * Modification date : ---
+ * Modfication reason : ---
+ * Author : Ahmad Mulhem Barakat
+ * contact : molham225@gmail.com
+*/
+function showConfirmDialog(url,title){
+	//if there wasn't a confirm dialog already add one.
+	if(!confirm_dialog){
+			append_text = " <div class='modal fade' id='confirm_dialog'>"
+						+	"<div class='modal-dialog'>"
+						+	"<div class='modal-content'>"
+						+	"<div class='modal-header'>"
+						+	"<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>x</button>"
+						+	"<h4 class='modal-title'>Confrm Dialog</h4>"
+						+	"</div>"
+						+	"<div class='modal-body'>"
+						+	"<p id='title'>"+title+"</p>"
+						+	"</div>"
+						+	"<div class='modal-footer'>"
+						+	"<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>"
+						+	"<button type='button' class='btn btn-primary' id='save' >Confirm</button>"
+						+	"</div>"
+						+	"</div><!-- /.modal-content -->"
+						+	"</div><!-- /.modal-dialog -->"
+						+	"</div><!-- /.modal -->";			
+			$('body').append(append_text);
+			confirm_dialog = true;
+		}
+		//change the message title to the one given from the user.
+		$('.modal-body p#title').html(title);
+		//append the dialog to the page body and show it
+		$('#input_dialog:first').appendTo('body').modal();
+		//add the given url with given message to the Save button href
+		$('.modal-footer button#save').click(function(){
+			window.location.href = url+'/'+$('.modal-body textarea#dialog_message').val();
+		});
+	}	

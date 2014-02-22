@@ -18,8 +18,8 @@
 	
 
 	<ul class="col-md-3">
-		<li>Hello, <a href="#" class="active">Hazem</a></li>	
-		<li><a href="#" class="">Sign out</a></li>					
+		<li>Hello, <a href="#" class="active"><?php echo $user_data['first_name'];?></a></li>	
+		<li><a href="login_user/signout" class="">Sign out</a></li>					
 	</ul>
 	
 </div>	
