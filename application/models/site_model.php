@@ -96,8 +96,19 @@ class Site_model extends CI_Model{
 							'{$this->lane_count}'
 						);
 					";
+		
 		$this->db->query($query);
-		return true;
+		
+		
+		//return the latest added site
+		$query = "select max(id) as site_id from site;";
+									
+		$query = $this->db->query($query);
+		
+		return $query->result_array();
+		
+		
+		
 	 }
 	 
 	 /**
