@@ -168,6 +168,7 @@ class Site extends CI_Controller {
 		
 		// instanciating the model file
 		$this->load->model('site_model');
+		$this->load->model('lane_model');
 		
 		//insert post values into the model
 		$this->site_model->name = $this->input->post('name');
@@ -177,12 +178,32 @@ class Site extends CI_Controller {
 		$this->site_model->start_date = $this->input->post('startDate');
 		$this->site_model->address = $this->input->post('address');
 		$this->site_model->functional_class = $this->input->post('functionalClass');
-		$this->site_model->lane_count = $this->input->post('laneCount');
+		
+		//lane count
+		$lane_direction = $this->input->post('lane');
+		$this->site_model->lane_count = count($lane_direction);
+		
+		
+		
+		
+		
+		
 		
 		if($action == "add"){
 		
 			//Execute addition function.
-			 $this->site_model->addSite();
+			$site_id =  $this->site_model->addSite();
+			
+			
+			
+			//adding lanes max number of lane is 16		
+			for($i= 0 ; $i < count($lane_direction) ; $i++)
+			{																						
+				$this->lane_model->lane_direction = $lane_direction[$i];						
+				$this->lane_model->lane_number = $i;
+				$this->lane_model->site_id = $site_id[0]["site_id"];
+				$this->lane_model->addLane();				
+			}
 		 
 		}elseif($action == "edit" && $id > 0){
 			//If the action is edit set the id in the model to the given one.
@@ -190,7 +211,9 @@ class Site extends CI_Controller {
 			//Edit the specified site.
 			$this->site_model->modifySite();
 		}
-		//redirect(base_url()."site");		
+		
+		
+		redirect(base_url()."site");		
 	}
 	
 	

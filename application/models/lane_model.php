@@ -26,13 +26,7 @@ class Lane_model extends CI_Model{
 	var $lane_direction = "";
 	
 	//The last name of the user
-	var $lane_spacing = "";
-	
-	//The lane spacing in cm.
-	var $username = "";
-	
-	//The login password of the user encrypted with MD5 hash.
-	var $password = "";
+	var $lane_spacing = "";	
 	
 	//The start date of this lane.
 	var $start_date = "";
@@ -73,7 +67,7 @@ class Lane_model extends CI_Model{
 	 * Author : Ahmad Mulhem Barakat
 	 * contact : molham225@gmail.com
 	 */
-	 public function addUser(){
+	 public function addLane(){
 		$query = "INSERT INTO lane(
 							lane_number,
 							lane_direction,

@@ -10,8 +10,8 @@ $(document).ready(function() {
         allowRemoveAll: true,
         allowAdd: true,
         allowAddN: true,
-        maxFormsCount: 10,
-        minFormsCount: 0,
+        maxFormsCount: 16,
+        minFormsCount: 1,
         iniFormsCount: 2
     });
  
@@ -76,25 +76,7 @@ $(document).ready(function() {
 				</td>
 			</tr>
 			
-			<tr>
-				<!-- start date -->
-				<td >
-					<label for="startDate">Start Date:</label>
-				</td>
-				<td>
-					<input class="form-control" type="text" name="startDate" id="startDate" />
-				</td>
-				
-				<!-- count of lanes -->
-				<td >
-					<label for="laneCount">Count of Lanes:</label>
-				</td>
-				
-				<td>
-					<input class="form-control" type="text" name="laneCount" id="laneCount" required/>
-				</td>
-				
-			</tr>
+		
 			
 			<tr>
 				
@@ -118,7 +100,13 @@ $(document).ready(function() {
 					</select>
 				</td>
 				
-				
+				<!-- start date -->
+				<td >
+					<label for="startDate">Start Date:</label>
+				</td>
+				<td>
+					<input class="form-control" type="text" name="startDate" id="startDate" />
+				</td>
 				
 			</tr>
 			
@@ -140,14 +128,25 @@ $(document).ready(function() {
 					<h2>Lane Information:</h2>
 				</td>
 				<td>
-					<!-- sheepIt Form -->
+					<!-- lane Form -->
 					<div id="sheepItForm">
 					 
 					  <!-- Form template-->
 					  <div id="sheepItForm_template" class="form-inline">
-					    <label for="sheepItForm_#index#_phone">Lane <span id="sheepItForm_label"></span></label>
-					    <input id="sheepItForm_#index#_phone" class="form-control" name="person[phones][#index#][phone]" type="text" size="15" maxlength="10" />
+					    <label for="sheepItForm_#index#_lane">Lane <span id="sheepItForm_label"></span></label>
 					    
+					    <select id="sheepItForm_#index#_lane" class="form-control" type="text" name="lane[#index#]">
+							<?php
+								for($i=0;$i<=8;$i++){
+									$lane_direction = lane_direction_text($i);
+									if(isset($lane_direction)){
+							?>
+							<option value="<?php echo $i; ?>"><?php echo $lane_direction; ?></option>
+							<?php
+									}
+								}
+							?>
+						</select>
 					    
 					    <a id="sheepItForm_remove_current">
 					    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
