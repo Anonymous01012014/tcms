@@ -329,7 +329,7 @@ class Cases extends CI_Controller {
 		$config['max_size']    = '80000';
 
 		$this->load->library('upload', $config);
-		if ( ! $this->upload->do_upload('binary_file'))
+		if ( ! $this->upload->do_upload('binary_file') )
 		{
 			$error = array('error' => $this->upload->display_errors());
 			echo print_r($error);
@@ -346,32 +346,34 @@ class Cases extends CI_Controller {
 			
 			//split the name and extension of the file
 			$file_name = explode('.',$file_data['file_name']);
+			if($file_name[count($file_name) - 1] == "BIN" || $file_name[count($file_name) - 1] == "bin"){
 			
-			
-			//setting the file name to uploaded-file-name_case-id
-			$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
-			//setting the binary file location.
-			$this->binary_file_model->location = 'files/Binary_files/';	
-			//setting the case id for this binary file.	
-			$this->binary_file_model->case_id = $case_id;		
-			//setting the counter id for this binary file
-			//This step shouldn't be here	
-			$this->binary_file_model->counter_id = 1;		
-			
-			//execute the add file function.
-			$this->binary_file_model->addBinaryFile();
-			
-			//set the id of the case to be closed to the given id.
-			$this->case_model->id = $case_id;
-			// set the collector id to the current user id.
-			$this->case_model->collector_id = $this->session->userdata['user']['id'];
-			
-			//execute the close normally function
-			$this->case_model->closeNormally();
-			rename('files/binary_files/'.$file_data['file_name'],'files/binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
-			
-			//extract count infofrom the binary and add it to database
-			
+				//setting the file name to uploaded-file-name_case-id
+				$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
+				//setting the binary file location.
+				$this->binary_file_model->location = 'files/Binary_files/';	
+				//setting the case id for this binary file.	
+				$this->binary_file_model->case_id = $case_id;		
+				//setting the counter id for this binary file
+				//This step shouldn't be here	
+				//$this->binary_file_model->counter_id = 1;		
+				
+				//execute the add file function.
+				$this->binary_file_model->addBinaryFile();
+				
+				//set the id of the case to be closed to the given id.
+				$this->case_model->id = $case_id;
+				// set the collector id to the current user id.
+				$this->case_model->collector_id = $this->session->userdata['user']['id'];
+				
+				//execute the close normally function
+				$this->case_model->closeNormally();
+				rename('files/binary_files/'.$file_data['file_name'],'files/binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+				
+				/**extract count info from the binary and add it to database**/
+				//execute the TSDP command with a volume 
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
+			}
 			redirect(base_url().'cases');
 		}
 	}

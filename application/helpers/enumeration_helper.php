@@ -661,7 +661,7 @@
 			case "A-A":
 			return Axle_Axle;
 			break;
-			case "U":
+			default:
 			return User_Keypress;
 			break;
 		}
@@ -742,7 +742,7 @@
 			case "PV":
 			return One_Count_per_Vehicle;
 			break;
-			case "Blank":
+			default:
 			return Blank;
 			break;
 		}
@@ -1125,5 +1125,182 @@
 		}
 
 
+	/**
+	 * Storage Mode
+	 **/
+	 
+	/**
+	 * Constants
+	 * 
+	 * Description :
+	 * These constants are the number representation of
+	 * storage mode.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 * 
+	 **/
+	const COUNT = 0;
+	const AXLE_CLASSIFICATION = 1;
+	const SPEED_CLASSIFICATION = 2;
+	const PER_VEHICLE = 3;
+
+	/**
+	 * Function name:
+	 * storage_mode_text
+	 * 
+	 * Description :
+	 * This function returns the text representation of the storage
+	 * determined by the given number.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function storage_mode_text($storage_mode){
+		switch($storage_mode){
+			case COUNT:
+			return "COUNT";
+			break;
+			case AXLE_CLASSIFICATION:
+			return "AxleClassification";
+			break;
+			case SPEED_CLASSIFICATION:
+			return "SpeedClassification";
+			break;
+			case PER_VEHICLE:
+			return "PER VEHICLE";
+			break;
+		}
+	}
+
+	/**
+	 * Function name:
+	 * storage_mode_enum
+	 * 
+	 * Description :
+	 * This function returns the number representation of the storage
+	 * determined by the given text.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function storage_mode_enum($storage_mode){
+		switch($storage_mode){
+			case "COUNT":
+			return COUNT;
+			break;
+			case "AxleClassification":
+			return AXLE_CLASSIFICATION;
+			break;
+			case "SpeedClassification":
+			return SPEED_CLASSIFICATION;
+			break;
+			case "PER VEHICLE":
+			return PER_VEHICLE;
+			break;
+		}
+	}
+
 	
+	
+	/**
+	 * Classification Type
+	 **/
+	 
+	/**
+	 * Constants
+	 * 
+	 * Description :
+	 * These constants are the number representation of
+	 * classification types.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 * 
+	 **/
+	const AXLE = 1;
+	const SPEED = 2;
+	const LENGTH = 3;
+	const GAP = 4;
+	const HEADWAY = 5;
+
+	/**
+	 * Function name:
+	 * classification_type_text
+	 * 
+	 * Description :
+	 * This function returns the text representation of the classification
+	 * type determined by the given number.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function classification_type_text($type){
+		switch($type){
+			case AXLE:
+			return "Axle";
+			break;
+			case SPEED:
+			return "speed";
+			break;
+			case LENGTH:
+			return "length";
+			break;
+			case GAP:
+			return "Gap";
+			break;
+			case HEADWAY:
+			return "Headway";
+			break;
+		}
+	}
+
+	/**
+	 * Function name:
+	 * classification_type_enum
+	 * 
+	 * Description :
+	 * This function returns the number representation of the classification
+	 * type determined by the given text.
+	 * 
+	 * Created date ; 23-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function classification_type_enum($type){
+		switch($type){
+			case "1":
+			return AXLE;
+			break;
+			case "2":
+			return SPEED;
+			break;
+			case "3":
+			return LENGTH;
+			break;
+			case "4":
+			return GAP;
+			break;
+			case "5":
+			return HEADWAY;
+			break;
+		}
+	}
 

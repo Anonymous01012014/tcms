@@ -2,7 +2,7 @@
 	<h1 class="title">Add User</h1>
 	<hr />
 	<div id="error" ></div>
-	<form method="post" action="<?php echo base_url();?>user/saveData" >
+	<form method="post" action="<?php echo base_url();?>user/saveData/add" >
 		<table id="addFormTable">
 				
 			
