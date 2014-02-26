@@ -115,6 +115,44 @@ class Per_vehicle_record_model extends CI_Model{
 		return $query->result_array();
 	 }
 	 
+	 
+	 /**
+	 * function name : addMultiRecords
+	 * 
+	 * Description : 
+	 * add an array of per vehicle records and inserts them in the data base 
+	 * and returns the first and last inserted ids
+	 * 
+	 * parameters:
+	 * per vehicle record array: the array of per vehicle records to be added to database.
+	 * 	
+	 * Created date : 26-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addMultiRecords($per_vehicle_record_array){
+		//array that has first and last added ids
+		$ids = array(0,0);
+		//get the latest added per vehicle record's id to know the id of the first inserted record
+		$query = "select max(id) as per_vehicle_record_id from per_vehicle_record;";
+									
+		$query = $this->db->query($query);
+		$id = $query->result_array();
+		if($id[0]['per_vehicle_record_id'] !== 0)
+		$ids[0] = $id[0]['per_vehicle_record_id'] + 1;
+		
+		$this->db->insert_batch('per_vehicle_record',$per_vehicle_record_array);
+		//get the latest added per vehicle record's id
+		$query = "select max(id) as per_vehicle_record_id from per_vehicle_record;";
+		$query = $this->db->query($query);
+		$id = $query->result_array();
+		$ids[1] = $id[0]['per_vehicle_record_id'];
+		return $ids;
+	 }
+	 
+	 
 	 /**
 	 * function name : deletePerVehicleRecord
 	 * 
