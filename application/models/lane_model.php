@@ -114,7 +114,8 @@ class Lane_model extends CI_Model{
 	 * function name : modifyLane
 	 * 
 	 * Description : 
-	 * modify the data of the lane of the given id.
+	 * modify the data of the lane of the given site_id and lane_number.
+	 * if that lane is exist then just update it, if that lane does not exist then add new one
 	 * 
 	 * Created date : 12-2-2014
 	 * Modification date : ---
@@ -123,18 +124,39 @@ class Lane_model extends CI_Model{
 	 * contact : molham225@gmail.com
 	 */
 	 public function modifyLane(){
-		$query = "UPDATE lane
-				  SET
-					lane_number = '{$this->lane_number}',
-					lane_direction = '{$this->lane_direction}',
-					lane_spacing = '{$this->lane_spacing}',
-					start_date = '{$this->start_date}',
-					end_date = '{$this->end_date}',
-					site_id = '{$this->site_id}',
-					counter_id = '{$this->counter_id}'
-	 			  WHERE id = {$this->id}";
-		$this->db->query($query);
-		return true;
+	 										
+	 									
+	 	$query = "select * from lane 
+	 			  where 
+	 			  site_id = {$this->site_id}
+	 			  and
+	 			  lane_number = '{$this->lane_number}'";
+	    $query = $this->db->query($query);
+		$lane =  $query->result_array();						
+	 							
+	 	if(count($lane) == 0)
+		{
+			//create new one
+			$this->addLane();
+			return TRUE;
+		}					
+		else {
+			$query = "UPDATE lane
+					  SET					
+						lane_direction = '{$this->lane_direction}',
+						lane_spacing = '{$this->lane_spacing}',
+						start_date = '{$this->start_date}',
+						end_date = '{$this->end_date}',					
+						counter_id = '{$this->counter_id}'
+		 			  WHERE 
+		 			  site_id = {$this->site_id}
+		 			  and
+		 			  lane_number = '{$this->lane_number}'
+		 			  
+		 			  ";
+			$this->db->query($query);
+			return true;
+		}	 	
 	 }
 	 
 	 /**

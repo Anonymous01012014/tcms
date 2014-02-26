@@ -274,15 +274,6 @@ div#error{
 }
 
 /* Table of addition form inputs */
-
-table#addFormTable{
-	width: 100%;
-}
-
-table td >input[type=text] , table#addFormTable td > select , table#addFormTable td > input[type=password]{
-	width:100%;
-}
-
 table tr td
 {
 	padding:10px;

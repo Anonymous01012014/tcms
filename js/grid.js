@@ -383,7 +383,7 @@ function gridAddControlRow(grid_id , control , data , option , row_id)
 		append_text += " >";					
 		append_text += " <i";
 		append_text += " class='"+control[control_counter]['icon']+"'";
-		append_text += " ></i></a></td>";
+		append_text += " ></i></a></td>";				
 							
 		$('#'+grid_id).find("tr:last").append(append_text);	
 		
@@ -440,27 +440,32 @@ function gridConfirm(message , url)
  * contact : ms.kaleia@gmail.com
  */
 function gridAddControlBar(grid_id , option , data)
-{		
-		//remove the control bar to change it and insert new one
-		var $grid = $("#grid_bar").remove();
-		
+{				
 		//reach grid table
-		var $grid =  $(".grid");
+		var $grid =  $("#"+grid_id+":parent");
+		
+		//remove the control bar to change it and insert new one
+		var $grid_bar = $grid.next();
+		$grid_bar.remove();
 		
 		//control bar
 		var bar = "";
 		
-		bar+= '<div id="grid_bar"   class="well well-sm">';
+		bar+= '<div id="grid_bar" class="well well-sm">';
 		bar+= '<div class="row">';
+		
+		
+		bar+='<div class="col-md-2">';
 		
 		//if add button is true then show add button with given url
 		if(option['add_button'] == true)
 		{
-			bar+='<div class="col-md-2">';
+			//bar+='<div class="col-md-2">';
 			bar+='<a class="btn btn-info" href="'+option["add_url"]+'"><i class="glyphicon glyphicon-plus-sign glyphicon-white"></i> '+option["add_title"]+'</a>';
-			bar+='</div>';
+			//bar+='</div>';
 		}
 		
+		bar+='</div>';
 		//show row count
 		var current_page = option['current_page'];
 		var page_size = option['page_size'];
@@ -1038,9 +1043,10 @@ function showInputDialog(url,title){
  * this function will show a dialog with a mesage to confirm or cancel the action done.
  * 
  * Parameters:
- * 
+ * 	url: the url to be called after the user confirm a message
+ * 	title: dialog box title 
  * Created date : 22-2-2014
- * Modification date : ---
+ * Modification date : 25-2-2014 by Mohanad Kaleia
  * Modfication reason : ---
  * Author : Ahmad Mulhem Barakat
  * contact : molham225@gmail.com
@@ -1071,9 +1077,10 @@ function showConfirmDialog(url,title){
 		//change the message title to the one given from the user.
 		$('.modal-body p#title').html(title);
 		//append the dialog to the page body and show it
-		$('#input_dialog:first').appendTo('body').modal();
+		$('#confirm_dialog:first').appendTo('body').modal();
 		//add the given url with given message to the Save button href
+		
 		$('.modal-footer button#save').click(function(){
-			window.location.href = url+'/'+$('.modal-body textarea#dialog_message').val();
+			window.location.href = url;
 		});
 	}	
