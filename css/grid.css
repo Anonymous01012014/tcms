@@ -34,7 +34,7 @@
 	min-width: 50px;	 	        
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
-    padding: 5px;
+    padding: 15px;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -47,14 +47,15 @@
     background: -ms-linear-gradient(top, #fff 0%, #e4e4e4 100%);
     background: linear-gradient(top, #fff 0%, #e4e4e4 100%);   
     font-size:smaller;
-    font-family:"ubuntu" , "times new roman" , "arial"         
+    font-family:"ubuntu" , "times new roman" , "arial";
+    font-size:16px;           
 }
 
 .grid td
 {
 	border-right: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
-	padding:5px;
+	padding:15px;
 	font-size:16px;	
 	white-space: normal;  	  	
 }
@@ -76,7 +77,7 @@
 
 .grid tr:hover
 {
-	background-color: #F2FFD1;
+	background-color: #eee;
 }
 
 .grid-search
@@ -127,7 +128,12 @@
 	top:-1px;
 }
 
-.grid-pagination ul li a
+ul.grid-pagination li a 
 {
 	cursor: pointer;
+}
+
+#grid_bar
+{	
+	overflow: hidden;	
 }

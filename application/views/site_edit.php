@@ -1,3 +1,35 @@
+<!-- set the fields that will be multiplied :) -->
+<script type="text/javascript">
+
+$(document).ready(function() {
+     
+    var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 16,
+        minFormsCount: 0,
+        iniFormsCount: 0,      
+        pregeneratedForms: [
+        <?php
+        	for($i = 1 ; $i <= count($lanes) ; $i++) {
+				echo "'pregenerated_form_".$i."'";
+				if($i < count($lanes)) echo ",";
+				else echo "]";				
+			}
+        ?>  
+        //pregeneratedForms: ['pregenerated_form_1' , 'pregenerated_form_2'] // Ids
+        
+        
+    });
+ 
+});
+
+</script>
+
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Modify Site Data</h1>
 	<hr />
@@ -55,25 +87,6 @@
 				</td>
 			</tr>
 			
-			<tr>
-				<!-- start date -->
-				<td >
-					<label for="startDate">Start Date:</label>
-				</td>
-				<td>
-					<input class="form-control" type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
-				</td>
-				
-				<!-- count of lanes -->
-				<td >
-					<label for="laneCount">Count of Lanes:</label>
-				</td>
-				
-				<td>
-					<input class="form-control" type="text" name="laneCount" id="laneCount" value="<?php echo $site['lane_count']; ?>"/>
-				</td>
-				
-			</tr>
 			
 			<tr>
 				
@@ -98,6 +111,15 @@
 				</td>
 				
 				
+				<!-- start date -->
+				<td >
+					<label for="startDate">Start Date:</label>
+				</td>
+				<td>
+					<input class="form-control" type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
+				</td>
+				
+				
 				
 			</tr>
 			
@@ -112,6 +134,90 @@
 				</td>
 			</tr>
 			
+			
+			<!-- lane information -->
+			<tr>
+				<td>
+					<h2>Lane Information:</h2>
+				</td>
+				<td>
+					<!-- lane Form -->
+					<div id="sheepItForm">
+					 
+					  <!-- Form template-->
+					  <div id="sheepItForm_template" class="form-inline">
+					    <label for="sheepItForm_#index#_lane">Lane <span id="sheepItForm_label"></span></label>
+					    
+					    <select id="sheepItForm_#index#_lane" class="form-control" type="text" name="lane[#index#]">
+							<?php
+								for($i=0;$i<=8;$i++){
+									$lane_direction = lane_direction_text($i);
+									if(isset($lane_direction)){
+							?>
+							<option value="<?php echo $i; ?>"><?php echo $lane_direction; ?></option>
+							<?php
+									}
+								}
+							?>
+						</select>
+					    
+					    <a id="sheepItForm_remove_current">
+					    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
+					    </a>
+					  </div>
+					  <!-- /Form template-->
+					  
+					  <?php
+					  	$lane_counter = 0;
+					    	foreach ($lanes as $lane) {
+					    		$lane_counter++;
+								?>								
+									<!-- pregenerated Form template-->
+									<div id="pregenerated_form_<?php echo $lane_counter;?>" class="form-inline">
+									    <label for="sheepItForm_#index#_lane">Lane <span id="sheepItForm_label"></span></label>					    
+									    <select id="sheepItForm_#index#_lane" class="form-control" type="text" name="lane[#index#]">
+											<?php
+												for($i=0;$i<=8;$i++){
+													$lane_direction = lane_direction_text($i);
+													if(isset($lane_direction)){
+											?>
+											<option value="<?php echo $i; ?>" <?php if($lane['lane_direction'] == $i) echo 'selected';?>><?php echo $lane_direction; ?></option>
+											<?php
+													}
+												}
+											?>
+										</select>
+									    
+									    <a id="sheepItForm_remove_current">
+									    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
+									    </a>
+									</div>
+									<!-- /Form template-->										
+								<?php
+							} 
+					    ?>
+					  
+					  
+					  
+					
+					   
+					  <!-- No forms template -->
+					  <div id="sheepItForm_noforms_template">No Lanes!!</div>
+					  <!-- /No forms template-->
+					   
+					  <!-- Controls -->
+					  <div id="sheepItForm_controls">
+					    <div id="sheepItForm_add"><a><button type="button" class="btn btn-default glyphicon glyphicon-plus"></button></a></div>					    					    
+					  </div>
+					  <!-- /Controls -->
+					   
+					</div>
+					<!-- /sheepIt Form -->
+
+				</td>
+			</tr>
+			
+			
 			<tr>
 				<td colspan="2">
 					<button type="submit" class="btn btn-info" id="btn_add">
@@ -123,6 +229,7 @@
 					</button>			
 				</td>
 			</tr>
+			
 		</table>
 		
 		

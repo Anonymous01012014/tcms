@@ -2,10 +2,13 @@
 	<h1 class="title">Add Case</h1>
 	<hr />
 	<form method="post" action="<?php echo base_url();?>cases/saveData" >
-		<table id="addFormTable">
+		<table>
 			<tr>
 				<td>
 					<label for="site">Site:</label>
+				</td>
+				
+				<td>
 					<select class="form-control" name="site" id="site" >
 						<?php
 							for($i=0;$i < count($sites);$i++){
@@ -18,15 +21,22 @@
 						?>
 					</select>
 				</td>
+			</tr>
+			
+			
+			<tr>
+				<td colspan="2">
+					<button type="submit" class="btn btn-info" id="btn_add">
+						<span class="glyphicon glyphicon-ok"></span> Open
+					</button>
+					
+					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard')";>
+						<span class="glyphicon glyphicon-remove"></span> Cancel
+					</button>
+					
+				</td>				
 			</tr>			
 		</table>
-		<button type="submit" class="btn btn-default btn-lg" id="btn_add">
-			<span class="glyphicon glyphicon-ok"></span> Open
-		</button>
-		
-		<button type="Button" class="btn btn-danger btn-lg" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard')";>
-			<span class="glyphicon glyphicon-remove"></span> Cancel
-		</button>
 		
 	</form>
 	

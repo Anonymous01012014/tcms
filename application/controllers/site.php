@@ -127,18 +127,29 @@ class Site extends CI_Controller {
 	 */
 	public function edit($site_id)
 	{
+		//load site model	
 		$this->load->model('site_model');
 		
-		$this->site_model->id = $site_id;
+		//load lane model	
+		$this->load->model('lane_model');
 		
+		
+		//get site information by id
+		$this->site_model->id = $site_id;			
 		$sites = $this->site_model->getSiteById();
+		
+		//get lane by site id		
+		$this->lane_model->site_id = $site_id;
+		$lanes = $this->lane_model->getLaneBySiteId();
+		
+		
 		
 		if(isset($sites[0])){
 			
 			$data['site'] = $sites[0];
-			
+			$data['lanes'] = $lanes;
 			$this->load->helper('enumeration');
-			$data['user_data'] = $this->session->userdata['user'];;
+			$data['user_data'] = $this->session->userdata['user'];
 			//call the general views for page structure	
 			$this->load->view('gen/header');
 			$this->load->view('gen/main_menu',$data);
@@ -181,13 +192,7 @@ class Site extends CI_Controller {
 		
 		//lane count
 		$lane_direction = $this->input->post('lane');
-		$this->site_model->lane_count = count($lane_direction);
-		
-		
-		
-		
-		
-		
+		$this->site_model->lane_count = count($lane_direction);				
 		
 		if($action == "add"){
 		
@@ -199,8 +204,7 @@ class Site extends CI_Controller {
 			//adding lanes max number of lane is 16		
 			for($i= 0 ; $i < count($lane_direction) ; $i++)
 			{																						
-				$this->lane_model->lane_direction = $lane_direction[$i];						
-				$this->lane_model->lane_number = $i;
+				$this->lane_model->lane_direction = $lane_direction[$i];										
 				$this->lane_model->site_id = $site_id[0]["site_id"];
 				$this->lane_model->addLane();				
 			}
@@ -210,6 +214,14 @@ class Site extends CI_Controller {
 			$this->site_model->id = $id;
 			//Edit the specified site.
 			$this->site_model->modifySite();
+			
+			//modify lanes 
+			for($i= 0 ; $i < count($lane_direction) ; $i++)
+			{																						
+				$this->lane_model->lane_direction = $lane_direction[$i];										
+				$this->lane_model->site_id = $id;								
+				$this->lane_model->modifyLane();				
+			}
 		}
 		
 		
