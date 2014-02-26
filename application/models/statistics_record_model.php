@@ -48,6 +48,9 @@ class Statistics_record_model extends CI_Model{
 	//The length of the interval.
 	var $interval_length = "";
 	
+	//The id of the case of this output file.
+	var $case_id = "";
+	
 	/**
      * Constructor
      **/	
@@ -85,7 +88,8 @@ class Statistics_record_model extends CI_Model{
 							start_time,
 							stop_date,
 							stop_time,
-							interval_length
+							interval_length,
+							case_id
 						) 
 						VALUES (
 							'{$this->operator_name}',
@@ -96,11 +100,17 @@ class Statistics_record_model extends CI_Model{
 							'{$this->start_time}',
 							'{$this->stop_date}',
 							'{$this->stop_time}',
-							'{$this->interval_length}'
+							'{$this->interval_length}',
+							'{$this->case_id}'
 						);
 					";
 		$this->db->query($query);
-		return true;
+		//return the latest added statistics record's id
+		$query = "select max(id) as statistics_record_id from statistics_record;";
+									
+		$query = $this->db->query($query);
+		
+		return $query->result_array();
 	 }
 	 
 	 /**
@@ -145,7 +155,8 @@ class Statistics_record_model extends CI_Model{
 					start_time = '{$this->start_time}',
 					stop_date = '{$this->stop_date}',
 					stop_time = '{$this->stop_time}',
-					interval_length = '{$this->interval_length}'														
+					interval_length = '{$this->interval_length}',
+					case_id = '{$this->case_id}'														
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
 		return true;

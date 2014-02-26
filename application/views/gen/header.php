@@ -11,13 +11,17 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css">
 	
 	
-	<!-- indlude fonts -->
-	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+	<!-- indlude fonts 
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">-->
 	
 	
 	<!-- load js -->
+<<<<<<< HEAD
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="<?php echo base_url();?>js/jquery-1.10.2.js"></script>	
+=======
+
+>>>>>>> 64564344dbfaab6426b2e5bd7af6bec4a8a86180
 	<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>js/grid.js"></script>
 	<script src="<?php echo base_url();?>js/bootstrap-datepicker.js"></script>

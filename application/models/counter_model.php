@@ -73,7 +73,12 @@ class Counter_model extends CI_Model{
 						);
 					";
 		$this->db->query($query);
-		return true;
+		//return the latest added counter's id
+		$query = "select max(id) as counter_id from counter;";
+									
+		$query = $this->db->query($query);
+		
+		return $query->result_array();
 	 }
 	 
 	 /**

@@ -56,7 +56,7 @@ class Lane_header extends CI_Model{
 		//Lane number
 		$this->lane_number = $line[1];
 		//Lane 1 info
-		$this->lane_1_info = $line[2];
+		$this->lane_1_info = lane_direction_enum($line[2]);
 		//Lane 1 spacing
 		$this->lane_1_spacing = $line[3];
 		//Lane sensor

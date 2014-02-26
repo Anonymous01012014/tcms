@@ -587,6 +587,54 @@
 		}
 	 }
 	 
+	 /**
+	 * Function name:
+	 * lane_direction_enum
+	 * 
+	 * Description :
+	 * This function returns the number representation of the 
+	 * lane direction determined by the given text.
+	 * 
+	 * Created date ; 24-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	 function lane_direction_enum($lane_direction){
+		switch ($lane_direction){
+			case "No Direction":
+			return NoDirection;
+			break;
+			case "North":
+			return North;
+			break;
+			case "North East":
+			return NorthEast;
+			break;
+			case "East":
+			return East;
+			break;
+			case "South East":
+			return SouthEast;
+			break;
+			case "South":
+			return South;
+			break;
+			case "South West":
+			return SouthWest;
+			break;
+			case "West":
+			return West;
+			break;
+			case "North West":
+			return NorthWest;
+			break;
+			default:
+			return NoDirection;
+			break;
+		}
+	 }
 	 
 	 /**
 	 * Lane Sensor Type

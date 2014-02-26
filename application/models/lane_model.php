@@ -19,7 +19,7 @@ class Lane_model extends CI_Model{
 	//The id field of the lane
 	var $id;
 	
-	//The number of this lane in its site.
+	//The number of this lane in its counter.
 	var $lane_number = "";
 	
 	//Represents the direction of the car movement in this lane.
@@ -160,6 +160,49 @@ class Lane_model extends CI_Model{
 	 }
 	 
 	 /**
+	 * function name : addCounterToLane
+	 * 
+	 * Description : 
+	 * add a counter to this lane
+	 * 
+	 * Created date : 24-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addCounterToLane(){
+		$query = "UPDATE lane
+				  SET
+					lane_number = '{$this->lane_number}',
+					counter_id = '{$this->counter_id}'
+	 			  WHERE id = {$this->id}";
+		$this->db->query($query);
+		return true;
+	 }
+	 
+	 /**
+	 * function name : addBinFileData
+	 * 
+	 * Description : 
+	 * add the binary file's lane related data to its table in the database.
+	 * 
+	 * Created date : 24-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addBinFileData(){
+		$query = "UPDATE lane
+				  SET
+					lane_spacing = '{$this->lane_spacing}'
+	 			  WHERE id = {$this->id}";
+		$this->db->query($query);
+		return true;
+	 }
+	 
+	 /**
 	 * function name : getLaneById
 	 * 
 	 * Description : 
@@ -191,7 +234,7 @@ class Lane_model extends CI_Model{
 	 * Author : Ahmad Mulhem Barakat
 	 * contact : molham225@gmail.com
 	 */
-	 public function getAllUsers(){
+	 public function getAllLanes(){
 		$query = "SELECT * 
 				  FROM lane";
 				  
@@ -215,6 +258,27 @@ class Lane_model extends CI_Model{
 		$query = "SELECT * 
 				  FROM lane
 				  WHERE site_id = {$this->site_id}";
+				  
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
+	 
+	 /**
+	 * function name : getLanesByCounterId
+	 * 
+	 * Description : 
+	 * Gets the lanes of the given counter.
+	 * 
+	 * Created date : 12-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getLanesByCounterId(){
+		$query = "SELECT * 
+				  FROM lane
+				  WHERE counter_id = {$this->counter_id}";
 				  
 		$query = $this->db->query($query);
 		return $query->result_array();

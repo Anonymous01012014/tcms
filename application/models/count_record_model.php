@@ -78,7 +78,12 @@ class Count_record_model extends CI_Model{
 						);
 					";
 		$this->db->query($query);
-		return true;
+		//return the latest added count record's id
+		$query = "select max(id) as count_record_id from count_record;";
+									
+		$query = $this->db->query($query);
+		
+		return $query->result_array();
 	 }
 	 
 	 /**
