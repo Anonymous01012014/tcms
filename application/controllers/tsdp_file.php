@@ -427,31 +427,12 @@ class Tsdp_file extends CI_Controller{
 				$count_record['interval_length'] = $this->count_records[$i]->interval_length;
 				$count_record['statistics_record_id'] = $statistics_record_id;
 				
-				
-				/*$this->count_record_model->date = date_to_sql($this->count_records[$i]->date);
-				$this->count_record_model->time = $this->count_records[$i]->time;
-				$this->count_record_model->interval_length = $this->count_records[$i]->interval_length;
-				$this->count_record_model->statistics_record_id = $statistics_record_id;*/
-				
-				//execute the addition function
-				/*$count_record_id = $this->count_record_model->addCountRecord();
-				if(isset($count_record_id[0])){
-					$count_record_id = $count_record_id[0]['count_record_id'];
-				}*/
-				
 				//adding this record to the count record array
 				$count_record_array[] = $count_record;
 				
 				$lane_totals = $this->count_records[$i]->lane_total;
 				//get the counts from the bins total array as key(lane number)=>value(count)
-				foreach($lane_totals as $lane_num => $b_total){
-					//fill the model's fields
-					/*$this->count_lane_record_model->count = $b_total;
-					$this->count_lane_record_model->lane_id = $lanes_ids[(int)$lane_num -1];
-					$this->count_lane_record_model->count_record_id = $count_record_id;*/
-					//execute the addition function
-					//$this->count_lane_record_model->addCountLaneRecord();
-					
+				foreach($lane_totals as $lane_num => $b_total){					
 					//fill the count_lane_record 
 					$count_lane_record['count'] = $b_total;
 					//set the count record id for one count_record's count_lane_records to 
@@ -489,33 +470,70 @@ class Tsdp_file extends CI_Controller{
 			$this->load->model('per_vehicle_record_model');
 			$this->load->model('vehicle_axle_spacing_model');
 			
+			//Inserting per vehicle data row after another took a lot of time so we decided to 
+			//use insert_batch tot add an array of records together
+			$per_vehicle_record_array = array();
+			$vehicle_axle_spacing_array = array();
+			
 			for($i=0;$i<count($this->per_vehicle_records);$i++){
 				
+				$per_vehicle_record = array();
+				$vehicle_axle_spacing = array();
+				
+				
 				//fill per vehicle model with data
-				$this->per_vehicle_record_model->date = date_to_sql($this->per_vehicle_records[$i]->date);
-				$this->per_vehicle_record_model->time = $this->per_vehicle_records[$i]->time;
-				$this->per_vehicle_record_model->speed = $this->per_vehicle_records[$i]->speed;
-				$this->per_vehicle_record_model->axles = $this->per_vehicle_records[$i]->axles;
-				$this->per_vehicle_record_model->total_number = $this->per_vehicle_records[$i]->total_length;
-				$this->per_vehicle_record_model->statistics_record_id = $statistics_record_id;
-				$this->per_vehicle_record_model->lane_id = $lanes_ids[$this->per_vehicle_records[$i]->lane - 1];
-				//execute the addition function
-				$per_vehicle_record_id = $this->per_vehicle_record_model->addPerVehicleRecord();
-				if(isset($per_vehicle_record_id[0])){
-					$per_vehicle_record_id = $per_vehicle_record_id[0]['per_vehicle_record_id'];
-				}
+				$per_vehicle_record['date'] = date_to_sql($this->per_vehicle_records[$i]->date);
+				$per_vehicle_record['time'] = $this->per_vehicle_records[$i]->time;
+				$per_vehicle_record['speed'] = $this->per_vehicle_records[$i]->speed;
+				$per_vehicle_record['axles'] = $this->per_vehicle_records[$i]->axles;
+				$per_vehicle_record['total_number'] = $this->per_vehicle_records[$i]->total_length;
+				$per_vehicle_record['statistics_record_id'] = $statistics_record_id;
+				$per_vehicle_record['lane_id'] = $lanes_ids[$this->per_vehicle_records[$i]->lane - 1];
+				
+				//adding this record to the per vehicle record array
+				$per_vehicle_record_array[] = $per_vehicle_record;
+				
+				
 				//get the axle spacings from the axle spacings array 
 				foreach($this->per_vehicle_records[$i]->axle_spacings as $axle_spacing){
-					//fill vehicle axle spacing model with data
-					$this->vehicle_axle_spacing_model->spacing = $axle_spacing;
-					$this->vehicle_axle_spacing_model->per_vehicle_record_id = $per_vehicle_record_id;
-					//execute the addition function
-					$this->vehicle_axle_spacing_model->addVehicleAxleSpacing();
+					
+					//add the spacing to this record
+					$vehicle_axle_spacing['spacing'] = $axle_spacing;
+					//set the per vehicle record id for one per vehicle's vehicle_axle_spacings to 
+					//the same index as the index of this per_vehicle_record in the per_vehicle_record_array
+					$vehicle_axle_spacing['per_vehicle_record_id'] = $i;
+					
+					//add it to the vehicle axle spacing array
+					$vehicle_axle_spacing_array[] = $vehicle_axle_spacing;
 				}
 			}
 			
+			//execute thse add multi records functions and get the first and last ids
+			if(isset($per_vehicle_record_array[0]))
+			$ids = $this->per_vehicle_record_model->addMultiRecords($per_vehicle_record_array);
+			
+			if(isset($ids[0])){
+				//add the vehicle axle spacings to the database
+				
+				//this loop adds the ids of the previously inserted per vehicle records
+				//to its  vehicle axle spacings
+				for($i=0;$i<count($vehicle_axle_spacing_array);$i++){
+					$vehicle_axle_spacing_array[$i]['per_vehicle_record_id'] += $ids[0];
+				}
+				
+				//execute the add multi records function
+				$this->vehicle_axle_spacing_model->addMultiRecords($vehicle_axle_spacing_array);
+			}
+			
+			
 			/** End of section **/
 			
+		}
+		
+		else if($this->storage_mode == PER_VEHICLE){
+			/** Inserting per vehicl records + vehicle axle spacings info into the database **/
+		
+			/** End of section **/
 		}
 		
 	}

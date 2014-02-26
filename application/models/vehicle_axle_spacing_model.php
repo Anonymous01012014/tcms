@@ -66,6 +66,27 @@ class Vehicle_axle_spacing_model extends CI_Model{
 		return true;
 	 }
 	 
+	 
+	 /**
+	 * function name : addMultiRecords
+	 * 
+	 * Description : 
+	 * add an array of vehicle axle spacings and inserts them in the data base 
+	 * 
+	 * parameters:
+	 * count lane record array: the array of count records to be added to database.
+	 * 	
+	 * Created date : 26-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addMultiRecords($vehicle_axle_spacing_array){
+		
+		$this->db->insert_batch('vehicle_axle_spacing',$vehicle_axle_spacing_array);
+	 }
+	 
 	 /**
 	 * function name : deleteVehicleAxleSpacing
 	 * 
