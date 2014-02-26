@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Per_vehicle_records extends CI_Model{
+class Per_vehicle_record extends CI_Model{
 	/**
 	 * Filename: per_vehicle_records.php
 	 * Description: 
@@ -50,7 +50,7 @@ class Per_vehicle_records extends CI_Model{
 		$this->load->helper('enumeration');
 		
 		//lane number
-		$this->lane = $line[0];
+		$this->lane = (int)$line[0];
 		//Date
 		$this->date = $line[1];
 		//Time

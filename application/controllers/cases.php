@@ -371,13 +371,46 @@ class Cases extends CI_Controller {
 				rename('files/binary_files/'.$file_data['file_name'],'files/binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
 				
 				/**extract count info from the binary and add it to database**/
-				//execute the TSDP command with a volume 
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
+				//execute the TSDP command with volume choice to generate the count text file.
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --classification --twoWay --sensorSpacing 48 2> error.txt");
+				//getting the output count file name
+				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
+				//extracting data from the count file and send it to database
+				$this->read_and_save($file,$case_id);
+				
 			}
 			redirect(base_url().'cases');
 		}
 	}
+	
+	
+	/**
+	 * Function name: read_and_save
+	 * Description: 
+	 * this function reads the given tsdp file and save it to database
+	 * 
+	 * Parameters:
+	 * $file: TSPD output text file.
+	 * $case_id: the id of the case for this file.
+	 * 
+	 * created date: 23-2-2014
+	 * created by: Eng. Ahmad Mulhem Barkat
+	 * contact: molham225@gmail.com
+	 */
+	public function read_and_save($file,$case_id){
+		$this->session->set_userdata('file',$file);
+		$this->session->set_userdata('case',$case_id);
+		redirect(base_url()."tsdp_file");
+		//call read file lines function with the file as aparameter
+		$this->tsdp_file->read_file_lines($file);
+		
+		//save the read file into the database on this case id
+		$this->tsdp_file->save_to_database($case_id);
+	}
+	
 }
+
+	
 
 /* End of file cases.php */
 /* Location: ./application/controllers/cases.php */

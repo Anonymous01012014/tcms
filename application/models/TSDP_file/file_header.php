@@ -51,6 +51,8 @@ class File_header extends CI_Model{
 	//Record Interval Length (when mode is Count or 
 	//Classification, this is the interval used)
 	var $interval_length = "";
+	//The id of the case for this file
+	var $case_id = "";
 	
 	/**
 	 * Function name: insert
@@ -66,7 +68,7 @@ class File_header extends CI_Model{
 	 * contact: molham225@gmail.com
 	 */
 	 public function insert($line){
-		//load enumeration helper
+		//load helpers
 		$this->load->helper('enumeration');
 		//Site name
 		$this->site_ID = $line[1];

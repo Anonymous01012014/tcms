@@ -106,7 +106,13 @@ class Per_vehicle_record_model extends CI_Model{
 						);
 					";
 		$this->db->query($query);
-		return true;
+		
+		//return the latest added count record's id
+		$query = "select max(id) as per_vehicle_record_id from per_vehicle_record;";
+									
+		$query = $this->db->query($query);
+		
+		return $query->result_array();
 	 }
 	 
 	 /**

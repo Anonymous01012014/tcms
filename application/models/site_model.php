@@ -180,6 +180,26 @@ class Site_model extends CI_Model{
 		return $query->result_array();
 	 }
 	
+	/**
+	 * function name : getSiteByName
+	 * 
+	 * Description : 
+	 * Returns the data of the site specified by the given name.
+	 * 
+	 * Created date : 24-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getSiteByName(){
+		$query = "SELECT * 
+				  FROM site
+	 			  WHERE name like '{$this->name}'";
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
+	
 	
 	/**
 	 * function name : getAllSites
