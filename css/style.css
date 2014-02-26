@@ -274,6 +274,12 @@ div#error{
 }
 
 /* Table of addition form inputs */
+
+table
+{
+	width:100%;
+}
+
 table tr td
 {
 	padding:10px;
