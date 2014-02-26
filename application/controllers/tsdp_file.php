@@ -33,7 +33,7 @@ class Tsdp_file extends CI_Controller{
 	public function index(){
 		$this->read_file_lines($this->session->userdata['file']);
 		$this->save_to_database($this->session->userdata['case']);
-		//redirect(base_url().'cases');
+		redirect(base_url().'cases');
 	}
 	
 	
@@ -99,8 +99,7 @@ class Tsdp_file extends CI_Controller{
 		$this->load->helper('string');
 		//load enumeration helper
 		$this->load->helper('enumeration');
-		$now = date('m/d/Y h:i:s a', time());
-		echo "<br />".$now."<br />";
+		
 		//open the given file
 		$file = fopen($file, "r") or exit("Unable to open file!");
 		//while didn't reach the end of file
@@ -148,8 +147,6 @@ class Tsdp_file extends CI_Controller{
 						$this->count_records[count($this->count_records)] = clone $this->count_record;
 						break;
 					default:
-						$now = date('m/d/Y h:i:s a', time());
-						echo "<br />".$now."<br />";
 						/** Per Vehicle Record **/
 						if($this->storage_mode == PER_VEHICLE){
 							$this->load->model("/TSDP_file/per_vehicle_record");
@@ -179,8 +176,6 @@ class Tsdp_file extends CI_Controller{
 			}
 		  }
 		fclose($file);
-		$now = date('m/d/Y h:i:s a', time());
-		echo "<br />".$now."---------------------------------------<br />";
 	}
 	
 	
@@ -241,8 +236,7 @@ class Tsdp_file extends CI_Controller{
 		//load helpers
 		$this->load->helper('enumeration');
 		$this->load->helper('date');
-		$now = date('m/d/Y h:i:s a', time());
-		echo "<br />".$now."<br />";
+		
 		/** Important variables **/
 		
 		//the id of this counter in the database
@@ -418,31 +412,74 @@ class Tsdp_file extends CI_Controller{
 			$this->load->model('count_record_model');
 			$this->load->model('count_lane_record_model');
 			
+			//Inserting count data row after another took a lot of time so we decided to 
+			//use insert_batch tot add an array of records together
+			$count_record_array = array();
+			$count_lane_record_array = array();
 			for($i=0;$i<count($this->count_records);$i++){
-				$now = date('m/d/Y h:i:s a', time());
-				echo "<br />".$now."---count<br />";
+				
+				$count_record = array();
+				$count_lane_record = array();
 				//fill count record model fields
-				$this->count_record_model->date = date_to_sql($this->count_records[$i]->date);
+				
+				$count_record['date'] = date_to_sql($this->count_records[$i]->date);
+				$count_record['time'] = $this->count_records[$i]->time;
+				$count_record['interval_length'] = $this->count_records[$i]->interval_length;
+				$count_record['statistics_record_id'] = $statistics_record_id;
+				
+				
+				/*$this->count_record_model->date = date_to_sql($this->count_records[$i]->date);
 				$this->count_record_model->time = $this->count_records[$i]->time;
 				$this->count_record_model->interval_length = $this->count_records[$i]->interval_length;
-				$this->count_record_model->statistics_record_id = $statistics_record_id;
+				$this->count_record_model->statistics_record_id = $statistics_record_id;*/
 				
 				//execute the addition function
-				$count_record_id = $this->count_record_model->addCountRecord();
+				/*$count_record_id = $this->count_record_model->addCountRecord();
 				if(isset($count_record_id[0])){
 					$count_record_id = $count_record_id[0]['count_record_id'];
-				}
+				}*/
+				
+				//adding this record to the count record array
+				$count_record_array[] = $count_record;
+				
 				$lane_totals = $this->count_records[$i]->lane_total;
 				//get the counts from the bins total array as key(lane number)=>value(count)
 				foreach($lane_totals as $lane_num => $b_total){
 					//fill the model's fields
-					$this->count_lane_record_model->count = $b_total;
+					/*$this->count_lane_record_model->count = $b_total;
 					$this->count_lane_record_model->lane_id = $lanes_ids[(int)$lane_num -1];
-					$this->count_lane_record_model->count_record_id = $count_record_id;
+					$this->count_lane_record_model->count_record_id = $count_record_id;*/
 					//execute the addition function
-					$this->count_lane_record_model->addCountLaneRecord();
+					//$this->count_lane_record_model->addCountLaneRecord();
+					
+					//fill the count_lane_record 
+					$count_lane_record['count'] = $b_total;
+					//set the count record id for one count_record's count_lane_records to 
+					//the same index as the index of this count_record in the count_record_array
+					$count_lane_record['count_record_id'] = $i;
+					$count_lane_record['lane_id'] = $lanes_ids[(int)$lane_num -1];
+					
+					//add it to the count lane record array
+					$count_lane_record_array[] = $count_lane_record;
 				}
 			}
+			//execute thse add multi records functions and get the first and last ids
+			if(isset($count_record_array[0]))
+			$ids = $this->count_record_model->addMultiRecords($count_record_array);
+			
+			if(isset($ids[0])){
+				//add the count lane records to the database
+				
+				//this loop adds the ids of the previously inserted count records
+				//to its count lane records
+				for($i=0;$i<count($count_lane_record_array);$i++){
+					$count_lane_record_array[$i]['count_record_id'] += $ids[0];
+				}
+				
+				//execute the add multi records function
+				$this->count_lane_record_model->addMultiRecords($count_lane_record_array);
+			}
+			
 			/** End of section **/
 		}
 		else if($this->storage_mode == PER_VEHICLE){
@@ -453,8 +490,7 @@ class Tsdp_file extends CI_Controller{
 			$this->load->model('vehicle_axle_spacing_model');
 			
 			for($i=0;$i<count($this->per_vehicle_records);$i++){
-				$now = date('m/d/Y h:i:s a', time());
-				echo "<br />".$now."----per vehicle<br />";
+				
 				//fill per vehicle model with data
 				$this->per_vehicle_record_model->date = date_to_sql($this->per_vehicle_records[$i]->date);
 				$this->per_vehicle_record_model->time = $this->per_vehicle_records[$i]->time;
@@ -481,8 +517,7 @@ class Tsdp_file extends CI_Controller{
 			/** End of section **/
 			
 		}
-		$now = date('m/d/Y h:i:s a', time());
-		echo "<br />".$now."<br />";
+		
 	}
 	
 	

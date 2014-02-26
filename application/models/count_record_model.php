@@ -86,6 +86,43 @@ class Count_record_model extends CI_Model{
 		return $query->result_array();
 	 }
 	 
+	 
+	 /**
+	 * function name : addMultiRecords
+	 * 
+	 * Description : 
+	 * add an array of count records and inserts them in the data base 
+	 * and returns the first and last inserted ids
+	 * 
+	 * parameters:
+	 * count record array: the array of count records to be added to database.
+	 * 	
+	 * Created date : 26-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addMultiRecords($count_record_array){
+		//array that has first and last added ids
+		$ids = array(0,0);
+		//get the latest added count record's id to know the id of the first inserted record
+		$query = "select max(id) as count_record_id from count_record;";
+									
+		$query = $this->db->query($query);
+		$id = $query->result_array();
+		if($id[0]['count_record_id'] !== 0)
+		$ids[0] = $id[0]['count_record_id'] + 1;
+		
+		$this->db->insert_batch('count_record',$count_record_array);
+		//get the latest added count record's id
+		$query = "select max(id) as count_record_id from count_record;";
+		$query = $this->db->query($query);
+		$id = $query->result_array();
+		$ids[1] = $id[0]['count_record_id'];
+		return $ids;
+	 }
+	 
 	 /**
 	 * function name : deleteCountRecord
 	 * 

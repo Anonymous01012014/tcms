@@ -372,7 +372,7 @@ class Cases extends CI_Controller {
 				
 				/**extract count info from the binary and add it to database**/
 				//execute the TSDP command with volume choice to generate the count text file.
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --classification --twoWay --sensorSpacing 48 2> error.txt");
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
 				//getting the output count file name
 				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
 				//extracting data from the count file and send it to database

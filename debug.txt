@@ -1,17 +1,17 @@
 File Header Info:
 ---------------------------
-Site ID: Colin Desk                    
-Info1: 1.23 First Test               
-Info2:                               
-Start Year (M/D/Y h:m): 1/13/11 15:34
-Stop Year (M/D/Y h:m): 1/24/11 11:41
+Site ID: Main & First                  
+Info1: test line 1                   
+Info2: Test line 2                   
+Start Year (M/D/Y h:m): 10/7/10 11:9
+Stop Year (M/D/Y h:m): 11/3/10 14:58
 Real Time Polling Flag: 0
 Number Format: 2
 Date Format: 1
 Storage Mode: 1
 Num Active Lanes: 1
 Creating UID Number: 128
-Creating Unit Version Number: 123
+Creating Unit Version Number: 118
 Num Intervals: 1
 Expanded Site and Info: 1
 Independent Volume Store: 0
@@ -21,7 +21,7 @@ Interval #2 Start: 0, Length: 0
 Interval #3 Start: 0, Length: 0
 Interval #4 Start: 0, Length: 0
 Data Security Storage Value: 0
-UserID: Colin Gibson                  
+UserID: Jesse Brady                   
 Serial Number: 010108-0000 OMG
 Weather: 
 

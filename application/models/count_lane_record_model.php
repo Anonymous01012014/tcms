@@ -72,6 +72,26 @@ class Count_lane_record_model extends CI_Model{
 	 }
 	 
 	 /**
+	 * function name : addMultiRecords
+	 * 
+	 * Description : 
+	 * add an array of count lane records and inserts them in the data base 
+	 * 
+	 * parameters:
+	 * count lane record array: the array of count records to be added to database.
+	 * 	
+	 * Created date : 26-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function addMultiRecords($count_lane_record_array){
+		
+		$this->db->insert_batch('count_lane_record',$count_lane_record_array);
+	 }
+	 
+	 /**
 	 * function name : deleteCountLaneRecord
 	 * 
 	 * Description : 
