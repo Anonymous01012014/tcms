@@ -116,7 +116,7 @@ $(document).ready(function() {
 					<label for="startDate">Start Date:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>"/>
+					<input class="form-control" type="text" name="startDate" id="startDate" value="<?php echo $site['start_date']; ?>" required/>
 				</td>
 				
 				
