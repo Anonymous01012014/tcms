@@ -1,6 +1,9 @@
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Close Case</h1>
 	<hr />
+	<div id="status_message" style="display: none;">
+		
+	</div>
 	<?php echo form_open_multipart(base_url().'cases/saveBinaryFile/'.$case_id);?>
 		<table>
 			<tr>
@@ -9,7 +12,7 @@
 					
 				</td>
 				<td>
-					<input type="file" class="form-control" name="binary_file" id="binary_file" />
+					<input type="file" class="form-control" name="binary_file" id="binary_file" required />
 				</td>					
 			</tr>	
 			
@@ -32,7 +35,23 @@
 
 </div>
 <script>	
-$( document ).ready( function( $ ) {
-    $( 'input[type="file"]' ).prettyFile();
-});
+$(document).ready(function(){
+		$( 'input[type="file"]' ).prettyFile();
+		$( 'input[type="file"]' ).next('div').children(':nth-child(2)').prop("required",true);
+		$('input[type=file]').change(function(e){
+		  var file = $(this).val();
+		  var file_parts = file.split('.');
+		  var extension = file_parts[file_parts.length - 1];
+		  if(extension !== "BIN" && extension !== "Bin"){
+				$(this).val("");
+				$(this).next('div').children(':nth-child(2)').val("");
+				$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>You should select only binary files!</div>');
+				$('#status_message').slideDown();
+			}
+		});
+	});
+	
+	function hideMessage(){
+			$('#status_message').hide();
+	}
 </script>

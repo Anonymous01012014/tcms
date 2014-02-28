@@ -66,7 +66,7 @@ class Login_user extends CI_Controller {
 			redirect(base_url().'dashboard');
 		}else{
 			$this->load->view('gen/header');
-			$this->load->view('gen/main_menu');
+			//$this->load->view('gen/main_menu');
 			$this->load->view('gen/logo');
 			$this->load->view('gen/main_content');
 			$this->load->view('login',$data);
