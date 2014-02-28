@@ -69,7 +69,7 @@ class Cases extends CI_Controller {
 	/**
 	 * Function name : add
 	 * Description: 
-	 * this function will call site_add views 
+	 * this function will call case_add views 
 	 * 
 	 * created date: 16-2-2014
 	 * created by: Eng. Ahmad Mulhem Barakat
@@ -94,6 +94,41 @@ class Cases extends CI_Controller {
 		
 		//show add case view
 		$this->load->view('case_add',$data);
+			
+		
+		$this->load->view('gen/footer');
+		
+	}
+	
+	
+	/**
+	 * Function name : addClosed
+	 * Description: 
+	 * this function will call case_add_closed view 
+	 * 
+	 * created date: 28-2-2014
+	 * created by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com
+	 */
+	public function addClosed()
+	{
+		$this->load->model('site_model');
+		
+		//get all active sites.
+		$sites = $this->site_model->getAllActiveSites();
+		$data['sites']= $sites;
+		
+		
+		//insert user data in the views
+		$data['user_data'] = $this->session->userdata['user'];
+		//call the general views for page structure	
+		$this->load->view('gen/header');
+		$this->load->view('gen/main_menu',$data);
+		$this->load->view('gen/logo');
+		$this->load->view('gen/main_content');
+		
+		//show add case view
+		$this->load->view('case_add_closed',$data);
 			
 		
 		$this->load->view('gen/footer');
@@ -171,7 +206,7 @@ class Cases extends CI_Controller {
 			//grid controls
 			$this->grid->control = array(
 										  array("title" => "Upload Binary" , "icon"=>"glyphicon glyphicon-upload" ,"url"=>base_url()."cases/closeNormally" , "message_type"=>null , "message"=>""),
-										  array("title" => "Cancel" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."cases/closeManually" , "message_type"=>"input" , "message"=>"Please enter the reason for cancelling this case..")
+										  array("title" => "Cancel" , "icon"=>"glyphicon glyphicon-trash" ,"url"=>base_url()."cases/closeManually" , "message_type"=>"input" , "message"=>"Please enter the reason for manually closing this case..")
 										  
 										);												
 		}else if($type === "closed"){
@@ -192,6 +227,8 @@ class Cases extends CI_Controller {
 			//get the data
 			
 			$this->grid->data = $this->case_model->getClosedCasesForView();
+			
+			
 			
 			//grid controls
 			$this->grid->control = array(
@@ -372,7 +409,7 @@ class Cases extends CI_Controller {
 				
 				/**extract count info from the binary and add it to database**/
 				//execute the TSDP command with volume choice to generate the count text file.
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --classification --twoWay --sensorSpacing 48 2> error.txt");
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
 				//getting the output count file name
 				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
 				//extracting data from the count file and send it to database

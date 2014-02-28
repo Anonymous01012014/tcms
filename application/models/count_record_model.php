@@ -106,15 +106,16 @@ class Count_record_model extends CI_Model{
 	 public function addMultiRecords($count_record_array){
 		//array that has first and last added ids
 		$ids = array(0,0);
-		//get the latest added count record's id to know the id of the first inserted record
-		$query = "select max(id) as count_record_id from count_record;";
-									
-		$query = $this->db->query($query);
-		$id = $query->result_array();
-		if($id[0]['count_record_id'] !== 0)
-		$ids[0] = $id[0]['count_record_id'] + 1;
 		
+		//add the first element in the array to the database
+		$this->db->insert('count_record',$count_record_array[0]);
+		//save its id in the ids array
+		$ids[0] = $this->db->insert_id();
+		
+		//isert the rest of array elements in the database
+		$count_record_array = array_slice($count_record_array, 1);
 		$this->db->insert_batch('count_record',$count_record_array);
+		
 		//get the latest added count record's id
 		$query = "select max(id) as count_record_id from count_record;";
 		$query = $this->db->query($query);

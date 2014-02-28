@@ -530,9 +530,19 @@ class Tsdp_file extends CI_Controller{
 			
 		}
 		
-		else if($this->storage_mode == PER_VEHICLE){
-			/** Inserting per vehicl records + vehicle axle spacings info into the database **/
+		else if($this->storage_mode == AXLE_CLASSIFICATION){
+			/** Inserting  classification records +  axle records info into the database **/
+			
+			
+			
+			/** End of section **/
+		}
 		
+		else if($this->storage_mode == SPEED_CLASSIFICATION){
+			/** Inserting classification records + speed records info into the database **/
+			
+			
+			
 			/** End of section **/
 		}
 		
@@ -541,7 +551,7 @@ class Tsdp_file extends CI_Controller{
 	
 	/**
 	 * This function takes a string as a parameter splits it into an array of
-	 * strings by commathen it trims each string and strips it from quotes
+	 * strings by comma then it trims each string and strips it from quotes
 	 **/
 	function separate_line($line){
 		$this->load->helper('string');

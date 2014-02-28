@@ -378,7 +378,7 @@ class Case_model extends CI_Model{
 	 * contact : molham225@gmail.com
 	 */
 	 public function getOpenCasesForView(){
-		$query = "SELECT * 
+		$query = "SELECT *
 				  FROM `case`
 				  WHERE status = '".OPENED."'";
 		//load site and user models.
@@ -422,9 +422,25 @@ class Case_model extends CI_Model{
 	 * contact : molham225@gmail.com
 	 */
 	 public function getClosedCasesForView(){
-		$query = "SELECT * 
-				  FROM `case`
-				  WHERE status = '".CLOSED_NORMALLY."'";
+		$query = "SELECT c.id as id, 
+						c.open_date as open_date,
+						c.open_time as open_time,
+						c.close_date as close_date,
+						c.close_time as close_time,
+						c.accept_reject_date as accept_reject_date,
+						c.accept_reject_time as accept_reject_time,
+						c.status as status,
+						c.manual_closing_reason as manual_closing_reason,
+						c.rejecting_reason as rejecting_reason,
+						c.collector_id as collector_id,
+						c.admin_id as admin_id,
+						c.site_id  as site_id,
+						cc.count as count
+				  FROM `case` as c , case_count as cc
+				  WHERE status = '".CLOSED_NORMALLY."'
+					AND c.id = cc.case_id";
+					
+										
 		//load site and user models.
 		$this->load->model('site_model');
 		$this->load->model('user_model');
@@ -455,7 +471,7 @@ class Case_model extends CI_Model{
 			$cases[$i]['open_date_time'] = $cases[$i]['open_date'].' '.$cases[$i]['open_time'];
 			$cases[$i]['close_date_time'] = $cases[$i]['close_date'].' '.$cases[$i]['close_time'];
 			//get the count of cars for this case
-			$cases[$i]['count'] = 0;
+			//$cases[$i]['count'] = 0;
 		}
 		return $cases;
 	 }

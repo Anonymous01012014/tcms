@@ -1,7 +1,12 @@
 <div id="container" class="col-md-4 col-md-offset-4">
 	<h1 class="title">Login</h1>
 	<hr />
-	<div id="error"><?php if($is_post_back)echo validation_errors();?></div>
+	<div id="status_message" style="display: none;">
+		<div class="alert alert-danger alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>
+			<?php if($is_post_back) echo validation_errors();?>
+		</div>
+	</div>
 	<form method="post" action="<?php echo base_url();?>login_user/login" id="login" >
 		<table>
 			<tr>
@@ -28,7 +33,39 @@
 				</td>
 			</tr>
 	</form>
-	
+	<button id="on_fly">on fly</button>
 
 </div>
+
+<div id="message1" class="jumbotron flyover flyover-centered">
+   <h1>Hey!</h1>
+   <p>
+      This is the text to show in the message.
+   </p>
+   <button class="btn btn-primary">Dismiss</button>
+</div>
+
+<script>
+	$(document).ready(function(){
+		if(<?php
+			$error = validation_errors();
+		 if($is_post_back && $error !== "") echo true;
+		 ?>){
+			var error = $('#status_message div  p').html();
+			$('#status_message div  p').remove();
+			$('#status_message div').append(error);
+			$('#status_message').slideDown();
+		}
+		$('button#on_fly').click(function(){
+			$('#message1').toggleClass('in');
+		});
 		
+	});
+	
+	
+	
+	function hideMessage(){
+			$('#status_message').hide();
+	}
+</script>
+
