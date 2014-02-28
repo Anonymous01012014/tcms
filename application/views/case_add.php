@@ -9,7 +9,7 @@
 				</td>
 				
 				<td>
-					<select class="form-control" name="site" id="site" >
+					<select name="site" id="site" >
 						<?php
 							for($i=0;$i < count($sites);$i++){
 								$site_name = $sites[$i]['name'];
@@ -43,3 +43,8 @@
 
 </div>
 		
+<script>
+	$(document).ready(function(){
+		$('#site').select2();
+	});
+</script>

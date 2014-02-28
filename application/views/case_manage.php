@@ -31,8 +31,8 @@
 					<th col="open_date_time"  type="text">Open Date/Time</th>		
 					<th col="close_date_time" type="text">Close Date/Time</th>
 					<th col="admin" type="text">Admin</th>
-					<th col="collector" type="date">Collector</th>	
-					<th col="count" type="date">Count</th>					
+					<th col="collector" type="text">Collector</th>	
+					<th col="count" type="integer">Count</th>					
 				</tr>										
 			</table>	
 		</div>
