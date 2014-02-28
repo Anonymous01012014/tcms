@@ -54,7 +54,7 @@ class Chart extends CI_Controller {
 		//looad site model
 		$this->load->model("site_model");
 		
-		$sites = $this->site_model->getAllSites();
+		$sites = $this->site_model->getAllActiveSites();
 		
 		$data['sites'] = $sites;		
 				

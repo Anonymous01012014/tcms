@@ -105,7 +105,7 @@ $(document).ready(function() {
 					<label for="startDate">Start Date:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="startDate" id="startDate" />
+					<input class="form-control" type="text" name="startDate" id="startDate" required/>
 				</td>
 				
 			</tr>

@@ -1,4 +1,4 @@
-<div id="container" class="col-md-8 col-md-offset-2">
+<div id="container" class="col-md-4 col-md-offset-4">
 	<h1 class="title">Login</h1>
 	<hr />
 	<div id="status_message" style="display: none;">
@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>	
-					<button type="submit" class="btn btn-default btn-lg" id="btn_login">
+					<button type="submit" class="btn btn-info btn-lg" id="btn_login">
 						<span class="glyphicon glyphicon-ok"></span> Enter
 					</button>
 				</td>
