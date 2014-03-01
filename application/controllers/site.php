@@ -165,6 +165,45 @@ class Site extends CI_Controller {
 	}
 	
 	/**
+	 * Function name : getSiteByName
+	 * Description: 
+	 * this function will call get the site specified by the given name
+	 * it's used to check if the site name is unique
+	 * 
+	 * created date: 18-2-2014
+	 * ccreated by: Eng. Mohanad Shab Kaleia
+	 * contact: ms.kaleia@gmail.com 
+	 */
+	public function getSiteByName()
+	{
+			
+		$this->load->model('site_model');
+		$site_name = $_GET['name'];
+		if(isset($_GET['old_name'])){
+			if($site_name == $_GET['old_name']){
+				echo "";
+			}else{
+				$this->site_model->name = $site_name;
+				$site = $this->site_model->getSiteByName();
+				if(isset($site[0])){
+					echo 'true';
+				}else{
+					echo "";
+				}
+			}
+		}else{
+			$this->site_model->name = $site_name;
+			$site = $this->site_model->getSiteByName();
+			if(isset($site[0])){
+				echo 'true';
+			}else{
+				echo "";
+			}
+		}
+	}
+	
+	
+	/**
 	 * Function name : saveData
 	 * Description: 
 	 * this function will save the addition form info ot the database.

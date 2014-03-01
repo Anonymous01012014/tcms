@@ -186,6 +186,27 @@ class User_model extends CI_Model{
 	 }
 	
 	/**
+	 * function name : getUserByUsername
+	 * 
+	 * Description : 
+	 * Returns the data of the user specified by the given username.
+	 * 
+	 * Created date : 1-3-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getUserByUsername(){
+		$query = "SELECT * 
+				  FROM user
+	 			  WHERE username like '{$this->username}'";
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
+	
+	
+	/**
 	 * function name : getAllUsers
 	 * 
 	 * Description : 

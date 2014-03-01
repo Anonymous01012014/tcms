@@ -1,7 +1,7 @@
 <div id="container" class="col-md-8 col-md-offset-2">
-	<h1 class="title">Add Case</h1>
+	<h1 class="title">Open Case</h1>
 	<hr />
-	<form method="post" action="<?php echo base_url();?>cases/saveData" >
+	<form method="post" action="<?php echo base_url();?>cases/saveData/open" >
 		<table>
 			<tr>
 				<td>

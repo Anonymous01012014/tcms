@@ -116,7 +116,8 @@ class Case_model extends CI_Model{
 						);
 					";
 		$this->db->query($query);
-		return true;
+		
+		return $this->db->insert_id();
 	 }
 	 
 	 /**
@@ -434,11 +435,9 @@ class Case_model extends CI_Model{
 						c.rejecting_reason as rejecting_reason,
 						c.collector_id as collector_id,
 						c.admin_id as admin_id,
-						c.site_id  as site_id,
-						cc.count as count
-				  FROM `case` as c , case_count as cc
-				  WHERE status = '".CLOSED_NORMALLY."'
-					AND c.id = cc.case_id";
+						c.site_id  as site_id
+				  FROM `case` as c 
+				  WHERE status = '".CLOSED_NORMALLY ."' ;";
 					
 										
 		//load site and user models.

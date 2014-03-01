@@ -134,6 +134,27 @@ class Binary_file_model extends CI_Model{
 	 }
 	 
 	 /**
+	 * function name : changeLocation
+	 * 
+	 * Description : 
+	 * changes the loaction of the specified binary file.
+	 * 
+	 * Created date : 12-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function changeLocation(){
+		$query = "UPDATE binary_file
+				  SET
+					location = '{$this->location}'					
+	 			  WHERE id = {$this->id}";
+		$this->db->query($query);
+		return true;
+	 }
+	 
+	 /**
 	 * function name : getBinaryFileById
 	 * 
 	 * Description : 

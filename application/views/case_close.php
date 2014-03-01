@@ -4,7 +4,7 @@
 	<div id="status_message" style="display: none;">
 		
 	</div>
-	<?php echo form_open_multipart(base_url().'cases/saveBinaryFile/'.$case_id);?>
+	<?php echo form_open_multipart(base_url().'cases/saveBinaryFile/close/'.$case_id);?>
 		<table>
 			<tr>
 				<td>
@@ -19,7 +19,7 @@
 			<tr>
 				<td colspan="2">
 					<button type="submit" class="btn btn-info" id="btn_add">
-						<span class="glyphicon glyphicon-ok"></span> Close
+						<span class="glyphicon glyphicon-ok"></span> Close Case
 					</button>
 					
 					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard')";>

@@ -28,6 +28,7 @@ class Login_user extends CI_Controller {
 	 
 	public function index()
 	{
+		$this->load->library('form_validation');
 		//if the user is logged in redirect him to dashboard
 		if(!isset($this->session->userdata['user'])){
 			$data['is_post_back'] = $this->is_post_back;

@@ -1,27 +1,12 @@
 <!-- set the fields that will be multiplied :) -->
-<script type="text/javascript">
 
-$(document).ready(function() {
-     
-    var sheepItForm = $('#sheepItForm').sheepIt({
-        separator: '',
-        allowRemoveLast: true,
-        allowRemoveCurrent: true,
-        allowRemoveAll: true,
-        allowAdd: true,
-        allowAddN: true,
-        maxFormsCount: 16,
-        minFormsCount: 1,
-        iniFormsCount: 2
-    });
- 
-});
-
-</script>
 
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Add Site</h1>
 	<hr />
+	<div id="status_message" style="display: none;">
+		
+	</div>
 	<form method="post" action="<?php echo base_url();?>site/saveData/add" >
 		<table id="addFormTable" >
 			<tr>
@@ -173,7 +158,7 @@ $(document).ready(function() {
 			
 			<tr>
 				<td colspan="2">
-					<button type="submit" class="btn btn-info" id="btn_add">
+					<button type="Button" class="btn btn-info" id="btn_add" onclick="checkNameUnique()" >
 						<span class="glyphicon glyphicon-ok">Add</span> 
 					</button>
 					
@@ -189,7 +174,7 @@ $(document).ready(function() {
 			
 		</table>
 		
-		
+		<button type="submit" id="submit" style="display: none;"/>
 	</form>
 	
 
@@ -198,4 +183,34 @@ $(document).ready(function() {
 	$('input#startDate').datepicker({
 		format: "yyyy-mm-dd"
 	});
+$(document).ready(function() {
+     
+    var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 16,
+        minFormsCount: 1,
+        iniFormsCount: 2
+    });
+ 
+});
+function checkNameUnique(){
+	var name = $('input#name').val();
+		$.get('<?php echo base_url();?>'+'site/getSiteByName?name='+name,function(data){
+			if(data){
+				$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>This site name already exists in the database!!</div>');
+				$('#status_message').slideDown();
+			}else{
+				$('form button#submit').click();
+			}
+		});
+}
+function hideMessage(){
+			$('#status_message').hide();
+	}	
+
 </script>

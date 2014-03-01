@@ -1,10 +1,10 @@
 <div id="container" class="col-md-8 col-md-offset-2">
-	<h1 class="title">Add Case</h1>
+	<h1 class="title">Add Closed Case</h1>
 	<hr />
 	<div id="status_message" style="display: none;">
 		
 	</div>
-	<form method="post" action="<?php echo base_url();?>cases/saveData" >
+	<?php echo form_open_multipart(base_url().'cases/saveBinaryFile/open_close');?>
 		<table>
 			<tr>
 				<td>
@@ -39,7 +39,7 @@
 			<tr>
 				<td colspan="2">
 					<button type="submit" class="btn btn-info" id="btn_add">
-						<span class="glyphicon glyphicon-ok"></span> Open
+						<span class="glyphicon glyphicon-ok"></span> Add Closed Case
 					</button>
 					
 					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard')";>

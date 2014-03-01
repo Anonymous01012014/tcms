@@ -1,39 +1,16 @@
 <!-- set the fields that will be multiplied :) -->
-<script type="text/javascript">
 
-$(document).ready(function() {
-     
-    var sheepItForm = $('#sheepItForm').sheepIt({
-        separator: '',
-        allowRemoveLast: true,
-        allowRemoveCurrent: true,
-        allowRemoveAll: true,
-        allowAdd: true,
-        allowAddN: true,
-        maxFormsCount: 16,
-        minFormsCount: 0,
-        iniFormsCount: 0,      
-        pregeneratedForms: [
-        <?php
-        	for($i = 1 ; $i <= count($lanes) ; $i++) {
-				echo "'pregenerated_form_".$i."'";
-				if($i < count($lanes)) echo ",";
-				else echo "]";				
-			}
-        ?>  
-        //pregeneratedForms: ['pregenerated_form_1' , 'pregenerated_form_2'] // Ids
-        
-        
-    });
- 
-});
-
-</script>
 
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Modify Site Data</h1>
 	<hr />
+	<div id="status_message" style="display: none;">
+		
+	</div>
 	<form method="post" action="<?php echo base_url();?>site/saveData/edit/<?php echo $site['id']; ?>" >
+		<!-- This field is used to compare with current site name -->
+		<input type="hidden" name="old_name" id="old_name" value="<?php echo $site['name']; ?>"/>
+		
 		<table id="addFormTable">
 			<tr>
 				
@@ -220,8 +197,8 @@ $(document).ready(function() {
 			
 			<tr>
 				<td colspan="2">
-					<button type="submit" class="btn btn-info" id="btn_add">
-						<span class="glyphicon glyphicon-ok">Save</span> 
+					<button type="Button" class="btn btn-info" id="btn_add" onclick="checkNameUnique()" >
+						<span class="glyphicon glyphicon-ok">Add</span> 
 					</button>
 					
 					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard');">
@@ -230,8 +207,12 @@ $(document).ready(function() {
 				</td>
 			</tr>
 			
+			
+			
+			
+			
 		</table>
-		
+		<button type="submit" id="submit" style="display: none;"/>
 		
 	</form>
 	
@@ -241,4 +222,46 @@ $(document).ready(function() {
 	$('input#startDate').datepicker({
 		format: "yyyy-mm-dd"
 	});
+$(document).ready(function() {
+     
+   var sheepItForm = $('#sheepItForm').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 16,
+        minFormsCount: 0,
+        iniFormsCount: 0,      
+        pregeneratedForms: [
+        <?php
+        	for($i = 1 ; $i <= count($lanes) ; $i++) {
+				echo "'pregenerated_form_".$i."'";
+				if($i < count($lanes)) echo ",";
+				else echo "]";				
+			}
+        ?>  
+        //pregeneratedForms: ['pregenerated_form_1' , 'pregenerated_form_2'] // Ids
+        
+        
+    });
+ 
+});
+function checkNameUnique(){
+	var name = $('input#name').val();
+	var oldName = $('input#old_name').val();
+		$.get('<?php echo base_url();?>'+'site/getSiteByName?name='+name+'&old_name='+oldName,function(data){
+			if(data){
+				$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>This site name already exists in the database!!</div>');
+				$('#status_message').slideDown();
+			}else{
+				$('form button#submit').click();
+			}
+		});
+}
+function hideMessage(){
+			$('#status_message').hide();
+	}	
+
 </script>
