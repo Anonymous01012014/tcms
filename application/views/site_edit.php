@@ -251,11 +251,20 @@ $(document).ready(function() {
 function checkNameUnique(){
 	var name = $('input#name').val();
 	var oldName = $('input#old_name').val();
+	var latitude = $('input#latitude').val();
+	var longitude = $('input#longitude').val();
 		$.get('<?php echo base_url();?>'+'site/getSiteByName?name='+name+'&old_name='+oldName,function(data){
 			if(data){
 				$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>This site name already exists in the database!!</div>');
 				$('#status_message').slideDown();
 			}else{
+				if(!$.isNumeric(longitude)){
+					$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>Longitude should be a number!!</div>');
+					$('#status_message').slideDown();
+				}else if(!$.isNumeric(latitude)){
+					$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>Latitude should be a number!!</div>');
+					$('#status_message').slideDown();
+				}else
 				$('form button#submit').click();
 			}
 		});

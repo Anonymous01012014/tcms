@@ -102,7 +102,7 @@ body
 #log
 {
 	margin-top:25px;
-	height:550px;
+	height:600px;
 	background-color:#555555;
 	opacity:0.8;
 	filter:alpha(opacity=80); /* For IE8 and earlier */
@@ -129,6 +129,7 @@ body
 	color:white;
 	border-bottom:1px dotted white;
 	margin-bottom:15px;
+	padding-bottom:5px;
 	padding-bottom:10px;	
 }
 
@@ -339,4 +340,8 @@ button#btn_login{
 
 .flyover.in {
    left: 50%;
+}
+
+.jspVerticalBar{
+	left:0;
 }

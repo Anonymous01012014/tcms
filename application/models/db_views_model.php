@@ -39,5 +39,27 @@ class Db_views_model extends CI_Model{
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
+	 
+	 
+	 /**
+	 * function name : getSiteCountersByCaseId
+	 * 
+	 * Description : 
+	 * Gets the last two days case activities from the data base
+	 * 
+	 * parameters:
+	 * 	
+	 * Created date : 2-3-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getCaseActivities(){	
+		$query = "SELECT * 
+				  FROM case_activities ";
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
 
 }
