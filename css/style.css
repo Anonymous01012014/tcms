@@ -128,8 +128,8 @@ body
 {
 	color:white;
 	border-bottom:1px dotted white;
+	margin:5px;
 	margin-bottom:15px;
-	padding-bottom:5px;
 	padding-bottom:10px;	
 }
 
@@ -341,7 +341,15 @@ button#btn_login{
 .flyover.in {
    left: 50%;
 }
-
+/* scrollbar styles */
 .jspVerticalBar{
 	left:0;
+	background: transparent;
+}
+.jspTrack{
+	background: #aaa;
+	width: 10px;
+}
+.jspDrag{
+	background: #666;
 }
