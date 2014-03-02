@@ -51,7 +51,7 @@ class Chart extends CI_Controller {
 		//get user information	
 		$data['user_data'] = $this->session->userdata['user'];
 				
-		//looad site model
+		//looad site model and get all active sites
 		$this->load->model("site_model");
 		
 		$sites = $this->site_model->getAllActiveSites();
@@ -80,20 +80,15 @@ class Chart extends CI_Controller {
 	 * ccreated by: Eng. Mohanad Shab Kaleia
 	 * contact: ms.kaleia@gmail.com 
 	 */
-	public function countChart()
+	public function countChart($site_id = "", $start_date ="" , $end_date = "")
 	{
-			
-		$data['user_data'] = $this->session->userdata['user'];
-		//call the general views for page structure	
-		$this->load->view('gen/header');
-		$this->load->view('gen/main_menu',$data);
-		$this->load->view('gen/logo');
-		$this->load->view('gen/main_content');
-	
-		$this->load->view('site_manage');
+		//load chart model
+		$this->load->model("chart_model");
 		
-		$this->load->view('gen/footer');
-		
+		//get count from database for a spesific site, start and end date
+		$this->chart_model->site_id = $site_id;
+		$count_records = $this->chart_model->getCounts();		
+		echo json_encode($count_records);									
 	}	
 }
 
