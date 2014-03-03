@@ -48,7 +48,7 @@
 				</td>
 				
 				<td>
-					<input class="form-control" type="text" name="longitude" id="longitude" required/>
+					<input class="form-control" type="number" max="180" min="-180" name="longitude" id="longitude" required/>
 				</td>
 				
 				
@@ -57,7 +57,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="latitude" id="latitude" required/>
+					<input class="form-control" type="number" name="latitude" id="latitude" required/>
 				</td>
 			</tr>
 			

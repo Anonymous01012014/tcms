@@ -15,7 +15,6 @@ function initialize()
 	  zoom:16,
 	  mapTypeId:google.maps.MapTypeId.ROADMAP
 	  };
-	  alert("lat: "+lat);
 	var map=new google.maps.Map(document.getElementById("googleMap")
 	  ,mapProp);
 	  
