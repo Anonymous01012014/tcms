@@ -347,9 +347,9 @@ button#btn_login{
 	background: transparent;
 }
 .jspTrack{
-	background: #aaa;
+	background: #666;
 	width: 10px;
 }
 .jspDrag{
-	background: #666;
+	background: #aaa;
 }
