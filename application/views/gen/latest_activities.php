@@ -3,7 +3,7 @@
 		Latest Activities
 	</h2>
 	<hr style="border-color: #000"/>
-	<div style="width: 50%; height: 25px; color: #E4F0F3;">
+	<div style="height: 25px; color: #E4F0F3;">
 		<b>Open Activity</b>
 	</div>
 	
@@ -15,7 +15,7 @@
 	</ul>
 	</div>
 	<br /><hr style="border-color: #000"/>
-	<div style="width: 50%; height: 25px; color: #E4F0F3;">
+	<div style=" height: 25px; color: #E4F0F3;">
 		<b>Close Activity</b>
 	</div>
 	<div class="close_list scroll-pane" style="height: 110px; overflow-y: scroll;background-color: #333;">
@@ -26,7 +26,7 @@
 	</ul>
 	</div>
 	<br /><hr style="border-color: #000"/>
-	<div style="width: 50%; height: 25px; color: #E4F0F3;">
+	<div style=" height: 25px; color: #E4F0F3;">
 		<b>Accept/Reject Activity</b>
 	</div>
 	
