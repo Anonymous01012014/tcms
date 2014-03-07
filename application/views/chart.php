@@ -1,7 +1,11 @@
+<!-- include the chart.js -->
+<script src="<?php echo base_url();?>js/chart.js"></script>
+
+
 <div id="container" class="col-md-8 col-md-offset-2">
 	<h1 class="title">Charting analysis results</h1>
 	<hr />
-	<form method="post" action="#" >
+	<form method="post" action="#">
 		<table>
 			<tr>				
 				<!-- site name -->
@@ -62,13 +66,13 @@
 			
 			<tr>
 				<td colspan="2" id="chart_container">
-					
+					<div id="googleMap" style="width:500px;height:380px;"></div>
 				</td>
 			</tr>
 		
 			<tr>
 				<td colspan="2">
-					<input type="submit" class="btn btn-info" value="Show Chart results"/>
+					<input type="button" class="btn btn-info" value="Show Chart results" onclick="getCountChart();"/>
 					<input type="reset" class="btn btn-default" value="Reset"/>
 				</td>
 			</tr>
@@ -89,3 +93,7 @@
 		format: "yyyy-mm-dd"
 	});
 </script>
+
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>

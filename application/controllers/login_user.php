@@ -33,7 +33,7 @@ class Login_user extends CI_Controller {
 		if(!isset($this->session->userdata['user'])){
 			$data['is_post_back'] = $this->is_post_back;
 			$this->load->view('gen/header');
-			//$this->load->view('gen/main_menu');
+			$this->load->view('gen/main_menu');
 			$this->load->view('gen/logo');
 			$this->load->view('gen/main_content');
 			$this->load->view('login',$data);
