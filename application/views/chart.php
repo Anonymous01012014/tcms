@@ -66,7 +66,7 @@
 			
 			<tr>
 				<td colspan="2" id="chart_container">
-					
+					<div id="googleMap" style="width:500px;height:380px;"></div>
 				</td>
 			</tr>
 		
