@@ -87,6 +87,43 @@ class User extends CI_Controller {
 		
 	}
 	
+	/**
+	 * Function name : getUserByUsername
+	 * Description: 
+	 * this function will call get the site specified by the given name
+	 * it's used to check if the site name is unique
+	 * 
+	 * created date: 1-3-2014
+	 * ccreated by: Eng. Ahmad Mulhem Barakat
+	 * contact: molham225@gmail.com 
+	 */
+	public function getUserByUsername()
+	{
+		$this->load->model('user_model');
+		$username = $_GET['username'];
+		if(isset($_GET['old_username'])){
+			if($username == $_GET['old_username']){
+				echo "";
+			}else{
+				$this->user_model->username = $username;
+				$user = $this->user_model->getUserByUsername();
+				if(isset($user[0])){
+					echo 'true';
+				}else{
+					echo "";
+				}
+			}
+		}else{
+			$this->user_model->username = $username;
+			$user = $this->user_model->getUserByUsername();
+			if(isset($user[0])){
+				echo 'true';
+			}else{
+				echo "";
+			}
+		}
+	}
+	
 	
 	/**
 	 * Function name : end
@@ -188,7 +225,7 @@ class User extends CI_Controller {
 			    {
 					$this->user_model->password = md5($this->input->post('password'));
 			   }
-				echo print_r($this->user_model);
+			   $this->user_model->hire_date = $this->input->post('hire_date');
 				$this->user_model->id = $id;
 				
 				//Execute addition function.

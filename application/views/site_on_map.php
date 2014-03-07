@@ -9,7 +9,7 @@
 	
 	
 	<script>
-		var site = "<?php echo $site[0]["name"];?>";
+		var site_name = "<?php echo $site[0]["name"];?>";
 		var lat = <?php echo $site[0]["latitude"];?>;
 		var long = <?php echo $site[0]["longitude"];?>;
 		google.maps.event.addDomListener(window, 'load', initialize);

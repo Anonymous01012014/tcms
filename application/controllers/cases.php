@@ -152,15 +152,14 @@ class Cases extends CI_Controller {
 		
 		//insert post values into the model
 		$this->case_model->site_id = $this->input->post('site');
-		$this->case_model->admin_id = 1;
-		$this->case_model->collector_id = 1;
+		$this->case_model->admin_id = $this->session->userdata['user']['id'];
+		$this->case_model->collector_id = 0;
 		
 		
 		//Execute addition function.
 		$this->case_model->openCase();
 		 
-		redirect(base_url().'cases');
-		
+		redirect(base_url().'cases');		
 	}
 	
 	
@@ -284,14 +283,29 @@ class Cases extends CI_Controller {
 	{		
 		// instanciating the case model class
 		$this->load->model('case_model');
+		$this->load->model('binary_file_model');
 		
 		//insert post values into the model
 		$this->case_model->id = $id;
 		$this->case_model->rejecting_reason= $reason;	
 		
+		//add the id of the admin rejected this case
+		$this->case_model->admin_id = $this->session->userdata['user']['id'];
+		
 		//Execute reject function.
 		$this->case_model->rejectCase();
-		 
+		
+		//get the binary file and move it to rejected file folder
+		$this->binary_file_model->case_id = $id;
+		$binary = $this->binary_file_model->getBinaryFileByCaseId();
+		if(isset($binary[0])){
+			rename($binary[0]['location'].$binary[0]['name'],'files/binary_files/rejected_binary_files/'.$binary[0]['name']);
+			$this->binary_file_model->location = 'files/binary_files/rejected_binary_files/';
+			$this->binary_file_model->id = $binary[0]['id'];
+			//change the location of this file to its new location
+			$this->binary_file_model->changeLocation();
+			
+		}
 		redirect(base_url().'cases');
 		
 	}
@@ -311,12 +325,27 @@ class Cases extends CI_Controller {
 	{		
 		// instanciating the case model class
 		$this->load->model('case_model');
+		$this->load->model('binary_file_model');
 		
 		//insert post values into the model
 		$this->case_model->id = $id;	
 		
+		//add the id of the admin accepted this case
+		$this->case_model->admin_id = $this->session->userdata['user']['id'];
+		
 		//Execute accept function.
 		$this->case_model->acceptCase();
+		 
+		//get the binary file and move it to rejected file folder
+		$this->binary_file_model->case_id = $id;
+		$binary = $this->binary_file_model->getBinaryFileByCaseId();
+		if(isset($binary[0])){
+			rename($binary[0]['location'].$binary[0]['name'],'files/binary_files/accepted_binary_files/'.$binary[0]['name']);
+			$this->binary_file_model->location = 'files/binary_files/accepted_binary_files/';
+			$this->binary_file_model->id = $binary[0]['id'];
+			//change the location of this file to its new location
+			$this->binary_file_model->changeLocation();
+		}
 		 
 		redirect(base_url().'cases');
 		
@@ -359,9 +388,9 @@ class Cases extends CI_Controller {
 	 * created by: Eng. Ahmad Mulhem Barakat
 	 * contact: molham225@gmail.com
 	 */
-	function saveBinaryFile($case_id)
+	function saveBinaryFile($action,$case_id = 0)
 	{
-		$config['upload_path'] = './files/Binary_files/';
+		$config['upload_path'] = './files/Binary_files/new_binary_files/';
 		$config['allowed_types'] = '*';
 		$config['max_size']    = '80000';
 
@@ -384,11 +413,21 @@ class Cases extends CI_Controller {
 			//split the name and extension of the file
 			$file_name = explode('.',$file_data['file_name']);
 			if($file_name[count($file_name) - 1] == "BIN" || $file_name[count($file_name) - 1] == "bin"){
-			
+				//if the action is close the create an open case to be closed
+				if($action == "open_close"){					
+					//insert post values into the model
+					$this->case_model->site_id = $this->input->post('site');
+					$this->case_model->admin_id = 0;
+					$this->case_model->collector_id = $this->session->userdata['user']['id'];
+					
+					//Execute addition function.
+					$case_id = $this->case_model->openCase();
+					echo $case_id;
+				}
 				//setting the file name to uploaded-file-name_case-id
 				$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
 				//setting the binary file location.
-				$this->binary_file_model->location = 'files/Binary_files/';	
+				$this->binary_file_model->location = 'files/Binary_files/new_binary_files/';	
 				//setting the case id for this binary file.	
 				$this->binary_file_model->case_id = $case_id;		
 				//setting the counter id for this binary file
@@ -405,15 +444,15 @@ class Cases extends CI_Controller {
 				
 				//execute the close normally function
 				$this->case_model->closeNormally();
-				rename('files/binary_files/'.$file_data['file_name'],'files/binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+				rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/new_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
 				
 				/**extract count info from the binary and add it to database**/
 				//execute the TSDP command with volume choice to generate the count text file.
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
+				//exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
 				//getting the output count file name
-				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
+				//$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
 				//extracting data from the count file and send it to database
-				$this->read_and_save($file,$case_id);
+				//$this->read_and_save($file,$case_id);
 				
 			}
 			redirect(base_url().'cases');

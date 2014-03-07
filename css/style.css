@@ -38,6 +38,7 @@ body
         background-size:100% 100%;
         overflow-x: hidden;    
         padding-top:50px;
+        min-height: 800px;
 }
 
 
@@ -102,7 +103,7 @@ body
 #log
 {
 	margin-top:25px;
-	height:550px;
+	min-height:650px;
 	background-color:#555555;
 	opacity:0.8;
 	filter:alpha(opacity=80); /* For IE8 and earlier */
@@ -128,6 +129,7 @@ body
 {
 	color:white;
 	border-bottom:1px dotted white;
+	margin:5px;
 	margin-bottom:15px;
 	padding-bottom:10px;	
 }
@@ -339,4 +341,16 @@ button#btn_login{
 
 .flyover.in {
    left: 50%;
+}
+/* scrollbar styles */
+.jspVerticalBar{
+	left:0;
+	background: transparent;
+}
+.jspTrack{
+	background: #666;
+	width: 10px;
+}
+.jspDrag{
+	background: #aaa;
 }
