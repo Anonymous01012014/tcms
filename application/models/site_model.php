@@ -266,7 +266,8 @@ class Site_model extends CI_Model{
 	 public function getAllActiveSites(){
 		$query = "SELECT * 
 				  FROM site
-				  WHERE end_date = '000000'";
+				  WHERE end_date = '000000'
+				  ORDER BY id DESC";
 				  
 		$query = $this->db->query($query);
 		return $query->result_array();

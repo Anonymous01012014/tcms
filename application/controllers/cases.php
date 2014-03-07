@@ -289,6 +289,9 @@ class Cases extends CI_Controller {
 		$this->case_model->id = $id;
 		$this->case_model->rejecting_reason= $reason;	
 		
+		//add the id of the admin rejected this case
+		$this->case_model->admin_id = $this->session->userdata['user']['id'];
+		
 		//Execute reject function.
 		$this->case_model->rejectCase();
 		
@@ -326,6 +329,9 @@ class Cases extends CI_Controller {
 		
 		//insert post values into the model
 		$this->case_model->id = $id;	
+		
+		//add the id of the admin accepted this case
+		$this->case_model->admin_id = $this->session->userdata['user']['id'];
 		
 		//Execute accept function.
 		$this->case_model->acceptCase();

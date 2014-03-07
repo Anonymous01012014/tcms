@@ -249,6 +249,7 @@ class Case_model extends CI_Model{
 				  SET
 					accept_reject_date = CURDATE(),
 					accept_reject_time = CURTIME(),
+					admin_id = '{$this->admin_id}',
 					status = '".ACCEPTED_CLOSED."'				
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
@@ -276,6 +277,7 @@ class Case_model extends CI_Model{
 					accept_reject_date = CURDATE(),
 					accept_reject_time = CURTIME(),
 					rejecting_reason = '{$this->rejecting_reason}',
+					admin_id = '{$this->admin_id}',
 					status = '".REJECTED_CLOSED."'				
 	 			  WHERE id = {$this->id}";
 		$this->db->query($query);
@@ -381,7 +383,8 @@ class Case_model extends CI_Model{
 	 public function getOpenCasesForView(){
 		$query = "SELECT *
 				  FROM `case`
-				  WHERE status = '".OPENED."'";
+				  WHERE status = '".OPENED."'
+				  ORDER BY id DESC";
 		//load site and user models.
 		$this->load->model('site_model');
 		$this->load->model('user_model');
@@ -437,7 +440,8 @@ class Case_model extends CI_Model{
 						c.admin_id as admin_id,
 						c.site_id  as site_id
 				  FROM `case` as c 
-				  WHERE status = '".CLOSED_NORMALLY ."' ;";
+				  WHERE status = '".CLOSED_NORMALLY ."' 
+				  ORDER BY id DESC;";
 					
 										
 		//load site and user models.

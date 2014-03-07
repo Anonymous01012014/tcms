@@ -102,7 +102,7 @@ body
 #log
 {
 	margin-top:25px;
-	height:600px;
+	height:650px;
 	background-color:#555555;
 	opacity:0.8;
 	filter:alpha(opacity=80); /* For IE8 and earlier */

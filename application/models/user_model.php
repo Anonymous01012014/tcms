@@ -242,7 +242,8 @@ class User_model extends CI_Model{
 	 public function getAllUsersForGridView(){
 		$query = "SELECT * 
 				  FROM user
-				  WHERE end_date = '00000000' ;";
+				  WHERE end_date = '00000000' 
+				  ORDER BY id DESC;";
 				  
 		$query = $this->db->query($query);
 		

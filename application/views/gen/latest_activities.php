@@ -2,7 +2,7 @@
 	<h2 class="log-title">
 		Latest Activities
 	</h2>
-	<hr />
+	<hr style="border-color: #000"/>
 	<div style="width: 50%; height: 25px; color: #E4F0F3;">
 		<b>Open Activity</b>
 	</div>
@@ -14,7 +14,7 @@
 		<?php }?>
 	</ul>
 	</div>
-	<br />
+	<br /><hr style="border-color: #000"/>
 	<div style="width: 50%; height: 25px; color: #E4F0F3;">
 		<b>Close Activity</b>
 	</div>
@@ -25,7 +25,7 @@
 		<?php }?>
 	</ul>
 	</div>
-	<br />
+	<br /><hr style="border-color: #000"/>
 	<div style="width: 50%; height: 25px; color: #E4F0F3;">
 		<b>Accept/Reject Activity</b>
 	</div>
