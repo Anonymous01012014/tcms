@@ -159,6 +159,30 @@ class Lane_model extends CI_Model{
 		}	 	
 	 }
 	 
+	 
+	 /**
+	 * function name : modifyLaneDirection
+	 * 
+	 * Description : 
+	 * modify the data of the lane direction of the given lane id.
+	 * 
+	 * Created date : 12-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function modifyLaneDirection(){
+		$query = "UPDATE lane
+				  SET					
+					lane_direction = '{$this->lane_direction}'
+				  WHERE
+				  id = '{$this->id}'
+				  ";
+		$this->db->query($query);
+		return true; 	
+	 }
+	 
 	 /**
 	 * function name : addCounterToLane
 	 * 

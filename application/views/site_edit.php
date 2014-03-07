@@ -137,7 +137,8 @@
 								}
 							?>
 						</select>
-					    
+					    <!-- lane id -->
+						<input type="hidden" id="lane_#index#_id" name="lane_id[#index#]" value="0" />
 					    <a id="sheepItForm_remove_current">
 					    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
 					    </a>
@@ -164,12 +165,15 @@
 												}
 											?>
 										</select>
-									    
+									    <!-- lane id -->
+										<input type="hidden" id="lane_#index#_id" name="lane_id[#index#]" value="<?php echo $lane['id'];?>" />
 									    <a id="sheepItForm_remove_current">
 									    <button type="button" class="btn btn-default glyphicon glyphicon-minus"></button> 
 									    </a>
+									    
 									</div>
-									<!-- /Form template-->										
+									<!-- /Form template-->	
+																
 								<?php
 							} 
 					    ?>

@@ -249,17 +249,47 @@ class Site extends CI_Controller {
 			}
 		 
 		}elseif($action == "edit" && $id > 0){
+			
 			//If the action is edit set the id in the model to the given one.
 			$this->site_model->id = $id;
 			//Edit the specified site.
 			$this->site_model->modifySite();
 			
-			//modify lanes 
-			for($i= 0 ; $i < count($lane_direction) ; $i++)
-			{																						
-				$this->lane_model->lane_direction = $lane_direction[$i];										
-				$this->lane_model->site_id = $id;								
-				$this->lane_model->modifyLane();				
+			//get lanes ids
+			$lane_id = $this->input->post('lane_id');
+			
+			//get all site lanes									
+			$this->lane_model->site_id = $id;
+			$lanes = $this->lane_model->getLaneBySiteId();
+			
+			
+			for($i= 0 ; $i < count($lane_id) ; $i++){
+				//add the new added lanes
+				if($lane_id[$i] == '0'){
+					$this->lane_model->lane_direction = $lane_direction[$i];
+					$this->lane_model->addLane();
+				//modify the modified lanes
+				}else{
+					$this->lane_model->lane_direction = $lane_direction[$i];
+					$this->lane_model->id = $lane_id[$i];
+					$this->lane_model->modifyLaneDirection();
+				}
+			}
+			
+			//delete the removed lanes 
+			foreach($lanes as $lane)
+			{	
+				$delete = true;			
+				for($i= 0 ; $i < count($lane_id) ; $i++){
+					if($lane_id[$i] == $lane['id']){
+						$delete = false;
+						break;
+					}
+				}
+				if($delete){
+					$this->lane_model->id = $lane['id'];
+					$this->lane_model->deleteLane();
+				}	
 			}
 		}
 		
