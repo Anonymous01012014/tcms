@@ -198,7 +198,7 @@
 			<tr>
 				<td colspan="2">
 					<button type="Button" class="btn btn-info" id="btn_add" onclick="checkNameUnique()" >
-						<span class="glyphicon glyphicon-ok">Add</span> 
+						<span class="glyphicon glyphicon-ok">Save</span> 
 					</button>
 					
 					<button type="Button" class="btn btn-default" id="btn_cancel" onclick="location.assign('<?php echo base_url();?>dashboard');">

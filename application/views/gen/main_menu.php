@@ -20,8 +20,7 @@
 
 	<ul class="col-md-3">
 		<li>Hello, <a href="#" class="active"><?php echo $user_data['first_name'];?></a></li>	
-		<li><a href="<?php echo base_url();?>login_user/signout" class="">Sign out</a></li>					
-		<li><a href="javascript: alert($(window).width())" class="">Sign out</a></li>					
+		<li><a href="<?php echo base_url();?>login_user/signout" class="">Sign out</a></li>						
 	</ul>
 	
 </div>	
