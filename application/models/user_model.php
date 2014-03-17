@@ -310,7 +310,8 @@ class User_model extends CI_Model{
 		$query = "SELECT * 
 				  FROM user
 				  WHERE username = '{$this->username}'
-				  AND password = '{$this->password}'";
+				  AND password = '{$this->password}'
+				  AND end_date = '000000'";
 				  
 		$query = $this->db->query($query);
 		$users = $query->result_array();
