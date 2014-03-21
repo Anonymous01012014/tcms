@@ -92,21 +92,30 @@ class Login_user extends CI_Controller {
 		
 		//fill use model with user and password
 		$this->user_model->username = $this->input->post('username');
-		$this->user_model->password = md5($this->input->post('password'));
 		
-		//get the user specified by login info entered
-		$user = $this->user_model->getUserByUsernameAndPassword();
+		//get user by user name
+		$user_information = $this->user_model->getUserByUsername();
 		
-		//if the user exists
-		if(isset($user)){
-			if($user['id'] !== 0){
+		if(isset($user_information[0]))
+		{
+			$can_login = password_verify ( $this->input->post('password') , $user_information[0]["password"]);
+			
+			if($can_login)
+			{
 				$this->session->set_userdata(array('user'=> $user));
+				return true;				
 			}
-			return true;
-		}else{
+			else 
+			{
+				$this->form_validation->set_message('validate_credentials','Incorrect username/password.');
+				return false;
+			}						
+		}
+		else
+		{
 			$this->form_validation->set_message('validate_credentials','Incorrect username/password.');
 			return false;
-		}
+		}	
 	}
 	
 	
