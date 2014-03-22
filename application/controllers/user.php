@@ -212,7 +212,7 @@ class User extends CI_Controller {
 		if($action == "add"){
 			//insert post values into the model 
 			if($this->input->post('password') == $this->input->post('re_password')){
-				$this->user_model->password = md5($this->input->post('password'));
+				$this->user_model->password =  hash('sha256', $this->input->post('password'), false); 
 				//Execute addition function.
 				$this->user_model->addUser();
 			}
@@ -223,7 +223,7 @@ class User extends CI_Controller {
 			    $this->input->post('password') == $this->input->post('re_password')
 			    )
 			    {
-					$this->user_model->password = md5($this->input->post('password'));
+					$this->user_model->password = hash('sha256', $this->input->post('password'), false); 
 			   }
 			   $this->user_model->hire_date = $this->input->post('hire_date');
 				$this->user_model->id = $id;

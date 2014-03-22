@@ -92,7 +92,7 @@ class Login_user extends CI_Controller {
 		
 		//fill use model with user and password
 		$this->user_model->username = $this->input->post('username');
-		$this->user_model->password = md5($this->input->post('password'));
+		$this->user_model->password = hash('sha256', $this->input->post('password'), false); 
 		
 		//get the user specified by login info entered
 		$user = $this->user_model->getUserByUsernameAndPassword();
