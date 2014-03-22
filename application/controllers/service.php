@@ -49,8 +49,7 @@ class Service extends CI_Controller
 				
 				//fill use model with user and password
 				$CI->user_model->username = $username;
-				$CI->user_model->password = md5($password);
-				
+				$CI->user_model->password = hash('sha256', $password, false);
 				//get the user specified by login info entered
 				$user = $CI->user_model->getUserByUsernameAndPassword();
 				
