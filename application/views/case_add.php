@@ -14,8 +14,15 @@
 							for($i=0;$i < count($sites);$i++){
 								$site_name = $sites[$i]['name'];
 								$site_id = $sites[$i]['id'];
+								$opened = false;
+								foreach($open_sites as $open_site){
+									if($site_id ==  $open_site['site_id']){
+										$opened = true;
+										break; 
+									}
+								}
 						?>
-						<option value="<?php echo $site_id; ?>"><?php echo $site_name; ?></option>
+						<option value="<?php echo $site_id; ?>" <?php if($opened){ echo "disabled='disabled'";}?>><?php echo $site_name; ?></option>
 						<?php
 							}
 						?>

@@ -31,9 +31,9 @@ class Tsdp_file extends CI_Controller{
 	}
 	
 	public function index(){
-		$this->read_file_lines($this->session->userdata['file']);
-		$this->save_to_database($this->session->userdata['case']);
-		redirect(base_url().'cases');
+		//$this->read_file_lines($this->session->userdata['file']);
+		//$this->save_to_database($this->session->userdata['case']);
+		//redirect(base_url().'cases');
 	}
 	
 	

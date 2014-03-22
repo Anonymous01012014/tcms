@@ -20,7 +20,7 @@ class Service extends CI_Controller
      public function __construct()
      {
           parent::__construct();
-          $this->ns = 'http://198.38.94.163/tcms/service/';
+          $this->ns = 'http://192.168.1.34:8080/tcms/service/';
           $this->load->library("Nusoap_library"); // load nusoap toolkit library in controller
           $this->nusoap_server = new soap_server(); // create soap server object
           $this->nusoap_server->configureWSDL("CaseControl", $this->ns); // wsdl cinfiguration
@@ -85,7 +85,7 @@ class Service extends CI_Controller
 		
 		
 		/**
-		 * Function: addClosedCase
+		 * Function: uploadBinary
 		 * 
 		 * Description: 
 		 * Uploads the given binary file and creates a new open case for the 
@@ -96,47 +96,75 @@ class Service extends CI_Controller
 		 * contact: molham225@gmail.com 
 		 */
 		
-		function addClosedCase($encoded_file,$name,$user_id,$site_id){
-				$CI =& get_instance();
-				//load user model.
-				$CI->load->model('binary_file_model');
-				$CI->load->model('case_model');
+		function uploadBinary($encoded_file,$name,$user_id){
+			$CI =& get_instance();
+			//load user model.
+			$CI->load->model('binary_file_model');
+			$CI->load->model('case_model');
+		
+			$location = "./files/Binary_files/new_binary_files/";                               // Mention where to upload the file
+			//criete the new file and suppress file not found warning
+			$current = @file_get_contents($location); 
+			// Get the file content. This will create an empty file if the file does not exist     
+			$current = base64_decode($encoded_file);   // Now decode the content which was sent by the client     
 			
-				$location = "./files/Binary_files/new_binary_files/";                               // Mention where to upload the file
-				//criete the new file and suppress file not found warning
-				$current = @file_get_contents($location); 
-				// Get the file content. This will create an empty file if the file does not exist     
-				$current = base64_decode($encoded);   // Now decode the content which was sent by the client     
-				                      // Write the decoded content in the file mentioned at particular location      
-				if($name!="")
-				{
+			//if a file was chosen
+			if($name!="")
+			{
+				
+				//get binary file data
+				$file_name =  $name;
+				
+				
+				//split the name and extension of the file
+				$file_name = explode('.',$file_name);
+				//if the file is a binary file
+				if(strtoupper($file_name[count($file_name) - 1]) == "BIN"){
+					//put the file in the new binary files directory
+					file_put_contents($location.$file_name[0].'.BIN', $current); 
 					
-					//get binary file data
-					$file_name =  $name;
-					
-					
-					//split the name and extension of the file
-					$file_name = explode('.',$file_name);
-					
-					if(strtoupper($file_name[count($file_name) - 1]) == "BIN"){
-										
-						//insert post values into the model
-						$CI->case_model->site_id = $site_id;
-						$CI->case_model->admin_id = 0;
-						$CI->case_model->collector_id = $user_id;
+					//execute the TSDP command with volume choice to generate the count text file.
+					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/new_binary_files/".$file_name[0].'.BIN'." --out files/output_files/count/".$file_name[0].".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");	
+					//echo __DIR__ ." files/binary_files/new_binary_files/".$file_name[0].'.BIN';
+					//getting the output count file name
+					$file = "files/output_files/count/".$file_name[0].".txt";
+					//extracting data from the count file and send it to database
+					$CI->load->model('tsdp_file');
+					//reading TSDP count file into the model object
+					$CI->tsdp_file->read_file_lines($file);
+					//getting the site name from the file header
+					$site_ID = $CI->tsdp_file->file_header->site_ID;
+					//loading site model
+					$CI->load->model('site_model');
+					//getting the id of this site
+					$CI->site_model->name = $site_ID;
+					$site = $CI->site_model->getSiteByName();
+					//if the site exists
+					if(isset($site[0])){
+						//get the opened case for this site
+						$CI->case_model->site_id = $site[0]['id'];
+						$open_case = $CI->case_model->getOpenCaseBySiteId();
+						//if the site already has an opened case just close and
+						if(isset($open_case[0])){
+							$case_id = $open_case[0]['id'];
+						}else{//if not create a new open case and close it
+							//insert post values into the model
+							$CI->case_model->site_id = $site[0]['id'];
+							$CI->case_model->admin_id = 0;
+							$CI->case_model->collector_id = $user_id;
+							
+							//Execute addition function.
+							$case_id = $CI->case_model->openCase();
+						}
+						//inserting output file headers info into the database (just file_header for now)
+						$CI->tsdp_file->save_file_headers($case_id);
 						
-						//Execute addition function.
-						$case_id = $CI->case_model->openCase();
-					
 						//setting the file name to uploaded-file-name_case-id
 						$CI->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
 						//setting the binary file location.
-						$CI->binary_file_model->location = 'files/Binary_files/new_binary_files/';	
+						$CI->binary_file_model->location = 'files/Binary_files/closed_binary_files/';	
 						//setting the case id for this binary file.	
-						$CI->binary_file_model->case_id = $case_id;		
-						//setting the counter id for this binary file
-						//This step shouldn't be here	
-						//$this->binary_file_model->counter_id = 1;		
+						$CI->binary_file_model->case_id = $case_id;			
 						
 						//execute the add file function.
 						$CI->binary_file_model->addBinaryFile();
@@ -148,21 +176,40 @@ class Service extends CI_Controller
 						
 						//execute the close normally function
 						$CI->case_model->closeNormally();
-						file_put_contents($location.$file_name[0].'_'.$case_id.'.BIN', $current); 
 						
-						return "File Uploaded successfully..."; // Output success message 				
+						rename($location.$file_name[0].'.BIN','files/binary_files/closed_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+						
+						return 0; // Output success message 	"File Uploaded successfully..."	
+					}else{
+						/* adding the undifined site binary file to the database under case_id=0 and thefile name is fileName_binaryFileId.BIN */
+						//setting the file name to uploaded-file-name_case-id
+						$CI->binary_file_model->name = $file_name[0];
+						//setting the binary file location.
+						$CI->binary_file_model->location = 'files/Binary_files/undefined_binary_files/';	
+						//setting the case id for this binary file.	
+						$CI->binary_file_model->case_id = 0;			
+						
+						//execute the add file function.
+						$file_id = $CI->binary_file_model->addBinaryFile();
+						//moving the binaryfile to the undefined binary files directory
+						rename($location.$file_name[0].'.BIN','files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
+						
+						return 1;//"The site of this file doesn't exist.."
+					}	
+					//delete the generated output count file
+					unlink($file);	
 				}
-				return "You should upload binary files only...";
+				return 2; //"You should upload binary files only..."
 			}
 			else        
 			{
-				return "Please upload a file...";
+				return 3;//"Please select a file for upload..."
 			}
 	 }
 		// registering add closed case method in the wsdl
-		$input_array = array ('encoded_file' => "xsd:string", 'name' => "xsd:string",'user_id'=>"xsd:int",'site_id'=>"xsd:int"); 
-		$return_array = array ("return" => "xsd:string");
-		$this->nusoap_server->register('addClosedCase', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/addClosedCase", "rpc", "encoded", "Upload a file and create a new closed case for it");
+		$input_array = array ('encoded_file' => "xsd:string", 'name' => "xsd:string",'user_id'=>"xsd:int"); 
+		$return_array = array ("return" => "xsd:int");
+		$this->nusoap_server->register('uploadBinary', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/uploadBinary", "rpc", "encoded", "Upload a file and create a new closed case for it");
 		
 	 
 		/**
@@ -174,7 +221,7 @@ class Service extends CI_Controller
 		 * created date: 17-3-2014
 		 * ccreated by: Eng. Ahmad Mulhem Barakat
 		 * contact: molham225@gmail.com 
-		 */
+		 *
 		
 		function closeCaseNormally($encoded_file,$name,$user_id,$case_id){
 				$CI =& get_instance();
@@ -222,26 +269,26 @@ class Service extends CI_Controller
 						$CI->case_model->closeNormally();
 						file_put_contents($location.$file_name[0].'_'.$case_id.'.BIN', $current); 
 						
-						return "File Uploaded successfully..."; // Output success message 				
+						return 0; // Output success message 				
 				}
-				return "You should upload binary files only...";
+				return 1;
 			}
 			else        
 			{
-				return "Please upload a file...";
+				return 2;
 			}
 	 }
 	 
 	 
 		// registering close case normally method in the wsdl
 		$input_array = array ('encoded_file' => "xsd:string", 'name' => "xsd:string",'user_id'=>"xsd:int",'case_id'=>"xsd:int"); 
-		$return_array = array ("return" => "xsd:string");
+		$return_array = array ("return" => "xsd:int");
 		$this->nusoap_server->register('closeCaseNormally', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/closeCaseNormally", "rpc", "encoded", "Upload a file to close a case");
 		
+		*/
 		
 		
-		
-		function closeCaseManually($reason,$user_id,$case_id){
+		/*function closeCaseManually($reason,$user_id,$case_id){
 			$CI =& get_instance();
 			//load  models.
 			$CI->load->model('case_model');
@@ -249,7 +296,7 @@ class Service extends CI_Controller
 			//insert values into the model
 			$CI->case_model->id = $case_id;
 			$CI->case_model->manual_closing_reason = $reason;	
-			$CI->case_model->collector_id = $user_ids;	
+			$CI->case_model->collector_id = $user_id;	
 			
 			//Execute manual close function.
 			$CI->case_model->closeManually();
@@ -261,55 +308,7 @@ class Service extends CI_Controller
 		$input_array = array ('reason' => "xsd:string",'user_id'=>"xsd:int",'case_id'=>"xsd:int"); 
 		$return_array = array ("return" => "xsd:int");
 		$this->nusoap_server->register('closeCaseManually', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/closeCaseManually", "rpc", "encoded", "Close a case manually and save the reason for that");
-		
-		
-		/**
-		 * Function: getSites
-		 * 
-		 * Description: 
-		 * Gets all of the available active sites in the database.
-		 * 
-		 * created date: 17-3-2014
-		 * ccreated by: Eng. Ahmad Mulhem Barakat
-		 * contact: molham225@gmail.com 
-		 */
-		function getSites(){
-			$CI =& get_instance();
-			$CI->load->model('site_model');
-		
-			//get all active sites.
-			$sites = $CI->site_model->getAllActiveSites();
-			return json_encode($sites);
-		}
-		
-		$input_array = array (); 
-		$return_array = array ("return" => "xsd:string");
-		$this->nusoap_server->register('getSites', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/getSites", "rpc", "encoded", "Gets all of the active sites inthe database.");
-		
-		/**
-		 * Function: getOpenCases
-		 * 
-		 * Description: 
-		 * Gets all of the available open cases in the database to be closed by the user.
-		 * 
-		 * created date: 17-3-2014
-		 * ccreated by: Eng. Ahmad Mulhem Barakat
-		 * contact: molham225@gmail.com 
-		 */
-		
-		function getOpenCases(){
-			$CI =& get_instance();
-			$CI->load->model('case_model');
-		
-			//get all active sites.
-			$open_cases = $CI->case_model->getOpenCasesForView();
-			return json_encode($open_cases);
-		}
-		
-		$input_array = array (); 
-		$return_array = array ("return" => "xsd:string");
-		$this->nusoap_server->register('getOpenCases', $input_array, $return_array, "urn:SOAPServerWSDL", "urn:".$this->ns."/getOpenCases", "rpc", "encoded", "Gets all of the opened cases in the database.");
-		
+		*/
 		$this->nusoap_server->service(file_get_contents("php://input"));
-}
+	}
 }

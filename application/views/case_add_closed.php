@@ -8,26 +8,6 @@
 		<table>
 			<tr>
 				<td>
-					<label for="site">Site:</label>
-				</td>
-				
-				<td>
-					<select name="site" id="site" >
-						<?php
-							for($i=0;$i < count($sites);$i++){
-								$site_name = $sites[$i]['name'];
-								$site_id = $sites[$i]['id'];
-						?>
-						<option value="<?php echo $site_id; ?>"><?php echo $site_name; ?></option>
-						<?php
-							}
-						?>
-					</select>
-				</td>
-			</tr>
-			
-			<tr>
-				<td>
 					<label for="site">Binary File:</label>
 					
 				</td>

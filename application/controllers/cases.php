@@ -16,11 +16,9 @@ class Cases extends CI_Controller {
 	 
 	 
 	 
-	public function index()
+	public function index($message = "")
 	{	
-		
 		$this->manage();
-		
 	}	
 	
 	/**
@@ -34,8 +32,15 @@ class Cases extends CI_Controller {
 	 */
 	public function manage()
 	{
+		$data['message'] = "";
+		if(isset($_GET['message'])){
+			$data['message'] = $_GET['message'];
+			//echo $message;
+		}
 		//insert user data in the views
-		$data['user_data'] = $this->session->userdata['user'];;
+		//$data['message'] = $message;
+		//insert user data in the views
+		$data['user_data'] = $this->session->userdata['user'];
 		//call the general views for page structure	
 		$this->load->view('gen/header');
 		$this->load->view('gen/main_menu',$data);
@@ -82,6 +87,9 @@ class Cases extends CI_Controller {
 		//get all active sites.
 		$sites = $this->site_model->getAllActiveSites();
 		$data['sites']= $sites;
+		//get all opened sites.
+		$open_sites = $this->site_model->getOpenedSites();
+		$data['open_sites']= $open_sites;
 		
 		
 		//insert user data in the views
@@ -390,9 +398,13 @@ class Cases extends CI_Controller {
 	 */
 	function saveBinaryFile($action,$case_id = 0)
 	{
+		
+		//info message
+		$message = "";
+		
 		$config['upload_path'] = './files/Binary_files/new_binary_files/';
 		$config['allowed_types'] = '*';
-		$config['max_size']    = '80000';
+		//$config['max_size']    = '80000';
 
 		$this->load->library('upload', $config);
 		if ( ! $this->upload->do_upload('binary_file') )
@@ -412,50 +424,107 @@ class Cases extends CI_Controller {
 			
 			//split the name and extension of the file
 			$file_name = explode('.',$file_data['file_name']);
-			if($file_name[count($file_name) - 1] == "BIN" || $file_name[count($file_name) - 1] == "bin"){
-				//if the action is close the create an open case to be closed
-				if($action == "open_close"){					
-					//insert post values into the model
-					$this->case_model->site_id = $this->input->post('site');
-					$this->case_model->admin_id = 0;
+			if(strtoupper($file_name[count($file_name) - 1]) == "BIN"){ 
+				
+				//execute the TSDP command with volume choice to generate the count text file.
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/new_binary_files/".$file_data['file_name']." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");	
+				//getting the output count file name
+				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
+				//extracting data from the count file and send it to database
+				$this->load->model('tsdp_file');
+				//reading TSDP count file into the model object
+				$this->tsdp_file->read_file_lines($file);
+				//getting the site name from the file header
+				$site_ID = $this->tsdp_file->CI->file_header->site_ID;
+				//loading site model
+				$this->load->model('site_model');
+				//getting the id of this site
+				$this->site_model->name = $site_ID;
+				$site = $this->site_model->getSiteByName();
+				//if the site exists
+				if(isset($site[0])){
+					//if the action is open_close the create an open case to be closed
+					if($action == "open_close"){					
+						//insert post values into the model
+						$this->case_model->site_id = $site[0]['id'];
+						$this->case_model->admin_id = 0;
+						$this->case_model->collector_id = $this->session->userdata['user']['id'];
+						
+						//Execute addition function.
+						$case_id = $this->case_model->openCase();
+						//echo $case_id;
+					}else{
+						$this->case_model->id = $case_id;
+						$case = $this->case_model->getCaseById();
+						if(isset($case[0])){
+							if($site[0]['id'] !== $case[0]['site_id']){
+								$message = "The file you uploaded belongs to '".$site[0]['name']."' site so a case was closed for that site..";
+								$this->case_model->site_id = $site[0]['id'];
+								$open_case = $this->case_model->getOpenCaseBySiteId();
+								if(isset($open_case[0])){
+									$case_id = $open_case[0]['id'];
+								}else{
+									//insert post values into the model
+									$this->case_model->site_id = $site[0]['id'];
+									$this->case_model->admin_id = 0;
+									$this->case_model->collector_id = $this->session->userdata['user']['id'];
+									
+									//Execute addition function.
+									$case_id = $this->case_model->openCase();
+								}
+							}
+						}
+					}
+					
+					//inserting output file headers info into the database (just file_header for now)
+					$this->tsdp_file->save_file_headers($case_id);
+					
+					//setting the file name to uploaded-file-name_case-id
+					$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
+					//setting the binary file location.
+					$this->binary_file_model->location = 'files/Binary_files/closed_binary_files/';	
+					//setting the case id for this binary file.	
+					$this->binary_file_model->case_id = $case_id;	
+					
+					//execute the add file function.
+					$this->binary_file_model->addBinaryFile();
+					
+					//set the id of the case to be closed to the given id.
+					$this->case_model->id = $case_id;
+					// set the collector id to the current user id.
 					$this->case_model->collector_id = $this->session->userdata['user']['id'];
 					
-					//Execute addition function.
-					$case_id = $this->case_model->openCase();
-					echo $case_id;
+					//execute the close normally function
+					$this->case_model->closeNormally();
+					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/closed_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+					
+					/**extract count info from the binary and add it to database**/
+					//execute the TSDP command with volume choice to generate the count text file.
+					//exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
+					//getting the output count file name
+					//$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
+					//extracting data from the count file and send it to database
+					//$this->read_and_save($file,$case_id);
+					
+				}else{
+					$message = "The file you uploaded doesn't belong to any of the sites in the database so it was moved to undefined_binary_files folder..";
+					/* adding the undifined site binary file to the database under case_id=0 */
+					//setting the file name to uploaded-file-name_case-id
+					$this->binary_file_model->name = $file_name[0];
+					//setting the binary file location.
+					$this->binary_file_model->location = 'files/Binary_files/undefined_binary_files/';	
+					//setting the case id for this binary file.	
+					$this->binary_file_model->case_id = 0;			
+					
+					//execute the add file function.
+					$file_id = $this->binary_file_model->addBinaryFile();
+					//moving the binaryfile to the undefined binary files directory
+					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
 				}
-				//setting the file name to uploaded-file-name_case-id
-				$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
-				//setting the binary file location.
-				$this->binary_file_model->location = 'files/Binary_files/new_binary_files/';	
-				//setting the case id for this binary file.	
-				$this->binary_file_model->case_id = $case_id;		
-				//setting the counter id for this binary file
-				//This step shouldn't be here	
-				//$this->binary_file_model->counter_id = 1;		
-				
-				//execute the add file function.
-				$this->binary_file_model->addBinaryFile();
-				
-				//set the id of the case to be closed to the given id.
-				$this->case_model->id = $case_id;
-				// set the collector id to the current user id.
-				$this->case_model->collector_id = $this->session->userdata['user']['id'];
-				
-				//execute the close normally function
-				$this->case_model->closeNormally();
-				rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/new_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
-				
-				/**extract count info from the binary and add it to database**/
-				//execute the TSDP command with volume choice to generate the count text file.
-				//exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/".$file_name[0].'_'.$case_id.'.BIN'." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");
-				//getting the output count file name
-				//$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
-				//extracting data from the count file and send it to database
-				//$this->read_and_save($file,$case_id);
-				
 			}
-			redirect(base_url().'cases');
+			//delete the generated count output file
+			unlink($file);
+			redirect(base_url().'cases/manage?message='.urlencode($message));
 		}
 	}
 	

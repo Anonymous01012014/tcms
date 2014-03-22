@@ -6,7 +6,6 @@
 	 **/
 	function date_to_sql($date){
 		$date_values = explode("/",$date);
-		$sql_date = $date_values[2]."-".$date_values[0]."-".$date_values[1];		
-		echo  $sql_date;
+		$sql_date = $date_values[2]."-".$date_values[0]."-".$date_values[1];
 		return $sql_date;
 	}

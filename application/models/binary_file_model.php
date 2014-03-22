@@ -77,15 +77,15 @@ class Binary_file_model extends CI_Model{
 						) 
 						VALUES (
 							'{$this->name}',
-							'{$this->upload_date}',
-							'{$this->upload_time}',
+							CURDATE(),
+							CURTIME(),
 							'{$this->location}',
 							'{$this->counter_id}',
 							'{$this->case_id}'
 						);
 					";
 		$this->db->query($query);
-		return true;
+		return $this->db->insert_id();
 	 }
 	 
 	 /**

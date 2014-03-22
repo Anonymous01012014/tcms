@@ -501,4 +501,26 @@ class Case_model extends CI_Model{
 		return $query->result_array();
 	 }
 	 
+	 /**
+	 * function name : getOpenCaseBySiteId
+	 * 
+	 * Description : 
+	 * Gets the given site's open case.
+	 * 
+	 * Created date : 21-3-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getOpenCaseBySiteId(){
+		$query = "SELECT * 
+				  FROM `case`
+				  WHERE status = '".OPENED."'
+				  AND   site_id = {$this->site_id}";
+				  
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
+	 
 }

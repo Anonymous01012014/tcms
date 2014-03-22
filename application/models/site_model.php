@@ -297,4 +297,34 @@ class Site_model extends CI_Model{
 				  
 		$query = $this->db->query($query);
 	 }
+	 
+
+	/**
+	 * function name : getOpenedSites
+	 * 
+	 * Description : 
+	 * gets the sites with opened cases in the the database
+	 * 
+	 * Note:
+	 * The site is considered as active if it wasn't ended.
+	 * 
+	 * Created date : 21-3-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 */
+	 public function getOpenedSites(){
+		$query = "SELECT
+					site.id AS site_id,
+					`case`.id AS case_id
+				  FROM
+					site ,`case`
+				  WHERE
+					site.id = `case`.site_id AND
+					`case`.`status` = 0 ;";
+				  
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
 }
