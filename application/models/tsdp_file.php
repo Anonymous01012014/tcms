@@ -566,7 +566,7 @@ class Tsdp_file extends CI_Model{
 		//the id of the site of this file in the database
 		$site_id = 0;
 		//this counter's lanes ids and their indeces in the array represent their order in this counter.
-		$lanes_ids = array(0,0);
+		//$lanes_ids = array(0,0);
 		//the id of the statistics record for this file
 		$statistics_record_id = 0;
 		
@@ -615,11 +615,11 @@ class Tsdp_file extends CI_Model{
 					$counter_id = $counter['counter_id'];
 					$site_id = $counter['site_id'];
 					//get the lanes ids of this counter
-					$this->CI->lane_model->counter_id = $counter['counter_id'];
-					$lanes = $this->CI->lane_model->getLanesByCounterId();
+					//$this->CI->lane_model->counter_id = $counter['counter_id'];
+					/*$lanes = $this->CI->lane_model->getLanesByCounterId();
 					for($i=0;$i<count($lanes);$i++){
 						$lanes_ids[$i] = $lanes[$i]['id'];
-					}
+					}*/
 					break;
 				}
 			}
@@ -660,7 +660,7 @@ class Tsdp_file extends CI_Model{
 				
 				/** End of section **/
 				
-				/** Add the counter to its lanes **/
+				/** Add the counter to its lanes **
 				
 				//get the lanes of this site
 				$this->CI->lane_model->site_id = $site_id; 
