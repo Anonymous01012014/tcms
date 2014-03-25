@@ -425,11 +425,12 @@ class Cases extends CI_Controller {
 			//split the name and extension of the file
 			$file_name = explode('.',$file_data['file_name']);
 			if(strtoupper($file_name[count($file_name) - 1]) == "BIN"){ 
-				
+				//echo $file_data['file_name'];
+				//echo __DIR__ ."\TSDP\TSDP.exe AUTO --in 'files/binary_files/new_binary_files/".$file_data['file_name']."' --out 'files/output_files/count/".$file_name[0].'_'.$case_id.".txt' --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt";
 				//execute the TSDP command with volume choice to generate the count text file.
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/new_binary_files/".$file_data['file_name']." --out files/output_files/count/".$file_name[0].'_'.$case_id.".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");	
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_data['file_name']."\" --out \"files/output_files/count/".'count_'.$case_id.".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 ");	
 				//getting the output count file name
-				$file = "files/output_files/count/".$file_name[0].'_'.$case_id.".txt";
+				$file = "files/output_files/count/".'count_'.$case_id.".txt";
 				//extracting data from the count file and send it to database
 				$this->load->model('tsdp_file');
 				//reading TSDP count file into the model object

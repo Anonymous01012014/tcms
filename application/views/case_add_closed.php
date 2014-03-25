@@ -44,7 +44,7 @@
 		  var file = $(this).val();
 		  var file_parts = file.split('.');
 		  var extension = file_parts[file_parts.length - 1];
-		  if(extension !== "BIN" && extension !== "Bin"){
+		  if(extension.toUpperCase() !== "BIN"){
 				$(this).val("");
 				$(this).next('div').children(':nth-child(2)').val("");
 				$('#status_message').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="hideMessage();">&times;</button>You should select only binary files!</div>');

@@ -111,7 +111,7 @@ class Service extends CI_Controller
 					file_put_contents($location.$file_name[0].'.BIN', $current); 
 					
 					//execute the TSDP command with volume choice to generate the count text file.
-					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in files/binary_files/new_binary_files/".$file_name[0].'.BIN'." --out files/output_files/count/".$file_name[0].".txt --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt");	
+					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_name[0].'.BIN'."\" --out \"files/output_files/count/".$file_name[0].".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 ");	
 					//echo __DIR__ ." files/binary_files/new_binary_files/".$file_name[0].'.BIN';
 					//getting the output count file name
 					$file = "files/output_files/count/".$file_name[0].".txt";
