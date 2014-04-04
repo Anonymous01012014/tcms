@@ -175,7 +175,8 @@ class Site_model extends CI_Model{
 	 public function getSiteById(){
 		$query = "SELECT * 
 				  FROM site
-	 			  WHERE id = {$this->id}";
+	 			  WHERE id = {$this->id}
+	 			  AND end_date = '000000'";
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
@@ -195,7 +196,8 @@ class Site_model extends CI_Model{
 	 public function getSiteByName(){
 		$query = "SELECT * 
 				  FROM site
-	 			  WHERE name like '{$this->name}'";
+	 			  WHERE name like '{$this->name}'
+	 			  AND end_date = '000000'";
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
@@ -322,7 +324,8 @@ class Site_model extends CI_Model{
 					site ,`case`
 				  WHERE
 					site.id = `case`.site_id AND
-					`case`.`status` = 0 ;";
+					`case`.`status` = 0 
+					AND site.end_date = '000000'";
 				  
 		$query = $this->db->query($query);
 		return $query->result_array();

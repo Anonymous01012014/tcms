@@ -508,7 +508,7 @@ class Cases extends CI_Controller {
 					//$this->read_and_save($file,$case_id);
 					
 				}else{
-					$message = "The file you uploaded doesn't belong to any of the sites in the database so it was moved to undefined_binary_files folder..";
+					$message = "The file you uploaded doesn't belong to any of the sites in the database so it was moved to undefined_binary_files folder..\nPlease add this site to add the your file's data to the database..";
 					/* adding the undifined site binary file to the database under case_id=0 */
 					//setting the file name to uploaded-file-name_case-id
 					$this->binary_file_model->name = $file_name[0];
@@ -521,6 +521,13 @@ class Cases extends CI_Controller {
 					$file_id = $this->binary_file_model->addBinaryFile();
 					//moving the binaryfile to the undefined binary files directory
 					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
+					//redirect the user to add site page
+					$this->session->set_userdata('site',$this->tsdp_file->CI->file_header->site_ID);
+					$this->session->set_userdata('long',$this->tsdp_file->CI->file_header->longitude);
+					$this->session->set_userdata('lat',$this->tsdp_file->CI->file_header->latitude);
+					$this->session->set_userdata('siteCase',1);
+					$this->session->set_userdata('binary','files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
+					redirect(base_url().'site/add');
 				}
 			}
 			//delete the generated count output file

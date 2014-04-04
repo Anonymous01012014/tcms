@@ -79,8 +79,20 @@ class Site extends CI_Controller {
 		$active_menu = "add_site";
 		$data["active_menu"] = $active_menu;	
 			
+		if(isset($this->session->userdata['siteCase'])){
+			//echo 1111;
+			$data['site_name'] = $this->session->userdata['site'];
+			$data['long'] = $this->session->userdata['long'];
+			$data['lat'] = $this->session->userdata['lat'];
+			$data['binary'] = $this->session->userdata['binary'];
+			$this->session->unset_userdata('site');
+			$this->session->unset_userdata('long');
+			$this->session->unset_userdata('lat');
+			$this->session->unset_userdata('binary');
+			$this->session->unset_userdata('siteCase');
+		}
 		$this->load->helper('enumeration');
-		$data['user_data'] = $this->session->userdata['user'];;
+		$data['user_data'] = $this->session->userdata['user'];
 		//call the general views for page structure	
 		$this->load->view('gen/header');
 		$this->load->view('gen/main_menu',$data);
@@ -247,6 +259,74 @@ class Site extends CI_Controller {
 				$this->lane_model->site_id = $site_id[0]["site_id"];
 				$this->lane_model->addLane();				
 			}
+			//processing adding site from binary file issue
+			//adding binary file info to the database
+			$binary = $this->input->post('binary');
+			if(isset($binary)){				
+				$binary_fragments = explode('/',$binary);
+				echo count($binary_fragments);
+				if(count($binary_fragments)>3 ){
+					//gretting binary file information
+					$binary_name = $binary_fragments[count($binary_fragments) - 1];
+					$binary_name_fragments = explode('_',$binary_name);
+					$binary_id = explode('.',$binary_name_fragments[count($binary_name_fragments) - 1]);
+					$binary_id = $binary_id[0];
+					/** adding binary file to database **/
+					$this->load->model("case_model");
+					
+					//adding new open case for the file in the new site
+					$this->case_model->site_id = $site_id[0]["site_id"];
+					$this->case_model->admin_id = 0;
+					$this->case_model->collector_id = $this->session->userdata['user']['id'];
+					
+					//Execute addition function.
+					$case_id = $this->case_model->openCase();
+					
+					//execute the TSDP command with volume choice to generate the count text file.
+					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"".$binary."\" --out \"files/output_files/count/".'count_'.$case_id.".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 ");	
+					//getting the output count file name
+					$file = "files/output_files/count/".'count_'.$case_id.".txt";
+					//extracting data from the count file and send it to database
+					$this->load->model('tsdp_file');
+					//reading TSDP count file into the model object
+					$this->tsdp_file->read_file_lines($file);
+					
+					//inserting output file headers info into the database (just file_header for now)
+					$this->tsdp_file->save_file_headers($case_id);
+					
+					$this->load->model("binary_file_model");
+					//get current file data from the data base
+					$this->binary_file_model->id = $binary_id;
+					$binary_data = $this->binary_file_model->getBinaryFileById();
+					echo var_dump($binary_data[0]);
+					if(isset($binary_data[0])){
+						//inserting binary file data into model
+						$this->binary_file_model->upload_date = $binary_data[0]['upload_date'];
+						$this->binary_file_model->upload_time = $binary_data[0]['upload_time'];
+						$this->binary_file_model->counter_id = $binary_data[0]['counter_id'];
+						$this->binary_file_model->name = $binary_data[0]['name'];
+						
+						//setting the binary file location.
+						$this->binary_file_model->location = 'files/Binary_files/closed_binary_files/';	
+						//setting the case id for this binary file.	
+						$this->binary_file_model->case_id = $case_id;	
+						
+						//execute the modify file function.
+						$this->binary_file_model->modifyBinaryFile();
+						
+						//set the id of the case to be closed to the given id.
+						$this->case_model->id = $case_id;
+						// set the collector id to the current user id.
+						$this->case_model->collector_id = $this->session->userdata['user']['id'];
+						
+						//execute the close normally function
+						$this->case_model->closeNormally();
+						$binary_name = explode('.',$binary_data[0]['name']); 
+						rename($binary,'files/binary_files/closed_binary_files/'.$binary_name[0].'_'.$case_id.'.BIN');
+						redirect(base_url()."cases");
+					}
+				}
+			}
 		 
 		}elseif($action == "edit" && $id > 0){
 			
@@ -294,7 +374,7 @@ class Site extends CI_Controller {
 		}
 		
 		
-		redirect(base_url()."site");		
+		//redirect(base_url()."site");		
 	}
 	
 	

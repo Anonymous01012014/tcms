@@ -17,7 +17,7 @@
 				</td>
 				
 				<td>
-					<input class="form-control" type="text" name="name" id="name" required/>
+					<input  class="form-control" type="text" name="name" id="name" required  <?php if(isset($site_name)) echo "value='".$site_name."'";?>/>
 				</td>
 				
 				<!-- FIPS -->
@@ -48,7 +48,7 @@
 				</td>
 				
 				<td>
-					<input class="form-control" type="number" max="180" min="-180" name="longitude" id="longitude" required/>
+					<input class="form-control" type="number" max="180" min="-180" name="longitude" id="longitude" required  <?php if(isset($long)) echo "value='".$long."'";?>/>
 				</td>
 				
 				
@@ -57,7 +57,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input class="form-control" type="number" name="latitude" id="latitude" required/>
+					<input class="form-control" type="number" name="latitude" id="latitude" required <?php if(isset($lat)) echo "value='".$lat."'";?>/>
 				</td>
 			</tr>
 			
@@ -173,7 +173,7 @@
 			
 			
 		</table>
-		
+		<?php if(isset($binary)) echo "<input type='hidden' value='".$binary."' name='binary' />";?>
 		<button type="submit" id="submit" style="display: none;"/>
 	</form>
 	
