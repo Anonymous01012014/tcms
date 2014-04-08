@@ -374,7 +374,7 @@ class Site extends CI_Controller {
 		}
 		
 		
-		//redirect(base_url()."site");		
+		redirect(base_url()."site");		
 	}
 	
 	

@@ -51,7 +51,7 @@
 				</td>
 				
 				<td>
-					<input class="form-control" type="text" name="longitude" id="longitude" value="<?php echo $site['longitude']; ?>"/>
+					<input class="form-control" type="number" step="any" name="longitude" id="longitude" value="<?php echo $site['longitude']; ?>"/>
 				</td>
 				
 				
@@ -60,7 +60,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input class="form-control" type="text" name="latitude" id="latitude" value="<?php echo $site['latitude']; ?>"/>
+					<input class="form-control" type="number" step="any" name="latitude" id="latitude" value="<?php echo $site['latitude']; ?>"/>
 				</td>
 			</tr>
 			

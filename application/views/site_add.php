@@ -48,7 +48,7 @@
 				</td>
 				
 				<td>
-					<input class="form-control" type="number" max="180" min="-180" name="longitude" id="longitude" required  <?php if(isset($long)) echo "value='".$long."'";?>/>
+					<input class="form-control" type="number" max="180" min="-180" step="any" name="longitude" id="longitude" required  <?php if(isset($long)) echo "value='".$long."'";?>/>
 				</td>
 				
 				
@@ -57,7 +57,7 @@
 					<label for="latitude">Latitude:</label>
 				</td>
 				<td>
-					<input class="form-control" type="number" name="latitude" id="latitude" required <?php if(isset($lat)) echo "value='".$lat."'";?>/>
+					<input class="form-control" type="number" step="any" name="latitude" id="latitude" required <?php if(isset($lat)) echo "value='".$lat."'";?>/>
 				</td>
 			</tr>
 			
