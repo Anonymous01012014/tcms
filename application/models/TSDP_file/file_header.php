@@ -14,9 +14,9 @@ class File_header extends CI_Model{
 	/** File Header class variables **/
 	//Site ID (30 - Alpha-Numeric)
 	var $site_ID = "";
-	//Info Line 1 (30 - Alpha-Numeric)
+	//Info Line 1 (30 - Alpha-Numeric) //this will have county in it 
 	var $info_line_1 = "";
-	//Info Line 2 (30 - Alpha-Numeric)
+	//Info Line 2 (30 - Alpha-Numeric) //this will have GPS location in it
 	var $info_line_2 = "";
 	//Operator (30 - Alpha-Numeric)
 	var $operator = "";

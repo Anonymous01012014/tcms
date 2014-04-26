@@ -44,6 +44,18 @@
 				</td>
 			</tr>
 		
+			<!-- county -->
+			<tr>
+				<td>
+					<label for="county"> 
+						County:
+					</label>
+				</td>
+				<td>
+					<input type="text" name="county" id="county" class="form-control" value="<?php echo $site['county']; ?>"/>
+				</td>
+			</tr>
+		
 			<tr>
 				<!-- longtitude -->
 				<td>

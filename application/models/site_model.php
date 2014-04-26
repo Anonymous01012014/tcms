@@ -22,8 +22,11 @@ class Site_model extends CI_Model{
 	//The name of the site
 	var $name = "";
 	
-	//the county of the site 
+	//the FIPS of the site 
 	var $FIPS = "";
+	
+	//the county of the site 
+	var $county = "";
 	
 	//the latitude of the site's location.
 	var $latitude = "";
@@ -76,6 +79,7 @@ class Site_model extends CI_Model{
 		$query = "INSERT INTO site(
 							name,
 							FIPS,
+							county,
 							latitude,
 							longitude,
 							start_date,
@@ -87,6 +91,7 @@ class Site_model extends CI_Model{
 						VALUES (
 							'{$this->name}',
 							'{$this->FIPS}',
+							'{$this->county}',
 							'{$this->latitude}',
 							'{$this->longitude}',
 							'{$this->start_date}',
@@ -147,6 +152,7 @@ class Site_model extends CI_Model{
 				  SET 
 					name = '{$this->name}',
 					FIPS = '{$this->FIPS}',
+					county = '{$this->county}',
 					latitude = '{$this->latitude}',
 					longitude = '{$this->longitude}',
 					start_date = '{$this->start_date}',
@@ -202,6 +208,30 @@ class Site_model extends CI_Model{
 		return $query->result_array();
 	 }
 	
+	
+	/**
+	 * function name : getSiteByNameCounty
+	 * 
+	 * Description : 
+	 * get site by its name and county
+	 * 
+	 * Created date : 25-4-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Kaleia
+	 * contact : ms.kaleia@gmail.com
+	 */
+	 public function getSiteByNameCounty()
+	 {
+		$query = "SELECT * 
+				  FROM site
+	 			  WHERE 
+	 			  name = '{$this->name}' and
+	 			  county = '{$this->county}' and
+	 			  end_date = '000000'";
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
 	
 	/**
 	 * function name : getAllSites

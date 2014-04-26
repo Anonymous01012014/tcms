@@ -437,11 +437,13 @@ class Cases extends CI_Controller {
 				$this->tsdp_file->read_file_lines($file);
 				//getting the site name from the file header
 				$site_ID = $this->tsdp_file->CI->file_header->site_ID;
+				$county = $this->tsdp_file->CI->file_header->info1;
 				//loading site model
 				$this->load->model('site_model');
 				//getting the id of this site
 				$this->site_model->name = $site_ID;
-				$site = $this->site_model->getSiteByName();
+				$this->site_model->county = $county;
+				$site = $this->site_model->getSiteByNameCounty();
 				//if the site exists
 				if(isset($site[0])){
 					//if the action is open_close the create an open case to be closed
@@ -523,6 +525,7 @@ class Cases extends CI_Controller {
 					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
 					//redirect the user to add site page
 					$this->session->set_userdata('site',$this->tsdp_file->CI->file_header->site_ID);
+					$this->session->set_userdata('county',$this->tsdp_file->CI->file_header->info1);
 					$this->session->set_userdata('long',$this->tsdp_file->CI->file_header->longitude);
 					$this->session->set_userdata('lat',$this->tsdp_file->CI->file_header->latitude);
 					$this->session->set_userdata('siteCase',1);

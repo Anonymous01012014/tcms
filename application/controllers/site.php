@@ -82,6 +82,7 @@ class Site extends CI_Controller {
 		if(isset($this->session->userdata['siteCase'])){
 			//echo 1111;
 			$data['site_name'] = $this->session->userdata['site'];
+			$date['county'] = $this->session->userdata['county'];
 			$data['long'] = $this->session->userdata['long'];
 			$data['lat'] = $this->session->userdata['lat'];
 			$data['binary'] = $this->session->userdata['binary'];
@@ -235,6 +236,7 @@ class Site extends CI_Controller {
 		//insert post values into the model
 		$this->site_model->name = $this->input->post('name');
 		$this->site_model->FIPS = $this->input->post('FIPS');
+		$this->site_model->county = $this->input->post('county');
 		$this->site_model->longitude = $this->input->post('longitude');
 		$this->site_model->latitude = $this->input->post('latitude');
 		$this->site_model->start_date = $this->input->post('startDate');

@@ -115,7 +115,7 @@ class Upload_sevice extends CI_Controller {
 				}
 			}
 		}else{
-			echo "User not found..."
+			echo "User not found...";
 		}
 	}
 	

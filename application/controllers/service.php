@@ -119,13 +119,15 @@ class Service extends CI_Controller
 					$CI->load->model('tsdp_file');
 					//reading TSDP count file into the model object
 					$CI->tsdp_file->read_file_lines($file);
-					//getting the site name from the file header
+					//getting the site name and county from the file header
 					$site_ID = $CI->tsdp_file->file_header->site_ID;
+					$county = $CI->tsdp_file->file_header->info1;
 					//loading site model
 					$CI->load->model('site_model');
 					//getting the id of this site
 					$CI->site_model->name = $site_ID;
-					$site = $CI->site_model->getSiteByName();
+					$CI->site_model->name = $county;
+					$site = $CI->site_model->getSiteByNameCounty();
 					//if the site exists
 					if(isset($site[0])){
 						//get the opened case for this site
