@@ -6,7 +6,7 @@
 	<hr />	
 		
 
-	<form method="post" action="<?php echo base_url();?>analyze/analyzFile" >
+	<form method="post" action="<?php echo base_url();?>analyze/analyzeFile" >
 		
 		<input type="hidden" name="case_id" value="<?php echo $case_id;?>"/>
 		

@@ -239,6 +239,7 @@ class Cases extends CI_Controller {
 			
 			//grid controls
 			$this->grid->control = array(
+										  array("title" => "Analyze" , "icon"=>"glyphicon glyphicon-signal" ,"url"=>base_url()."analyze/analyzeFile" , "message_type"=>"" , "message"=>""),
 										  array("title" => "accept" , "icon"=>"glyphicon glyphicon-ok" , "url"=>base_url()."cases/accept" , "message_type"=>null , "message"=>"") , 
 										  array("title" => "reject" , "icon"=>"glyphicon glyphicon-remove" ,"url"=>base_url()."cases/reject" , "message_type"=>"input" , "message"=>"Please enter the reason for rejecting this case..")
 										);												
@@ -483,7 +484,7 @@ class Cases extends CI_Controller {
 					$this->tsdp_file->save_file_headers($case_id);
 					
 					//setting the file name to uploaded-file-name_case-id
-					$this->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
+					$this->binary_file_model->name = $file_name[0].'_'.$case_id;
 					//setting the binary file location.
 					$this->binary_file_model->location = 'files/Binary_files/closed_binary_files/';	
 					//setting the case id for this binary file.	

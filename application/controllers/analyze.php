@@ -75,8 +75,6 @@ class Analyze extends CI_Controller {
 	public function analyzeFile()
 	{
 		
-		
-		
 		//get tsdp paramters options
 		
 		//analyze type
@@ -102,7 +100,45 @@ class Analyze extends CI_Controller {
 		$this->binary_file_model->case_id = $case_id;
 		$binary_file = $this->binary_file_model->getBinaryFileByCaseId();
 		
-		//to do apply tsdp command
+		$location = $binary_file[0]["location"];
+		$file_name = $binary_file[0]["name"];
+		
+		//choose the output file by analyze type
+		if($analyze_type == "volume")
+		{
+			$output = "count";
+		}
+		else if($analyze_type == "classification")
+		{
+			$output = "classification";
+		}
+		
+		
+		//execute the TSDP command with volume choice to generate the count text file.
+		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
+		
+		//input file location and name
+		$command .= $location . $file_name . "_".$case_id .  ".BIN\"";
+		
+		//output file
+		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
+		
+		//settings
+		$command .= " --settings" . __DIR__ ."\TSDP\SettingsFiles\CGSET.INI";
+		
+		//number of lanes
+		$command .= " --numLanes ".$num_lane;
+		
+		//analyze type 
+		$command .= " --" . $analyze_type;
+		
+		//number of ways
+		$command .= " --".$lane_direction;
+		
+		//sensor spacing
+		$command.= " --sensorSpacing ". $sensor_spacing;
+						
+		exec($command);		
 	}
 	
 }
