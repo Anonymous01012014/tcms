@@ -17,7 +17,7 @@
 				</td>
 				
 				<td>
-					<input  class="form-control" type="text" name="name" id="name" required  <?php if(isset($site_name)) echo "value='".$site_name."'";?>/>
+					<input  class="form-control" type="text" name="name" id="name" required="true" value="<?php if(isset($site_name)) echo $site_name;?>" />
 				</td>
 				
 				<!-- FIPS -->

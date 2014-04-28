@@ -30,12 +30,14 @@ html, body { height: 100%; width: 100%; margin: 0; }
 
 body
 {
-        background-color:#FEFEFE;
+        background-color:#b9b9b9;
+        
         background-image: url("../images/bg.jpg");
         background-repeat:no-repeat;
         background-attachment:fixed;
         background-position:top center;  
         background-size:100% 100%;
+       
         overflow-x: hidden;    
         padding-top:50px;
         min-height: 800px;
