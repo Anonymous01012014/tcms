@@ -138,7 +138,18 @@ class Analyze extends CI_Controller {
 		//sensor spacing
 		$command.= " --sensorSpacing ". $sensor_spacing;
 						
-		exec($command);		
+		exec($command);
+		
+		//save the output analyze file to the database
+		$this->load->model("tsdp_file");
+		
+		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";
+		
+		//read the output file lines
+		$this->tsdp_file->read_file_lines($output_file);
+		
+		//save the output to the database	
+		$this->tsdp_file->save_to_database($case_id);	
 	}
 	
 }
