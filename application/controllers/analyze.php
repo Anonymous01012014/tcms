@@ -73,8 +73,7 @@ class Analyze extends CI_Controller {
 	 * contact: ms.kaleia@gmail.com
 	 */
 	public function analyzeFile()
-	{
-		
+	{		
 		//get tsdp paramters options
 		
 		//analyze type

@@ -316,6 +316,181 @@
 
 	
 	/**
+	 * Function name:
+	 * FIPS_id
+	 * 
+	 * Description :
+	 * This function returns the FIPS number by passing the state text
+	 * determined by the given number.
+	 * 
+	 * Created date ; 30-4-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Kaleia
+	 * contact : ms.kaleia@gmail.com
+	 **/
+	function FIPS_id($FIPS_text)
+	{
+		switch($FIPS_text)
+		{
+			case "Alabama":
+			return Alabama;
+			break;
+			case "Alaska" :
+			return Alaska;
+			break;
+			case "Arizona":
+			return Arizona;
+			break;
+			case "Arkansas":
+			return Arkansas;
+			break;
+			case "California":
+			return California;
+			break;
+			case "Colorado":
+			return Colorado;
+			break;
+			case "Connecticut":
+			return Connecticut;
+			break;
+			case "Delaware":
+			return Delaware;
+			break;
+			case "DC":
+			return DC;
+			break;
+			case "Florida":
+			return Florida;
+			break;
+			case "Georgia":
+			return Georgia;
+			break;
+			case "Hawaii":
+			return Hawaii;
+			break;
+			case "Idaho":
+			return Idaho;
+			break;
+			case "Illinois":
+			return Illinois;
+			break;
+			case "Indiana":
+			return Indiana;
+			break;
+			case "Iowa":
+			return Iowa;
+			break;
+			case "Kansas":
+			return Kansas;
+			break;
+			case "Kentucky":
+			return Kentucky;
+			break;
+			case "Louisiana":
+			return Louisiana;
+			break;
+			case "Maine":
+			return Maine;
+			break;
+			case "Maryland":
+			return Maryland;
+			break;
+			case "Massachusetts":
+			return Massachusetts;
+			break;
+			case "Michigan":
+			return Michigan;
+			break;
+			case "Minnesota":
+			return Minnesota;
+			break;
+			case "Mississippi":
+			return Mississippi;
+			break;
+			case "Missouri":
+			return Missouri;
+			break;
+			case "Montana":
+			return Montana;
+			break;
+			case "Nebraska":
+			return Nebraska;
+			break;
+			case "Nevada":
+			return Nevada;
+			break;
+			case "New_Hampshire":
+			return New_Hampshire;
+			break;
+			case "New_Jersey":
+			return New_Jersey;
+			break;
+			case "New_Mexico":
+			return New_Mexico;
+			break;
+			case "New_York":
+			return New_York;
+			break;
+			case "North_Carolina":
+			return North_Carolina;
+			break;
+			case "North_Dakota":
+			return North_Dakota;
+			break;
+			case "Ohio":
+			return Ohio;
+			break;
+			case "Oklahoma":
+			return Oklahoma;
+			break;
+			case "Oregon":
+			return Oregon;
+			break;
+			case "Pennsylvania":
+			return Pennsylvania;
+			break;
+			case "Rhode_Island":
+			return Rhode_Island;
+			break;
+			case "South_Carolina":
+			return South_Carolina;
+			break;
+			case "South_Dakota":
+			return South_Dakota;
+			break;
+			case "Tennessee":
+			return Tennessee;
+			break;
+			case "Texas":
+			return Texas;
+			break;
+			case "Utah":
+			return Utah;
+			break;
+			case "Vermont":
+			return Vermont;
+			break;
+			case "Virginia":
+			return Virginia;
+			break;
+			case "Washington":
+			return Washington;
+			break;
+			case "West_Virginia":
+			return West_Virginia;
+			break;
+			case "Wisconsin":
+			return Wisconsin;
+			break;
+			case "Wyoming":
+			return Wyoming;
+			break;
+		}
+	}
+	
+	
+	/**
 	 * Site Functional Classes
 	 **/
 	 

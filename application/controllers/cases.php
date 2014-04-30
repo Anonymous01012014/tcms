@@ -438,13 +438,22 @@ class Cases extends CI_Controller {
 				$this->tsdp_file->read_file_lines($file);
 				//getting the site name from the file header
 				$site_ID = $this->tsdp_file->CI->file_header->site_ID;
-				$county = $this->tsdp_file->CI->file_header->info1;
-				//loading site model
+				
+				//splite the info1 field into state and county
+				$info1 = explode("|", $this->tsdp_file->CI->file_header->info1 ) ;				
+				$state = $info1[0];
+				//get the state id
+				$FIPS = FIPS_id($FIPS_text);
+				$county = $info1[1];				
+				
+				//loading site model				
 				$this->load->model('site_model');
+				
 				//getting the id of this site
 				$this->site_model->name = $site_ID;
+				$this->site_model->FIPS = $FIPS;
 				$this->site_model->county = $county;
-				$site = $this->site_model->getSiteByNameCounty();
+				$site = $this->site_model->getSiteByNameStateCounty();
 				//if the site exists
 				if(isset($site[0])){
 					//if the action is open_close the create an open case to be closed

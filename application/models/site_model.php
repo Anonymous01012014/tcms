@@ -210,10 +210,10 @@ class Site_model extends CI_Model{
 	
 	
 	/**
-	 * function name : getSiteByNameCounty
+	 * function name : getSiteByNameStateCounty
 	 * 
 	 * Description : 
-	 * get site by its name and county
+	 * get site by its name state and county
 	 * 
 	 * Created date : 25-4-2014
 	 * Modification date : ---
@@ -221,13 +221,14 @@ class Site_model extends CI_Model{
 	 * Author : Mohanad Kaleia
 	 * contact : ms.kaleia@gmail.com
 	 */
-	 public function getSiteByNameCounty()
+	 public function getSiteByNameStateCounty()
 	 {
 		$query = "SELECT * 
 				  FROM site
 	 			  WHERE 
-	 			  name = '{$this->name}' and
-	 			  county = '{$this->county}' and
+	 			  name = '{$this->name}' 	 and
+	 			  fips = '{$this->fips}' 	 and
+	 			  county = '{$this->county}' and	 			  
 	 			  end_date = '000000'";
 		$query = $this->db->query($query);
 		return $query->result_array();
