@@ -1,14 +1,14 @@
 File Header Info:
 ---------------------------
-Site ID: 55                            
-Info1: testing                       
-Info2:                               
-Start Year (M/D/Y h:m): 10/17/13 17:4
-Stop Year (M/D/Y h:m): 10/19/13 19:0
+Site ID: 1                             
+Info1: Oklahoma|Adair                
+Info2: testing                       
+Start Year (M/D/Y h:m): 5/2/14 5:55
+Stop Year (M/D/Y h:m): 5/2/14 5:55
 Real Time Polling Flag: 0
 Number Format: 2
 Date Format: 1
-Storage Mode: 1
+Storage Mode: 3
 Num Active Lanes: 1
 Creating UID Number: 128
 Creating Unit Version Number: 133
@@ -21,7 +21,7 @@ Interval #2 Start: 0, Length: 0
 Interval #3 Start: 0, Length: 0
 Interval #4 Start: 0, Length: 0
 Data Security Storage Value: 0
-UserID: Shawn Schaefer                
+UserID: 4                             
 Serial Number: 20843          
 Weather: 
 

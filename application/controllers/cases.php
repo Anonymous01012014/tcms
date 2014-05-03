@@ -239,7 +239,7 @@ class Cases extends CI_Controller {
 			
 			//grid controls
 			$this->grid->control = array(
-										  array("title" => "Analyze" , "icon"=>"glyphicon glyphicon-signal" ,"url"=>base_url()."analyze/analyzeFile" , "message_type"=>"" , "message"=>""),
+										  array("title" => "Analyze" , "icon"=>"glyphicon glyphicon-signal" ,"url"=>base_url()."analyze/parameterSet" , "message_type"=>"" , "message"=>""),
 										  array("title" => "accept" , "icon"=>"glyphicon glyphicon-ok" , "url"=>base_url()."cases/accept" , "message_type"=>null , "message"=>"") , 
 										  array("title" => "reject" , "icon"=>"glyphicon glyphicon-remove" ,"url"=>base_url()."cases/reject" , "message_type"=>"input" , "message"=>"Please enter the reason for rejecting this case..")
 										);												
@@ -439,11 +439,11 @@ class Cases extends CI_Controller {
 				//getting the site name from the file header
 				$site_ID = $this->tsdp_file->CI->file_header->site_ID;
 				
-				//splite the info1 field into state and county
-				$info1 = explode("|", $this->tsdp_file->CI->file_header->info1 ) ;				
+				//splite the info1 field into state and county				
+				$info1 = explode("|", $this->tsdp_file->CI->file_header->info_line_1 ) ;				
 				$state = $info1[0];
 				//get the state id
-				$FIPS = FIPS_id($FIPS_text);
+				$FIPS = FIPS_id($state);
 				$county = $info1[1];				
 				
 				//loading site model				
@@ -451,7 +451,7 @@ class Cases extends CI_Controller {
 				
 				//getting the id of this site
 				$this->site_model->name = $site_ID;
-				$this->site_model->FIPS = $FIPS;
+				$this->site_model->FIPS = $FIPS;				
 				$this->site_model->county = $county;
 				$site = $this->site_model->getSiteByNameStateCounty();
 				//if the site exists
@@ -535,12 +535,15 @@ class Cases extends CI_Controller {
 					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
 					//redirect the user to add site page
 					$this->session->set_userdata('site',$this->tsdp_file->CI->file_header->site_ID);
-					$this->session->set_userdata('county',$this->tsdp_file->CI->file_header->info1);
-					$this->session->set_userdata('long',$this->tsdp_file->CI->file_header->longitude);
-					$this->session->set_userdata('lat',$this->tsdp_file->CI->file_header->latitude);
+					$this->session->set_userdata('FIPS',$FIPS);					
+					$this->session->set_userdata('county',$county);
+					$this->session->set_userdata('long',$this->tsdp_file->CI->file_header->GPS_long);
+					$this->session->set_userdata('lat',$this->tsdp_file->CI->file_header->GPS_lat);
 					$this->session->set_userdata('siteCase',1);
 					$this->session->set_userdata('binary','files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
 					redirect(base_url().'site/add');
+					
+					
 				}
 			}
 			//delete the generated count output file

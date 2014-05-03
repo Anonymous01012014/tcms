@@ -82,7 +82,8 @@ class Site extends CI_Controller {
 		if(isset($this->session->userdata['siteCase'])){
 			//echo 1111;
 			$data['site_name'] = $this->session->userdata['site'];
-			$date['county'] = $this->session->userdata['county'];
+			$data['FIPS'] = $this->session->userdata['FIPS'];
+			$data['county'] = $this->session->userdata['county'];
 			$data['long'] = $this->session->userdata['long'];
 			$data['lat'] = $this->session->userdata['lat'];
 			$data['binary'] = $this->session->userdata['binary'];
@@ -101,7 +102,7 @@ class Site extends CI_Controller {
 		$this->load->view('gen/main_content');
 		
 		//show log area 
-		$this->load->view('site_add');
+		$this->load->view('site_add' , $data);
 			
 		
 		$this->load->view('gen/footer');

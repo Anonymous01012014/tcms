@@ -147,8 +147,11 @@ class Analyze extends CI_Controller {
 		//read the output file lines
 		$this->tsdp_file->read_file_lines($output_file);
 		
-		//save the output to the database	
+		//save the output to the database
+			
 		$this->tsdp_file->save_to_database($case_id);	
+		
+		echo "an output file is created succesfully";
 	}
 	
 }

@@ -157,6 +157,8 @@
 	 * contact : molham225@gmail.com
 	 **/
 	function FIPS_text($FIPS_number){
+		
+		
 		switch($FIPS_number){
 			case Alabama:
 			return "Alabama";
@@ -331,6 +333,10 @@
 	 **/
 	function FIPS_id($FIPS_text)
 	{
+		
+		//first captalize first character
+		$FIPS_text = ucfirst($FIPS_text);
+		
 		switch($FIPS_text)
 		{
 			case "Alabama":

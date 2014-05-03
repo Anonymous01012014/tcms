@@ -25,14 +25,14 @@
 					<label for="FIPS">FIPS Name:</label>
 				</td>
 				
-				<td>
+				<td>					
 					<select class="form-control" type="text" name="FIPS" id="FIPS" >
 						<?php
 							for($i=0;$i<=56;$i++){
 								$FIPS_name = FIPS_text($i);
 								if(isset($FIPS_name)){
 						?>
-						<option value="<?php echo $i; ?>"><?php echo $FIPS_name; ?></option>
+						<option value="<?php echo $i; ?>" <?php if(isset($FIPS) && $FIPS == $i) echo " selected";?>><?php echo $FIPS_name; ?></option>
 						<?php
 								}
 							}
@@ -44,7 +44,7 @@
 		
 			<!-- county -->
 			<tr>
-				<td>
+				<td>					
 					<label for="county"> 
 						County:
 					</label>

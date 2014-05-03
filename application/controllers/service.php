@@ -123,10 +123,10 @@ class Service extends CI_Controller
 					$site_ID = $CI->tsdp_file->file_header->site_ID;
 					
 					//splite the info1 field into state and county
-					$info1 = explode("|", $this->tsdp_file->CI->file_header->info1 ) ;				
+					$info1 = explode("|", $this->tsdp_file->CI->file_header->info_line_1 ) ;				
 					$state = $info1[0];
 					//get the state id
-					$FIPS = FIPS_id($FIPS_text);
+					$FIPS = FIPS_id($state);
 					$county = $info1[1];
 					
 					//loading site model

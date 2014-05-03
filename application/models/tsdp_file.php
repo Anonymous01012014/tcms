@@ -257,8 +257,7 @@ class Tsdp_file extends CI_Model{
 		/** End of section**/
 		
 		//if this file is a count or per vehicle file
-		if($this->storage_mode == COUNT || $this->storage_mode == PER_VEHICLE){
-		
+		if($this->storage_mode == COUNT || $this->storage_mode == PER_VEHICLE){			
 			/** Inserting file header info into the database **/
 			
 			//load statistics model
@@ -276,9 +275,10 @@ class Tsdp_file extends CI_Model{
 			$this->CI->statistics_record_model->case_id = $case_id;
 			
 			//insert statistics record into the database and getting its id
-			$statistics_record_id = $this->CI->statistics_record_model->addStatisticsRecord();
+			$statistics_record_id = $this->CI->statistics_record_model->addStatisticsRecord();			
+			
 			if(isset($statistics_record_id[0])){
-				$statistics_record_id = $statistics_record_id[0]['statistics_record_id'];
+				$statistics_record_id = $statistics_record_id[0]['statistics_record_id'];				
 			}
 			
 			/** End of Inserting file header info into the database section**/
@@ -294,9 +294,14 @@ class Tsdp_file extends CI_Model{
 			$counters = $this->CI->db_views_model->getSiteCountersByCaseId($case_id);
 			//flag that is set to true if the counter was already added to this site
 			$exists = false;
+			
+			
+			
 			//if the counter exists in the database extract its site and lanes
-			foreach($counters as $counter){
-				if($counter['serial'] == $this->file_header->counter_serial){
+			foreach($counters as $counter)
+			{
+				if($counter['serial'] == $this->file_header->counter_serial)
+				{					
 					//if the counter exists get its id and its site id and lanes ids.
 					$exists = true;
 					$counter_id = $counter['counter_id'];
@@ -308,11 +313,11 @@ class Tsdp_file extends CI_Model{
 						$lanes_ids[$i] = $lanes[$i]['id'];
 					}
 					break;
-				}
+				}				
 			}
 			//if the counter isn't already in the database
-			if(!$exists){
-				
+			if(!$exists)
+			{			
 				/** Add this counter to the database **/
 				
 				//load counter model
@@ -321,8 +326,7 @@ class Tsdp_file extends CI_Model{
 				$this->CI->counter_model->serial = $this->file_header->counter_serial;
 				$this->CI->counter_model->unit_type = $this->file_header->unit_type;
 				$this->CI->counter_model->unit_version = $this->file_header->unit_ver;
-				//get site id
-				
+				//get site id				
 				if(isset($counters[0])){
 					$site_id = $counters[0]['site_id'];
 				}else{
@@ -385,7 +389,8 @@ class Tsdp_file extends CI_Model{
 			/** End of section**/
 			
 			/** Inserting lane headers info into the database **/
-			for($i=0;$i<count($this->lane_headers);$i++){
+			for($i=0;$i<count($this->lane_headers);$i++)
+			{							
 				/** Adding Lane record table info **/
 				//load lane record model
 				$this->CI->load->model('lane_record_model');
@@ -409,21 +414,23 @@ class Tsdp_file extends CI_Model{
 			
 			/** End of section **/
 		}
+				
 		
-		if($this->storage_mode == COUNT){
-			
+		if($this->storage_mode == COUNT)
+		{		
 			/** Inserting count records + count lane records info into the database **/
 			
 			//load models
 			$this->CI->load->model('count_record_model');
 			$this->CI->load->model('count_lane_record_model');
+						
 			
 			//Inserting count data row after another took a lot of time so we decided to 
 			//use insert_batch tot add an array of records together
 			$count_record_array = array();
 			$count_lane_record_array = array();
-			for($i=0;$i<count($this->count_records);$i++){
-				
+			for($i=0;$i<count($this->count_records);$i++)
+			{				
 				$count_record = array();
 				$count_lane_record = array();
 				//fill count record model fields
@@ -438,7 +445,8 @@ class Tsdp_file extends CI_Model{
 				
 				$lane_totals = $this->count_records[$i]->lane_total;
 				//get the counts from the bins total array as key(lane number)=>value(count)
-				foreach($lane_totals as $lane_num => $b_total){					
+				foreach($lane_totals as $lane_num => $b_total)
+				{					
 					//fill the count_lane_record 
 					$count_lane_record['count'] = $b_total;
 					//set the count record id for one count_record's count_lane_records to 
@@ -450,9 +458,10 @@ class Tsdp_file extends CI_Model{
 					$count_lane_record_array[] = $count_lane_record;
 				}
 			}
+		
 			//execute thse add multi records functions and get the first and last ids
 			if(isset($count_record_array[0]))
-			$ids = $this->CI->count_record_model->addMultiRecords($count_record_array);
+				$ids = $this->CI->count_record_model->addMultiRecords($count_record_array);
 			
 			if(isset($ids[0])){
 				//add the count lane records to the database
@@ -469,7 +478,8 @@ class Tsdp_file extends CI_Model{
 			
 			/** End of section **/
 		}
-		else if($this->storage_mode == PER_VEHICLE){
+		else if($this->storage_mode == PER_VEHICLE)
+		{
 			/** Inserting per vehicl records + vehicle axle spacings info into the database **/
 			
 			//load models

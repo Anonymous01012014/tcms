@@ -82,10 +82,10 @@ class File_header extends CI_Model{
 		$this->weather = $line[5];
 		
 		//GSP latitude and longitude
-		if($line[6] !== ""){
+		if($line[6] != ""){
 			$this->GPS_lat = $line[6];
 		}
-		if($line[7] !== ""){
+		if($line[7] != ""){
 			$this->GPS_long = $line[7];
 		}
 		

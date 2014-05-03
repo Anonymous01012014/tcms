@@ -114,7 +114,14 @@ class Count_record_model extends CI_Model{
 		
 		//isert the rest of array elements in the database
 		$count_record_array = array_slice($count_record_array, 1);
-		$this->db->insert_batch('count_record',$count_record_array);
+		
+		
+		//if the array is empty then an error will be appear		
+		if(count($count_record_array) > 0)
+		{
+			$this->db->insert_batch('count_record',$count_record_array);
+		}
+		
 		
 		//get the latest added count record's id
 		$query = "select max(id) as count_record_id from count_record;";
