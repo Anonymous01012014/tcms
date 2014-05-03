@@ -46,8 +46,8 @@
 				
 				<td>
 					<select name="lane_direction" class="form-control">
-						<option value="oneWay">oneWay</option>
-						<option value="twoWay">towWay</option>
+						<option value="oneWay">One Way</option>
+						<option value="twoWay">Two Way</option>
 					</select>
 				</td>
 				
