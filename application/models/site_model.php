@@ -231,7 +231,7 @@ class Site_model extends CI_Model{
 	 			  county = '{$this->county}' and	 			  
 	 			  end_date = '000000'";
 				  
-		echo $query;		  
+		//echo $query;		  
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
