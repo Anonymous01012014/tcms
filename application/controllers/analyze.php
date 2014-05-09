@@ -117,7 +117,7 @@ class Analyze extends CI_Controller {
 		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
 		
 		//input file location and name
-		$command .= $location . $file_name . "_".$case_id .  ".BIN\"";
+		$command .= $location . $file_name .  ".BIN\"";
 		
 		//output file
 		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
@@ -137,7 +137,7 @@ class Analyze extends CI_Controller {
 		//sensor spacing
 		$command.= " --sensorSpacing ". $sensor_spacing;
 		
-		//echo $command;	
+		echo $command;	
 						
 		exec($command);
 		
