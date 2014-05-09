@@ -227,9 +227,11 @@ class Site_model extends CI_Model{
 				  FROM site
 	 			  WHERE 
 	 			  name = '{$this->name}' 	 and
-	 			  fips = '{$this->fips}' 	 and
+	 			  fips = '{$this->FIPS}' 	 and
 	 			  county = '{$this->county}' and	 			  
 	 			  end_date = '000000'";
+				  
+		echo $query;		  
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
