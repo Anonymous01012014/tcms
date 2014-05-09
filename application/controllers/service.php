@@ -156,8 +156,8 @@ class Service extends CI_Controller
 						//inserting output file headers info into the database (just file_header for now)
 						$CI->tsdp_file->save_file_headers($case_id);
 						
-						//setting the file name to uploaded-file-name_case-id
-						$CI->binary_file_model->name = $file_name[0].'_'.$case_id.'.BIN';
+						//setting the file name to uploaded-file-name_case-id						
+						$CI->binary_file_model->name = $file_name[0].'_'.$case_id;
 						//setting the binary file location.
 						$CI->binary_file_model->location = 'files/Binary_files/closed_binary_files/';	
 						//setting the case id for this binary file.	
