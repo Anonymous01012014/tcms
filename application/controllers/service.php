@@ -134,7 +134,7 @@ class Service extends CI_Controller
 					//getting the id of this site
 					$CI->site_model->name = $site_ID;
 					$CI->site_model->FIPS = $FIPS;
-					$CI->site_model->name = $county;
+					$CI->site_model->county = $county;
 					$site = $CI->site_model->getSiteByNameStateCounty();
 					//if the site exists
 					if(isset($site[0])){
