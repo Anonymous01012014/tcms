@@ -212,6 +212,7 @@ $(document).ready(function() {
  
 });
 function checkNameUnique(){
+	/*
 	var name = $('input#name').val();
 	var latitude = $('input#latitude').val();
 	var longitude = $('input#longitude').val();
@@ -230,6 +231,8 @@ function checkNameUnique(){
 				$('form button#submit').click();
 			}
 		});
+		*/
+		$('form button#submit').click();
 }
 function hideMessage(){
 			$('#status_message').hide();
