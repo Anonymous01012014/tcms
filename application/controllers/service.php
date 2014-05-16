@@ -124,18 +124,25 @@ class Service extends CI_Controller
 					
 					//splite the info1 field into state and county
 					$info1 = explode("|", $CI->tsdp_file->CI->file_header->info_line_1 ) ;				
-					$state = $info1[0];
-					//get the state id
-					$FIPS = FIPS_id($state);
-					$county = $info1[1];
 					
-					//loading site model
-					$CI->load->model('site_model');
-					//getting the id of this site
-					$CI->site_model->name = $site_ID;
-					$CI->site_model->FIPS = $FIPS;
-					$CI->site_model->county = $county;
-					$site = $CI->site_model->getSiteByNameStateCounty();
+					//define empty site
+					$site = array();
+					
+					if(isset($info1[1]))
+					{					
+						$state = $info1[0];
+						//get the state id
+						$FIPS = FIPS_id($state);
+						$county = $info1[1];
+					
+						//loading site model
+						$CI->load->model('site_model');
+						//getting the id of this site
+						$CI->site_model->name = $site_ID;
+						$CI->site_model->FIPS = $FIPS;
+						$CI->site_model->county = $county;
+						$site = $CI->site_model->getSiteByNameStateCounty();
+					}
 					//if the site exists
 					if(isset($site[0])){
 						//get the opened case for this site
