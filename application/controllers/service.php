@@ -20,7 +20,7 @@ class Service extends CI_Controller
      public function __construct()
      {
           parent::__construct();
-          $this->ns = 'http://192.168.1.34:8080/tcms/service/';
+          $this->ns = 'http://198.38.94.163/tcms/service/';
           $this->load->library("Nusoap_library"); // load nusoap toolkit library in controller
           $this->nusoap_server = new soap_server(); // create soap server object
           $this->nusoap_server->configureWSDL("CaseControl", $this->ns); // wsdl configuration
