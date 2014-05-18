@@ -83,7 +83,11 @@ class Service extends CI_Controller
 		 * contact: molham225@gmail.com 
 		 */
 		
-		function uploadBinary($encoded_file,$name,$user_id){
+		function uploadBinary($encoded_file,$name,$user_id)
+		{
+			//the value to be returned	
+			$return_code = 0;	
+				
 			$CI =& get_instance();
 			//load user model.
 			$CI->load->model('binary_file_model');
@@ -106,7 +110,8 @@ class Service extends CI_Controller
 				//split the name and extension of the file
 				$file_name = explode('.',$file_name);
 				//if the file is a binary file
-				if(strtoupper($file_name[count($file_name) - 1]) == "BIN"){
+				if(strtoupper($file_name[count($file_name) - 1]) == "BIN")
+				{
 					//put the file in the new binary files directory
 					file_put_contents($location.$file_name[0].'.BIN', $current); 
 					
@@ -128,23 +133,35 @@ class Service extends CI_Controller
 					//define empty site
 					$site = array();
 					
-					if(isset($info1[1]))
-					{					
-						$state = $info1[0];
-						//get the state id
-						$FIPS = FIPS_id($state);
-						$county = $info1[1];
+					$state = $info1[0];
+					//get the state id
+					$FIPS = FIPS_id($state);
+					$county = $info1[1];
+				
+					//loading site model
+					$CI->load->model('site_model');
+					//getting the id of this site
+					$CI->site_model->name = $site_ID;
+					$CI->site_model->FIPS = $FIPS;
+					$CI->site_model->county = $county;
 					
-						//loading site model
-						$CI->load->model('site_model');
-						//getting the id of this site
-						$CI->site_model->name = $site_ID;
-						$CI->site_model->FIPS = $FIPS;
-						$CI->site_model->county = $county;
-						$site = $CI->site_model->getSiteByNameStateCounty();
+					
+					$site_name = $CI->site_model->getSiteByName();
+					$site = $CI->site_model->getSiteByNameStateCounty();
+					
+					if(!isset($site_name[0]))
+					{
+						$return_code = 1; //site name was not found in the database //"The site of this file doesn't exist.."
 					}
+					else if(!isset($site[0]))
+					{
+						$return_code = 4; // the site name with county and state was not found
+					}
+					
+					
 					//if the site exists
-					if(isset($site[0])){
+					if(isset($site[0]))
+					{
 						//get the opened case for this site
 						$CI->case_model->site_id = $site[0]['id'];
 						$open_case = $CI->case_model->getOpenCaseBySiteId();
@@ -183,8 +200,24 @@ class Service extends CI_Controller
 						
 						rename($location.$file_name[0].'.BIN','files/binary_files/closed_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
 						
-						return 0; // Output success message 	"File Uploaded successfully..."	
-					}else{
+						
+						//analyze the file with the proper TSDP parameters come from info2 field						
+						$info2 = explode("|", $CI->tsdp_file->CI->file_header->info_line_2 ) ;
+						
+						$analyze_type = $info2[0];   //anlayze type V or C 
+						$number_of_lane = $info2[1]; //lane number 1 or 2
+						$tube = $info2[2]; //tube setup {Normal short/long or directional}
+						$sensor_spacing = $info2[3]; //sensor spacing 48
+						$interval = $info2[4]; // volume interval
+						$lane1_info = $info2[5]; // lane 1 info
+						$lane2_info = $info2[6]; // lane 2 info
+						$direction = "twoWay";		
+						
+						
+						$return_code =  0; // Output success message 	"File Uploaded successfully..."	
+					}													
+					else
+					{
 						/* adding the undifined site binary file to the database under case_id=0 and thefile name is fileName_binaryFileId.BIN */
 						//setting the file name to uploaded-file-name_case-id
 						$CI->binary_file_model->name = $file_name[0];
@@ -196,19 +229,24 @@ class Service extends CI_Controller
 						//execute the add file function.
 						$file_id = $CI->binary_file_model->addBinaryFile();
 						//moving the binaryfile to the undefined binary files directory
-						rename($location.$file_name[0].'.BIN','files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');
-						
-						return 1;//"The site of this file doesn't exist.."
+						rename($location.$file_name[0].'.BIN','files/binary_files/undefined_binary_files/'.$file_name[0].'_'.$file_id.'.BIN');												
 					}	
 					//delete the generated output count file
 					unlink($file);	
 				}
-				return 2; //"You should upload binary files only..."
+                else
+				{
+					$return_code =  2; //"You should upload binary files only..."
+				}
+				
 			}
 			else        
 			{
-				return 3;//"Please select a file for upload..."
+				$return_code = 3;//"Please select a file for upload..."
 			}
+			
+			
+			return $return_code;
 	 }
 		// registering add closed case method in the wsdl
 		$input_array = array ('encoded_file' => "xsd:string", 'name' => "xsd:string",'user_id'=>"xsd:int"); 
