@@ -73,7 +73,7 @@
 
 
 	/**
-	 * Site FIPS
+	 * Site FIPS (States)
 	 **/
 	 
 	/**
@@ -497,6 +497,608 @@
 		
 	}
 	
+	/**
+	 * Oklahoma Counties
+	 **/
+	 
+	/**
+	 * Constants
+	 * 
+	 * Description :
+	 * These constants are the number representation of
+	 * Oklahoma counties.
+	 * 
+	 * Created date ; 18-5-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 * 
+	 **/
+	 
+	const None = 0;
+	const Adair = 1;
+	const Alfalfa = 3;
+	const Atoka = 5;
+	const Beaver = 7;
+	const Beckham = 9;
+	const Blaine = 11;
+	const Bryan = 13;
+	const Caddo = 15;
+	const Canadian = 17;
+	const Carter = 19;
+	const Cherokee = 21;
+	const Choctaw = 23;
+	const Cimarron = 25;
+	const Cleveland = 27;
+	const Coal = 29;
+	const Comanche = 31;
+	const Cotton = 33;
+	const Craig = 35;
+	const Creek = 37;
+	const Custer = 39;
+	const Delaware = 41;
+	const Dewey = 43;
+	const Ellis = 45;
+	const Garfield = 47;
+	const Garvin = 49;
+	const Grady = 51;
+	const Grant = 53;
+	const Greer = 55;
+	const Harmon = 57;
+	const Harper = 59;
+	const Haskell = 61;
+	const Hughes = 63;
+	const Jackson = 65;
+	const Jefferson = 67;
+	const Johnston = 69;
+	const Kay = 71;
+	const Kingfisher = 73;
+	const Kiowa = 75;
+	const Latimer = 77;
+	const Le_Flore = 79;
+	const Lincoln = 81;
+	const Logan = 83;
+	const Love = 85;
+	const Major = 93;
+	const Marshall = 95;
+	const Mayes = 97;
+	const McClain = 87;
+	const McCurtain = 89;
+	const McIntosh = 91;
+	const Murray = 99;
+	const Muskogee = 101;
+	const Noble = 103;
+	const Nowata = 105;
+	const Okfuskee = 107;
+	const Oklahoma = 109;
+	const Okmulgee = 111;
+	const Osage = 113;
+	const Ottawa = 115;
+	const Pawnee = 117;
+	const Payne = 119;
+	const Pittsburg = 121;
+	const Pontotoc = 123;
+	const Pottawatomie = 125;
+	const Pushmataha = 127;
+	const Roger_Mills = 129;
+	const Rogers = 131;
+	const Seminole = 133;
+	const Sequoyah = 135;
+	const Stephens = 137;
+	const Texas = 139;
+	const Tillman = 141;
+	const Tulsa = 143;
+	const Wagoner = 145;
+	const Washington = 147;
+	const Washita = 149;
+	const Woods = 151;
+	const Woodward = 153;
+
+
+	/**
+	 * Function name:
+	 * county_text
+	 * 
+	 * Description :
+	 * This function returns the text representation of the county
+	 * determined by the given number.
+	 * 
+	 * Created date ; 12-2-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function county_text($county_number){
+		switch($county_number){
+			case None:
+			return "None";
+			break;
+			case Adair:
+			return "Adair";
+			break;
+			case Alfalfa:
+			return "Alfalfa";
+			break;
+			case Atoka:
+			return "Atoka";
+			break;
+			case Beaver:
+			return "Beaver";
+			break;
+			case Beckham:
+			return "Beckham";
+			break;
+			case Blaine:
+			return "Blaine";
+			break;
+			case Bryan:
+			return "Bryan";
+			break;
+			case Caddo:
+			return "Caddo";
+			break;
+			case Canadian:
+			return "Canadian";
+			break;
+			case Carter:
+			return "Carter";
+			break;
+			case Cherokee:
+			return "Cherokee";
+			break;
+			case Choctaw:
+			return "Choctaw";
+			break;
+			case Cimarron:
+			return "Cimarron";
+			break;
+			case Cleveland:
+			return "Cleveland";
+			break;
+			case Coal:
+			return "Coal";
+			break;
+			case Comanche:
+			return "Comanche";
+			break;
+			case Cotton:
+			return "Cotton";
+			break;
+			case Craig:
+			return "Craig";
+			break;
+			case Creek:
+			return "Creek";
+			break;
+			case Custer:
+			return "Custer";
+			break;
+			case Delaware:
+			return "Delaware";
+			break;
+			case Ellis:
+			return "Ellis";
+			break;
+			case Garfield:
+			return "Garfield";
+			break;
+			case Garvin:
+			return "Garvin";
+			break;
+			case Grady:
+			return "Grady";
+			break;
+			case Grant:
+			return "Grant";
+			break;
+			case Greer:
+			return "Greer";
+			break;
+			case Harmon:
+			return "Harmon";
+			break;
+			case Harper:
+			return "Harper";
+			break;
+			case Haskell:
+			return "Haskell";
+			break;
+			case Hughes:
+			return "Hughes";
+			break;
+			case Jackson:
+			return "Jackson";
+			break;
+			case Jefferson:
+			return "Jefferson";
+			break;
+			case Johnston:
+			return "Johnston";
+			break;
+			case Kay:
+			return "Kay";
+			break;
+			case Kingfisher:
+			return "Kingfisher";
+			break;
+			case Kiowa:
+			return "Kiowa";
+			break;
+			case Latimer:
+			return "Latimer";
+			break;
+			case Le_Flore:
+			return "Le_Flore";
+			break;
+			case Lincoln:
+			return "Lincoln";
+			break;
+			case Logan:
+			return "Logan";
+			break;
+			case Love:
+			return "Love";
+			break;
+			case Major:
+			return "Major";
+			break;
+			case Marshall:
+			return "Marshall";
+			break;
+			case Mayes:
+			return "Mayes";
+			break;
+			case McClain:
+			return "McClain";
+			break;
+			case McCurtain:
+			return "McCurtain";
+			break;
+			case McIntosh:
+			return "McIntosh";
+			break;
+			case Murray:
+			return "Murray";
+			break;
+			case Muskogee:
+			return "Muskogee";
+			break;
+			case Noble:
+			return "Noble";
+			break;
+			case Nowata:
+			return "Nowata";
+			break;
+			case Okfuskee:
+			return "Okfuskee";
+			break;
+			case Oklahoma:
+			return "Oklahoma";
+			break;
+			case Okmulgee:
+			return "Okmulgee";
+			break;
+			case Osage:
+			return "Osage";
+			break;
+			case Ottawa:
+			return "Ottawa";
+			break;
+			case Pawnee:
+			return "Pawnee";
+			break;
+			case Payne:
+			return "Payne";
+			break;
+			case Pittsburg:
+			return "Pittsburg";
+			break;
+			case Pontotoc:
+			return "Pontotoc";
+			break;
+			case Pottawatomie:
+			return "Pottawatomie";
+			break;
+			case Pushmataha:
+			return "Pushmataha";
+			break;
+			case Roger_Mills:
+			return "Roger_Mills";
+			break;
+			case Rogers:
+			return "Rogers";
+			break;
+			case Seminole:
+			return "Seminole";
+			break;
+			case Sequoyah:
+			return "Sequoyah";
+			break;
+			case Stephens:
+			return "Stephens";
+			break;
+			case Texas:
+			return "Texas";
+			break;
+			case Tillman:
+			return "Tillman";
+			break;
+			case Tulsa:
+			return "Tulsa";
+			break;
+			case Wagoner:
+			return "Wagoner";
+			break;
+			case Washington:
+			return "Washington";
+			break;
+			case Washita:
+			return "Washita";
+			break;
+			case Woods:
+			return "Woods";
+			break;
+			case Woodward:
+			return "Woodward";
+			break;
+		}
+	}
+	
+	
+	/**
+	 * Function name:
+	 * county_text
+	 * 
+	 * Description :
+	 * This function returns the number representation of the county
+	 * determined by the given text.
+	 * 
+	 * Created date ; 18-5-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Ahmad Mulhem Barakat
+	 * contact : molham225@gmail.com
+	 **/
+	function county_enum($county_text){
+		//transform the text to uppercase first format 
+		$county_text = ucfirst($copunty_text);
+		
+		switch($county_text){
+			case "None":
+			return None;
+			break;
+			case "Adair":
+			return Adair;
+			break;
+			case "Alfalfa":
+			return Alfalfa;
+			break;
+			case "Atoka":
+			return Atoka;
+			break;
+			case "Beaver":
+			return Beaver;
+			break;
+			case "Beckham":
+			return Beckham;
+			break;
+			case "Blaine":
+			return Blaine;
+			break;
+			case "Bryan":
+			return Bryan;
+			break;
+			case "Caddo":
+			return Caddo;
+			break;
+			case "Canadian":
+			return Canadian;
+			break;
+			case "Carter":
+			return Carter;
+			break;
+			case "Cherokee":
+			return Cherokee;
+			break;
+			case "Choctaw":
+			return Choctaw;
+			break;
+			case "Cimarron":
+			return Cimarron;
+			break;
+			case "Cleveland":
+			return Cleveland;
+			break;
+			case "Coal":
+			return Coal;
+			break;
+			case "Comanche":
+			return Comanche;
+			break;
+			case "Cotton":
+			return Cotton;
+			break;
+			case "Craig":
+			return Craig;
+			break;
+			case "Creek":
+			return Creek;
+			break;
+			case "Custer":
+			return Custer;
+			break;
+			case "Delaware":
+			return Delaware;
+			break;
+			case "Ellis":
+			return "Ellis";
+			break;
+			case "Garfield":
+			return Garfield;
+			break;
+			case "Garvin":
+			return Garvin;
+			break;
+			case "Grady":
+			return Grady;
+			break;
+			case "Grant":
+			return Grant;
+			break;
+			case "Greer":
+			return Greer;
+			break;
+			case "Harmon":
+			return Harmon;
+			break;
+			case "Harper":
+			return Harper;
+			break;
+			case "Haskell":
+			return Haskell;
+			break;
+			case "Hughes":
+			return Hughes;
+			break;
+			case "Jackson":
+			return Jackson;
+			break;
+			case "Jefferson":
+			return Jefferson;
+			break;
+			case "Johnston":
+			return Johnston;
+			break;
+			case "Kay":
+			return Kay;
+			break;
+			case "Kingfisher":
+			return Kingfisher;
+			break;
+			case "Kiowa":
+			return Kiowa;
+			break;
+			case "Latimer":
+			return Latimer;
+			break;
+			case "Le_Flore":
+			return Le_Flore;
+			break;
+			case "Lincoln":
+			return Lincoln;
+			break;
+			case "Logan":
+			return Logan;
+			break;
+			case "Love":
+			return Love;
+			break;
+			case "Major":
+			return Major;
+			break;
+			case "Marshall":
+			return Marshall;
+			break;
+			case "Mayes":
+			return Mayes;
+			break;
+			case "McClain":
+			return McClain;
+			break;
+			case "McCurtain":
+			return McCurtain;
+			break;
+			case "McIntosh":
+			return McIntosh;
+			break;
+			case "Murray":
+			return Murray;
+			break;
+			case "Muskogee":
+			return Muskogee;
+			break;
+			case "Noble":
+			return Noble;
+			break;
+			case "Nowata":
+			return Nowata;
+			break;
+			case "Okfuskee":
+			return Okfuskee;
+			break;
+			case "Oklahoma":
+			return Oklahoma;
+			break;
+			case "Okmulgee":
+			return Okmulgee;
+			break;
+			case "Osage":
+			return Osage;
+			break;
+			case "Ottawa":
+			return Ottawa;
+			break;
+			case "Pawnee":
+			return Pawnee;
+			break;
+			case "Payne":
+			return Payne;
+			break;
+			case "Pittsburg":
+			return Pittsburg;
+			break;
+			case "Pontotoc":
+			return Pontotoc;
+			break;
+			case "Pottawatomie":
+			return Pottawatomie;
+			break;
+			case "Pushmataha":
+			return Pushmataha;
+			break;
+			case "Roger_Mills":
+			return Roger_Mills;
+			break;
+			case "Rogers":
+			return Rogers;
+			break;
+			case "Seminole":
+			return Seminole;
+			break;
+			case "Sequoyah":
+			return Sequoyah;
+			break;
+			case "Stephens":
+			return Stephens;
+			break;
+			case "Texas":
+			return Texas;
+			break;
+			case "Tillman":
+			return Tillman;
+			break;
+			case "Tulsa":
+			return Tulsa;
+			break;
+			case "Wagoner":
+			return Wagoner;
+			break;
+			case "Washington":
+			return Washington;
+			break;
+			case "Washita":
+			return Washita;
+			break;
+			case "Woods":
+			return Woods;
+			break;
+			case "Woodward"
+			return Woodward;
+			break;
+		}
+	}
 	
 	/**
 	 * Site Functional Classes
