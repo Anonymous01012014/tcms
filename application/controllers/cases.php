@@ -440,7 +440,8 @@ class Cases extends CI_Controller {
 				$site_ID = $this->tsdp_file->CI->file_header->site_ID;
 				
 				//splite the info1 field into state and county				
-				$info1 = explode("|", $this->tsdp_file->CI->file_header->info_line_1 ) ;				
+				$info1 = explode("|", $this->tsdp_file->CI->file_header->info_line_1 ) ;	
+				$info2 = explode("|", $CI->tsdp_file->CI->file_header->info_line_2 ) ;			
 				$state = $info1[0];
 				//get the state id
 				$this->load->helper('enumeration');
@@ -455,8 +456,17 @@ class Cases extends CI_Controller {
 				$this->site_model->FIPS = $FIPS;				
 				$this->site_model->county = $county;
 				$site = $this->site_model->getSiteByNameStateCounty();
+				
+				
+				if(!isset($info2[0]))
+				{
+					echo "Error, No TSDP parameters is found in the binary file .. :(";
+					return 0;
+				}
+				
 				//if the site exists
-				if(isset($site[0])){
+				if(isset($site[0]))
+				{
 					//if the action is open_close the create an open case to be closed
 					if($action == "open_close"){					
 						//insert post values into the model
@@ -511,6 +521,30 @@ class Cases extends CI_Controller {
 					//execute the close normally function
 					$this->case_model->closeNormally();
 					rename('files/binary_files/new_binary_files/'.$file_data['file_name'],'files/binary_files/closed_binary_files/'.$file_name[0].'_'.$case_id.'.BIN');
+					
+					$analyze_type = $info2[0];   //anlayze type V or C 
+					if(strtolower($analyze_type) == "v") $analyze_type = "volume"; // change the analyze type to "volume" or "classification"
+					if(strtolower($analyze_type) == "c") $analyze_type = "classification"; // change the analyze type to "volume" or "classification"
+					$number_of_lane = $info2[1]; //lane number 1 or 2
+					$tube = $info2[2]; //tube setup {Normal short/long or directional}
+					$sensor_spacing = $info2[3]; //sensor spacing 48
+					$interval = $info2[4]; // volume interval
+					$lane1_info = $info2[5]; // lane 1 info
+					$lane2_info = $info2[6]; // lane 2 info
+					$direction = "twoWay";		
+					
+					
+					
+					
+					//if it success analyze the binary file to generate output file																	
+					$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);
+					
+					//read the output file lines
+					$this->tsdp_file->read_file_lines($output_file);
+					
+					//save the output to the database							
+					$this->tsdp_file->save_to_database($case_id);	
+					
 					
 					/**extract count info from the binary and add it to database**/
 					//execute the TSDP command with volume choice to generate the count text file.

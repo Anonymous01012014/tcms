@@ -93,60 +93,11 @@ class Analyze extends CI_Controller {
 		
 		//get binary file from case id
 		$case_id = $this->input->post('case_id');
-				
-		//load binary file model
-		$this->load->model("binary_file_model");
-		$this->binary_file_model->case_id = $case_id;
-		$binary_file = $this->binary_file_model->getBinaryFileByCaseId();
-		
-		$location = $binary_file[0]["location"];
-		$file_name = $binary_file[0]["name"];
-		
-		//choose the output file by analyze type
-		if($analyze_type == "volume")
-		{
-			$output = "count";
-		}
-		else if($analyze_type == "classification")
-		{
-			$output = "classification";
-		}
-		
-		
-		//execute the TSDP command with volume choice to generate the count text file.
-		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
-		
-		//input file location and name
-		$command .= $location . $file_name .  ".BIN\"";
-		
-		//output file
-		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
-		
-		//settings
-		$command .= " --settings" . __DIR__ ."\TSDP\SettingsFiles\CGSET.INI";
-		
-		//number of lanes
-		$command .= " --numLanes ".$num_lane;
-		
-		//analyze type 
-		$command .= " --" . $analyze_type;
-		
-		//number of ways
-		$command .= " --".$lane_direction;
-		
-		//sensor spacing
-		$command.= " --sensorSpacing ". $sensor_spacing;
-		
-		echo $command;	
 						
-		exec($command);
-		
-		//save the output analyze file to the database
 		$this->load->model("tsdp_file");
 		
-		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";
-		
-		
+		//generate output file
+		$output_file = $this->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);						
 		
 		//read the output file lines
 		$this->tsdp_file->read_file_lines($output_file);
@@ -165,105 +116,7 @@ class Analyze extends CI_Controller {
 
 
 
-	/**
-	 * Function name : analyzeBinaryFile
-	 * Description: 
-	 * read tsdp parameters from the interface and apply these parameters to TSDP command
-	 * the generated file put it in the output folder
-	 * 
-	 * 
-	 * parameters:
-	 * analyze_type: Volume
-	 * created date: 27-4-2014
-	 * created by: Eng. Mohanad Kaleia
-	 * contact: ms.kaleia@gmail.com
-	 */
-	public function analyzeBinaryFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id)
-	{		
-		//get tsdp paramters options
-		
-		//analyze type
-		$analyze_type = $this->input->post('analysis_type');
-		
-		//lane number
-		$num_lane = $this->input->post('num_lane');
-		
-		//lane direction
-		$lane_direction = $this->input->post('lane_direction');
-		
-		//tube
-		$tube = $this->input->post('tube');
-		
-		//sensor spacing
-		$sensor_spacing = $this->input->post('sensor_spacing');
-		
-		//get binary file from case id
-		$case_id = $this->input->post('case_id');
-				
-		//load binary file model
-		$this->load->model("binary_file_model");
-		$this->binary_file_model->case_id = $case_id;
-		$binary_file = $this->binary_file_model->getBinaryFileByCaseId();
-		
-		$location = $binary_file[0]["location"];
-		$file_name = $binary_file[0]["name"];
-		
-		//choose the output file by analyze type
-		if($analyze_type == "volume")
-		{
-			$output = "count";
-		}
-		else if($analyze_type == "classification")
-		{
-			$output = "classification";
-		}
-		
-		
-		//execute the TSDP command with volume choice to generate the count text file.
-		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
-		
-		//input file location and name
-		$command .= $location . $file_name .  ".BIN\"";
-		
-		//output file
-		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
-		
-		//settings
-		$command .= " --settings" . __DIR__ ."\TSDP\SettingsFiles\CGSET.INI";
-		
-		//number of lanes
-		$command .= " --numLanes ".$num_lane;
-		
-		//analyze type 
-		$command .= " --" . $analyze_type;
-		
-		//number of ways
-		$command .= " --".$lane_direction;
-		
-		//sensor spacing
-		$command.= " --sensorSpacing ". $sensor_spacing;
-		
-		echo $command;	
-						
-		exec($command);
-		
-		//save the output analyze file to the database
-		$this->load->model("tsdp_file");
-		
-		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";
-		
-		
-		
-		//read the output file lines
-		$this->tsdp_file->read_file_lines($output_file);
-		
-		//save the output to the database
-			
-		$this->tsdp_file->save_to_database($case_id);	
-		
-		//echo "an output file is created succesfully";
-		//redirect(base_url().'cases/manage');
-	}
+	
 	
 }
 

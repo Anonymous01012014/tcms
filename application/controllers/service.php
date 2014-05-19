@@ -101,8 +101,7 @@ class Service extends CI_Controller
 			
 			//if a file was chosen
 			if($name!="")
-			{
-				
+			{				
 				//get binary file data
 				$file_name =  $name;
 				
@@ -129,7 +128,7 @@ class Service extends CI_Controller
 					
 					//splite the info1 field into state and county
 					$info1 = explode("|", $CI->tsdp_file->CI->file_header->info_line_1 ) ;				
-					
+					$info2 = explode("|", $CI->tsdp_file->CI->file_header->info_line_2 ) ;
 					//define empty site
 					$site = array();
 					
@@ -157,10 +156,14 @@ class Service extends CI_Controller
 					{
 						$return_code = 4; // the site name with county and state was not found
 					}
+					else if(!isset($info2[0]))
+					{
+						$return_code = 5;
+					}
 					
 					
 					//if the site exists
-					if(isset($site[0]))
+					if(isset($site[0]) && isset($info2[0]))
 					{
 						//get the opened case for this site
 						$CI->case_model->site_id = $site[0]['id'];
@@ -202,9 +205,11 @@ class Service extends CI_Controller
 						
 						
 						//analyze the file with the proper TSDP parameters come from info2 field						
-						$info2 = explode("|", $CI->tsdp_file->CI->file_header->info_line_2 ) ;
+						
 						
 						$analyze_type = $info2[0];   //anlayze type V or C 
+						if(strtolower($analyze_type) == "v") $analyze_type = "volume"; // change the analyze type to "volume" or "classification"
+						if(strtolower($analyze_type) == "c") $analyze_type = "classification"; // change the analyze type to "volume" or "classification"
 						$number_of_lane = $info2[1]; //lane number 1 or 2
 						$tube = $info2[2]; //tube setup {Normal short/long or directional}
 						$sensor_spacing = $info2[3]; //sensor spacing 48
@@ -214,7 +219,19 @@ class Service extends CI_Controller
 						$direction = "twoWay";		
 						
 						
+						
+						
+						//if it success analyze the binary file to generate output file																	
+						$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);
+						
+						//read the output file lines
+						$this->tsdp_file->read_file_lines($output_file);
+						
+						//save the output to the database							
+						$this->tsdp_file->save_to_database($case_id);	
+						
 						$return_code =  0; // Output success message 	"File Uploaded successfully..."	
+						
 					}													
 					else
 					{
@@ -244,8 +261,7 @@ class Service extends CI_Controller
 			{
 				$return_code = 3;//"Please select a file for upload..."
 			}
-			
-			
+						
 			return $return_code;
 	 }
 		// registering add closed case method in the wsdl

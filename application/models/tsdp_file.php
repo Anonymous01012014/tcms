@@ -747,4 +747,89 @@ class Tsdp_file extends CI_Model{
 		return $line;
 	}
 	
+	
+	
+	/**
+	 * Function name : generateOutputFile
+	 * Description: 
+	 * read tsdp parameters from the interface and apply these parameters to TSDP command
+	 * the generated file put it in the output folder
+	 * 
+	 * 
+	 * parameters:
+	 * analyze_type: "volume" or "count"
+	 * num_lane: 1 or 2
+	 * lane_direction: "oneWay" or "twoWay"
+	 * tube: "normal", "shortLong", "directional"
+	 * sensor_spacing: 48 or any number
+	 * case_id: the id of case
+	 * created date: 18-5-2014
+	 * created by: Eng. Mohanad Kaleia
+	 * contact: ms.kaleia@gmail.com
+	 */
+	public function generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id)
+	{
+		//load CI object
+		$CI =& get_instance();
+												
+		//load binary file model				
+		$CI->load->model("binary_file_model");
+		$CI->binary_file_model->case_id = $case_id;
+		$binary_file = $CI->binary_file_model->getBinaryFileByCaseId();
+		
+		$location = $binary_file[0]["location"];
+		$file_name = $binary_file[0]["name"];
+		
+		//choose the output file by analyze type
+		if($analyze_type == "volume")
+		{
+			$output = "count";
+		}
+		else if($analyze_type == "classification")
+		{
+			$output = "classification";
+		}
+		
+		
+		//execute the TSDP command with volume choice to generate the count text file.
+		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
+		
+		//input file location and name
+		$command .= $location . $file_name .  ".BIN\"";
+		
+		//output file
+		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
+		
+		//settings
+		$command .= " --settings" . __DIR__ ."\TSDP\SettingsFiles\CGSET.INI";
+		
+		//number of lanes
+		$command .= " --numLanes ".$num_lane;
+		
+		//analyze type 
+		$command .= " --" . $analyze_type;
+		
+		//number of ways
+		$command .= " --".$lane_direction;
+		
+		//sensor spacing
+		$command.= " --sensorSpacing ". $sensor_spacing;				
+						
+		exec($command);
+		
+		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";
+		
+		//read the output file lines
+		//$this->tsdp_file->read_file_lines($output_file);
+		
+		//save the output to the database
+			
+		//$this->tsdp_file->save_to_database($case_id);	
+		
+		//echo "an output file is created succesfully";
+		//redirect(base_url().'cases/manage');
+		
+		return $output_file;
+	}
+	
 }
