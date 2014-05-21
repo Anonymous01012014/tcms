@@ -1094,7 +1094,7 @@
 			case "Woods":
 			return Woods;
 			break;
-			case "Woodward"
+			case "Woodward":
 			return Woodward;
 			break;
 		}
