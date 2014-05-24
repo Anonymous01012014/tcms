@@ -85,6 +85,11 @@ class Service extends CI_Controller
 		
 		function uploadBinary($encoded_file,$name,$user_id)
 		{
+				
+			//tsdp_file_objects
+			$this->load->model("tsdp_file");
+			$tsdp_file_object = clone $this->tsdp_file;	
+				
 			//the value to be returned	
 			$return_code = 0;	
 				
@@ -225,10 +230,10 @@ class Service extends CI_Controller
 						$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);
 						
 						//read the output file lines
-						$this->tsdp_file->read_file_lines($output_file);
+						$tsdp_file_object->read_file_lines($output_file);
 						
 						//save the output to the database							
-						$this->tsdp_file->save_to_database($case_id);	
+						$tsdp_file_object->save_to_database($case_id);	
 						
 						$return_code =  0; // Output success message 	"File Uploaded successfully..."	
 						

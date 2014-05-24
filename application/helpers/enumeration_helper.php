@@ -97,7 +97,7 @@
 	const California = 6;
 	const Colorado = 8;
 	const Connecticut = 9;
-	const Delaware = 10;
+	//const Delaware = 10;
 	const DC = 11;
 	const Florida = 12;
 	const Georgia = 13;
@@ -133,11 +133,11 @@
 	const South_Carolina = 45;
 	const South_Dakota = 46;
 	const Tennessee = 47;
-	const Texas = 48;
+	//const Texas = 48;
 	const Utah = 49;
 	const Vermont = 50;
 	const Virginia = 51;
-	const Washington = 53;
+	//const Washington = 53;
 	const West_Virginia = 54;
 	const Wisconsin = 55;
 	const Wyoming = 56;
@@ -571,7 +571,7 @@
 	const Noble = 103;
 	const Nowata = 105;
 	const Okfuskee = 107;
-	const Oklahoma = 109;
+	//const Oklahoma = 109;
 	const Okmulgee = 111;
 	const Osage = 113;
 	const Ottawa = 115;

@@ -111,6 +111,7 @@ class Tsdp_file extends CI_Model{
 		  {
 			// get next line from the file
 			$line = fgets($file);
+			
 			// if line not empty
 			if(strlen(trim($line)) > 0 ){
 				//form the line in an array of valid values
@@ -131,6 +132,7 @@ class Tsdp_file extends CI_Model{
 						break;
 					/** Lane Header **/	
 					case '-1':
+						
 						$this->CI->load->model("/TSDP_file/lane_header");
 						//insert the current line in this lane header object
 						$this->CI->lane_header->insert($line);
@@ -388,7 +390,7 @@ class Tsdp_file extends CI_Model{
 			}
 			/** End of section**/
 			
-			/** Inserting lane headers info into the database **/
+			/** Inserting lane headers info into the database **/		
 			for($i=0;$i<count($this->lane_headers);$i++)
 			{							
 				/** Adding Lane record table info **/
@@ -792,7 +794,7 @@ class Tsdp_file extends CI_Model{
 		
 		
 		//execute the TSDP command with volume choice to generate the count text file.
-		$command = __DIR__ . "\TSDP\TSDP.exe AUTO --in \"";
+		$command =  getcwd() . "\application\controllers\TSDP\TSDP.exe AUTO --in \"";
 		
 		//input file location and name
 		$command .= $location . $file_name .  ".BIN\"";
@@ -801,7 +803,7 @@ class Tsdp_file extends CI_Model{
 		$command .= " --out \"files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt\""; 
 		
 		//settings
-		$command .= " --settings" . __DIR__ ."\TSDP\SettingsFiles\CGSET.INI";
+		$command .= " --settings " . " application/controllers/TSDP/SettingsFiles/CGSET.INI";
 		
 		//number of lanes
 		$command .= " --numLanes ".$num_lane;
@@ -813,11 +815,14 @@ class Tsdp_file extends CI_Model{
 		$command .= " --".$lane_direction;
 		
 		//sensor spacing
-		$command.= " --sensorSpacing ". $sensor_spacing;				
+		$command.= " --sensorSpacing ". $sensor_spacing . " 2> error.txt";				
+
 						
 		exec($command);
 		
 		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";
+		
+		
 		
 		//read the output file lines
 		//$this->tsdp_file->read_file_lines($output_file);

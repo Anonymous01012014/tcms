@@ -2,9 +2,9 @@ File Header Info:
 ---------------------------
 Site ID: 1                             
 Info1: Oklahoma|Adair                
-Info2: testing                       
-Start Year (M/D/Y h:m): 5/2/14 5:55
-Stop Year (M/D/Y h:m): 5/2/14 5:55
+Info2: V|1|Normal|48|15M|N|S         
+Start Year (M/D/Y h:m): 5/19/14 9:54
+Stop Year (M/D/Y h:m): 5/19/14 9:55
 Real Time Polling Flag: 0
 Number Format: 2
 Date Format: 1
@@ -21,7 +21,7 @@ Interval #2 Start: 0, Length: 0
 Interval #3 Start: 0, Length: 0
 Interval #4 Start: 0, Length: 0
 Data Security Storage Value: 0
-UserID: 4                             
+UserID: 500                           
 Serial Number: 20843          
 Weather: 
 

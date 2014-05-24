@@ -399,6 +399,11 @@ class Cases extends CI_Controller {
 	 */
 	function saveBinaryFile($action,$case_id = 0)
 	{
+		//tsdp_file_objects
+		$this->load->model("tsdp_file");
+		$tsdp_file_object = clone $this->tsdp_file;
+		
+		
 		
 		//info message
 		$message = "";
@@ -433,7 +438,7 @@ class Cases extends CI_Controller {
 				//getting the output count file name
 				$file = "files/output_files/count/".'count_'.$case_id.".txt";
 				//extracting data from the count file and send it to database
-				$this->load->model('tsdp_file');
+			
 				//reading TSDP count file into the model object
 				$this->tsdp_file->read_file_lines($file);
 				//getting the site name from the file header
@@ -441,7 +446,7 @@ class Cases extends CI_Controller {
 				
 				//splite the info1 field into state and county				
 				$info1 = explode("|", $this->tsdp_file->CI->file_header->info_line_1 ) ;	
-				$info2 = explode("|", $CI->tsdp_file->CI->file_header->info_line_2 ) ;			
+				$info2 = explode("|", $this->tsdp_file->CI->file_header->info_line_2 ) ;			
 				$state = $info1[0];
 				//get the state id
 				$this->load->helper('enumeration');
@@ -537,13 +542,12 @@ class Cases extends CI_Controller {
 					
 					
 					//if it success analyze the binary file to generate output file																	
-					$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);
+					$output_file = $this->tsdp_file->generateOutputFile($analyze_type  , $number_of_lane , $direction , $tube , $sensor_spacing , $case_id);
 					
-					//read the output file lines
-					$this->tsdp_file->read_file_lines($output_file);
-					
+					//read the output file lines										
+					$tsdp_file_object->read_file_lines($output_file);
 					//save the output to the database							
-					$this->tsdp_file->save_to_database($case_id);	
+					$tsdp_file_object->save_to_database($case_id);	
 					
 					
 					/**extract count info from the binary and add it to database**/
@@ -611,6 +615,9 @@ class Cases extends CI_Controller {
 		//save the read file into the database on this case id
 		$this->tsdp_file->save_to_database($case_id);
 	}
+	
+	
+	
 	
 }
 
