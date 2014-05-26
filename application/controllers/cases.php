@@ -587,7 +587,7 @@ class Cases extends CI_Controller {
 			}
 			//delete the generated count output file
 			unlink($file);
-			//redirect(base_url().'cases/manage?message='.urlencode($message));
+			redirect(base_url().'cases/manage?message='.urlencode($message));
 		}
 	}
 	
