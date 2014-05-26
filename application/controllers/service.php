@@ -86,14 +86,15 @@ class Service extends CI_Controller
 		function uploadBinary($encoded_file,$name,$user_id)
 		{
 				
-			//tsdp_file_objects
-			$this->load->model("tsdp_file");
-			$tsdp_file_object = clone $this->tsdp_file;	
-				
 			//the value to be returned	
 			$return_code = 0;	
 				
 			$CI =& get_instance();
+			
+			//tsdp_file_objects
+			$CI->load->model("tsdp_file");
+			$tsdp_file_object = clone $CI->tsdp_file;	
+			
 			//load user model.
 			$CI->load->model('binary_file_model');
 			$CI->load->model('case_model');
@@ -120,7 +121,7 @@ class Service extends CI_Controller
 					file_put_contents($location.$file_name[0].'.BIN', $current); 
 					
 					//execute the TSDP command with volume choice to generate the count text file.
-					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_name[0].'.BIN'."\" --out \"files/output_files/count/".$file_name[0].".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 ");	
+					exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_name[0].'.BIN'."\" --out \"files/output_files/count/".$file_name[0].".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 1 --volume --twoWay --sensorSpacing 48 ");	
 					//echo __DIR__ ." files/binary_files/new_binary_files/".$file_name[0].'.BIN';
 					//getting the output count file name
 					$file = "files/output_files/count/".$file_name[0].".txt";
@@ -186,7 +187,7 @@ class Service extends CI_Controller
 							$case_id = $CI->case_model->openCase();
 						}
 						//inserting output file headers info into the database (just file_header for now)
-						$CI->tsdp_file->save_file_headers($case_id);
+						//$CI->tsdp_file->save_file_headers($case_id);
 						
 						//setting the file name to uploaded-file-name_case-id						
 						$CI->binary_file_model->name = $file_name[0].'_'.$case_id;
@@ -227,7 +228,8 @@ class Service extends CI_Controller
 						
 						
 						//if it success analyze the binary file to generate output file																	
-						$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $num_lane , $lane_direction , $tube , $sensor_spacing , $case_id);
+						$output_file = $CI->tsdp_file->generateOutputFile($analyze_type  , $number_of_lane , $direction , $tube , $sensor_spacing , $case_id);
+												
 						
 						//read the output file lines
 						$tsdp_file_object->read_file_lines($output_file);

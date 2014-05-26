@@ -115,11 +115,11 @@ class Tsdp_file extends CI_Model{
 			// if line not empty
 			if(strlen(trim($line)) > 0 ){
 				//form the line in an array of valid values
+				
 				$line = $this->separate_line($line);
 				//read the flag of the line
 				$flag = $line[0];
-				
-				switch($flag){
+							switch($flag){
 					/** File Header **/
 					case '-2':
 						$this->CI->load->model("/TSDP_file/file_header");
@@ -147,10 +147,11 @@ class Tsdp_file extends CI_Model{
 						$this->classification_setup =& $this->CI->classification_setup;
 						break;
 					/** Count Record **/	
-					case '0':
+					case '0':						
 						$this->CI->load->model("/TSDP_file/count_record");
 						//insert the current line in this count record object
 						$this->CI->count_record->insert($line);
+												
 						//add this count record object to the count records array
 						$this->count_records[count($this->count_records)] = clone $this->CI->count_record;
 						break;
@@ -447,6 +448,8 @@ class Tsdp_file extends CI_Model{
 				
 				$lane_totals = $this->count_records[$i]->lane_total;
 				//get the counts from the bins total array as key(lane number)=>value(count)
+				
+				
 				foreach($lane_totals as $lane_num => $b_total)
 				{					
 					//fill the count_lane_record 
@@ -470,8 +473,11 @@ class Tsdp_file extends CI_Model{
 				
 				//this loop adds the ids of the previously inserted count records
 				//to its count lane records
+				
+				
 				for($i=0;$i<count($count_lane_record_array);$i++){
 					$count_lane_record_array[$i]['count_record_id'] += $ids[0];
+									
 				}
 				
 				//execute the add multi records function
@@ -815,9 +821,8 @@ class Tsdp_file extends CI_Model{
 		$command .= " --".$lane_direction;
 		
 		//sensor spacing
-		$command.= " --sensorSpacing ". $sensor_spacing . " 2> error.txt";				
+		$command.= " --sensorSpacing ". $sensor_spacing;				
 
-						
 		exec($command);
 		
 		$output_file = "files/output_files/" .$output. "/" . $output. "_" . $case_id . ".txt";

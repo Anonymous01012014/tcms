@@ -40,6 +40,8 @@ class Count_record extends CI_Model{
 	 * contact: molham225@gmail.com
 	 */
 	 public function insert($line){
+	 	
+		
 		//load enumeration helper
 		$this->load->helper('enumeration');
 		
@@ -54,5 +56,7 @@ class Count_record extends CI_Model{
 			//lane_total = Array(Lane_number => Lane_total)
 			$this->lane_total[$line[$i]] = $line[$i + 1];
 		}
+		
+		
 	}
 }

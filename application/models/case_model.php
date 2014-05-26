@@ -438,9 +438,12 @@ class Case_model extends CI_Model{
 						c.rejecting_reason as rejecting_reason,
 						c.collector_id as collector_id,
 						c.admin_id as admin_id,
-						c.site_id  as site_id
-				  FROM `case` as c 
-				  WHERE status = '".CLOSED_NORMALLY ."' 
+						c.site_id  as site_id , 
+						case_count.count as count
+				  FROM `case` as c , case_count
+				  WHERE 
+				  c.status = '".CLOSED_NORMALLY ."'  and
+				  case_id =  c.id
 				  ORDER BY id DESC;";
 					
 										
@@ -473,6 +476,7 @@ class Case_model extends CI_Model{
 			//put open/close date & time in the right format for the grdi view
 			$cases[$i]['open_date_time'] = $cases[$i]['open_date'].' '.$cases[$i]['open_time'];
 			$cases[$i]['close_date_time'] = $cases[$i]['close_date'].' '.$cases[$i]['close_time'];
+			
 			//get the count of cars for this case
 			//$cases[$i]['count'] = 0;
 		}

@@ -434,7 +434,7 @@ class Cases extends CI_Controller {
 				//echo $file_data['file_name'];
 				//echo __DIR__ ."\TSDP\TSDP.exe AUTO --in 'files/binary_files/new_binary_files/".$file_data['file_name']."' --out 'files/output_files/count/".$file_name[0].'_'.$case_id.".txt' --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 2> error.txt";
 				//execute the TSDP command with volume choice to generate the count text file.
-				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_data['file_name']."\" --out \"files/output_files/count/".'count_'.$case_id.".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 2 --volume --twoWay --sensorSpacing 48 ");	
+				exec(__DIR__ ."\TSDP\TSDP.exe AUTO --in \"files/binary_files/new_binary_files/".$file_data['file_name']."\" --out \"files/output_files/count/".'count_'.$case_id.".txt\" --settings ". __DIR__ ."\TSDP\SettingsFiles\CGSET.INI --numLanes 1 --volume --twoWay --sensorSpacing 48 ");	
 				//getting the output count file name
 				$file = "files/output_files/count/".'count_'.$case_id.".txt";
 				//extracting data from the count file and send it to database
@@ -506,7 +506,7 @@ class Cases extends CI_Controller {
 					}
 					
 					//inserting output file headers info into the database (just file_header for now)
-					$this->tsdp_file->save_file_headers($case_id);
+					//$this->tsdp_file->save_file_headers($case_id);
 					
 					//setting the file name to uploaded-file-name_case-id
 					$this->binary_file_model->name = $file_name[0].'_'.$case_id;
@@ -587,7 +587,7 @@ class Cases extends CI_Controller {
 			}
 			//delete the generated count output file
 			unlink($file);
-			redirect(base_url().'cases/manage?message='.urlencode($message));
+			//redirect(base_url().'cases/manage?message='.urlencode($message));
 		}
 	}
 	

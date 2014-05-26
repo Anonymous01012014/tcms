@@ -61,5 +61,27 @@ class Db_views_model extends CI_Model{
 		$query = $this->db->query($query);
 		return $query->result_array();
 	 }
+	 
+	 
+	 /**
+	 * function name : getCaseCount
+	 * 
+	 * Description : 
+	 * get case count from views by case id
+	 * 
+	 * parameters:
+	 * case_id: case id	
+	 * Created date : 25-5-2014
+	 * Modification date : ---
+	 * Modfication reason : ---
+	 * Author : Mohanad Kaleia
+	 * contact : molham225@gmail.com
+	 */
+	 public function getCaseCount(){	
+		$query = "SELECT * 
+				  FROM case_activities ";
+		$query = $this->db->query($query);
+		return $query->result_array();
+	 }
 
 }

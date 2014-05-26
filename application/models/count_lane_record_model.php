@@ -87,8 +87,9 @@ class Count_lane_record_model extends CI_Model{
 	 * contact : molham225@gmail.com
 	 */
 	 public function addMultiRecords($count_lane_record_array){
-		
+
 		$this->db->insert_batch('count_lane_record',$count_lane_record_array);
+		
 	 }
 	 
 	 /**
