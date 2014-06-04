@@ -107,7 +107,7 @@ class Analyze extends CI_Controller {
 		$this->tsdp_file->save_to_database($case_id);	
 		
 		//echo "an output file is created succesfully";
-		//redirect(base_url().'cases/manage');
+		redirect(base_url().'cases/manage');
 	}
 
 

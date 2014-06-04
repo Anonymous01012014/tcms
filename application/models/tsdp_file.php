@@ -86,6 +86,11 @@ class Tsdp_file extends CI_Model{
 	 * 		   classification record.Save it in an axle classification record 
 	 * 		   object of the axle classification record model and add this object
 	 * 		   to the per vehicle records array in this class.
+	 * 
+	 *		i- if the storage mode is "SPEED_CLASSIFICATION" then this is a speed 
+	 * 		   classification record.Save it in an speed classification record 
+	 * 		   object of the speed classification record model and add this object
+	 * 		   to the per vehicle records array in this class.
 	 * 	4- close the file.
 	 * 
 	 * Parameters:
@@ -499,7 +504,8 @@ class Tsdp_file extends CI_Model{
 			$per_vehicle_record_array = array();
 			$vehicle_axle_spacing_array = array();
 			
-			for($i=0;$i<count($this->per_vehicle_records);$i++){
+			for($i=0;$i<count($this->per_vehicle_records);$i++)
+			{
 				
 				$per_vehicle_record = array();
 				$vehicle_axle_spacing = array();
